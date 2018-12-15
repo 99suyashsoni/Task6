@@ -8,17 +8,19 @@ import kotlinx.android.synthetic.main.activity_home_screen.*
 class HomeScreen : AppCompatActivity() {
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-        when (item.itemId) {
+        when (item.itemId)
+        {
             R.id.navigation_home -> {
-                message.setText(R.string.title_home)
+                //message.setText(R.string.title_home)
                 return@OnNavigationItemSelectedListener true
             }
-            R.id.navigation_dashboard -> {
-                message.setText(R.string.title_dashboard)
+            R.id.navigation_dashboard ->
+            {
+                //message.setText(R.string.title_dashboard)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_notifications -> {
-                message.setText(R.string.title_notifications)
+                //message.setText(R.string.title_notifications)
                 return@OnNavigationItemSelectedListener true
             }
         }
