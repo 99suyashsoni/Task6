@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:layout_margin="@dimen/margin_question_textbox"
+                android:id="@+id/ProgressBarMainQuiz"/>
+
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/TextQuestion"
+                android:text="Question Number 1"
+                android:layout_margin="@dimen/margin_question_textbox"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ProgressBarMainQuiz"/>
+
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/TextOption1"
+                android:text="Option 1"
+                android:layout_margin="@dimen/margin_question_textbox"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginLeft="@dimen/margin_question_textbox"
+                app:layout_constraintTop_toBottomOf="@id/TextQuestion"/>
+
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/TextOption2"
+                android:text="Option 2"
+                android:layout_margin="@dimen/margin_question_textbox"
+                android:layout_marginRight="@dimen/margin_question_textbox"
+                app:layout_constraintTop_toBottomOf="@id/TextOption1"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/TextOption3"
+                android:text="Option 3"
+                android:layout_margin="@dimen/margin_question_textbox"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginLeft="@dimen/margin_question_textbox"
+                app:layout_constraintTop_toBottomOf="@id/TextOption2"/>
+
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/TextOption4"
+                android:text="Option 4"
+                android:layout_margin="@dimen/margin_question_textbox"
+                android:layout_marginRight="@dimen/margin_question_textbox"
+                app:layout_constraintTop_toBottomOf="@id/TextOption3"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+</android.support.constraint.ConstraintLayout>
