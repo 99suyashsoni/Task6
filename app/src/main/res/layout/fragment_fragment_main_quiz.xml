@@ -21,7 +21,7 @@
             app:layout_constraintTop_toBottomOf="@id/ProgressBarMainQuiz"
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_margin="@dimen/margin_16"
-            android:text="@string/question"/>
+            android:text="@string/question" android:layout_marginTop="84dp"/>
 
     <TextView
             android:layout_width="match_parent"
