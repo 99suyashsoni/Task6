@@ -21,7 +21,7 @@
             app:layout_constraintTop_toBottomOf="@id/ProgressBarMainQuiz"
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_margin="@dimen/margin_16"
-            android:text="Question"/>
+            android:text="@string/question"/>
 
     <TextView
             android:layout_width="match_parent"
@@ -30,7 +30,7 @@
             app:layout_constraintTop_toBottomOf="@id/TextViewQuestion"
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_margin="@dimen/margin_16"
-            android:text="Option 1"/>
+            android:text="@string/option_1"/>
 
     <TextView
             android:layout_width="match_parent"
@@ -39,7 +39,7 @@
             app:layout_constraintTop_toBottomOf="@id/Option1"
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_margin="@dimen/margin_16"
-            android:text="Option 2"/>
+            android:text="@string/option_2"/>
 
     <TextView
             android:layout_width="match_parent"
@@ -48,7 +48,7 @@
             app:layout_constraintTop_toBottomOf="@id/Option2"
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_margin="@dimen/margin_16"
-            android:text="Option 3"/>
+            android:text="@string/option_3"/>
 
     <TextView
             android:layout_width="match_parent"
@@ -57,6 +57,6 @@
             app:layout_constraintTop_toBottomOf="@id/Option3"
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_margin="@dimen/margin_16"
-            android:text="Option 4"/>
+            android:text="@string/option_4"/>
 
 </android.support.constraint.ConstraintLayout>

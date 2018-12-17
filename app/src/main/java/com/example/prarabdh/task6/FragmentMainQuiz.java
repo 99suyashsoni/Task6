@@ -3,10 +3,13 @@ package com.example.prarabdh.task6;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 
 /**
@@ -26,7 +29,14 @@ public class FragmentMainQuiz extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    ProgressBar progressBar;
+    TextView question;
+    TextView option_1;
+    TextView option_2;
+    TextView option_3;
+    TextView option_4;
+    int status=0;
+    private Handler handler=new Handler();
     private OnFragmentInteractionListener mListener;
 
     public FragmentMainQuiz() {
@@ -61,10 +71,37 @@ public class FragmentMainQuiz extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+        View view=inflater.inflate(R.layout.fragment_fragment_main_quiz, container, false);
+        progressBar=view.findViewById(R.id.ProgressBarMainQuiz);
+        question=view.findViewById(R.id.TextViewQuestion);
+        option_1=view.findViewById(R.id.Option1);
+        option_2=view.findViewById(R.id.Option2);
+        option_3=view.findViewById(R.id.Option3);
+        option_4=view.findViewById(R.id.Option4);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (status<30){
+                    status += 1;
+                    // Update the progress bar
+                    handler.post(new Runnable() {
+                        public void run() {
+                            progressBar.setProgress(status);
+                        }
+        });
+                    try {
+                        // Sleep for 200 milliseconds.
+                        Thread.sleep(200);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_fragment_main_quiz, container, false);
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
