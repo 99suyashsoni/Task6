@@ -18,12 +18,20 @@ class HomeScreen : AppCompatActivity()
                 //message.setText(R.string.title_home)
                 return@OnNavigationItemSelectedListener true
             }
-            R.id.navigation_dashboard -> {
-                //message.setText(R.string.title_dashboard)
+            R.id.navigation_profile -> {
+                //message.setText(R.string.title_profile)
                 return@OnNavigationItemSelectedListener true
             }
-            R.id.navigation_notifications -> {
-               // message.setText(R.string.title_notifications)
+            R.id.navigation_leaderboard -> {
+               // message.setText(R.string.title_leaderboard)
+                return@OnNavigationItemSelectedListener true
+            }
+            R.id.navigation_random -> {
+                //message.setText(R.string.title_random)
+                return@OnNavigationItemSelectedListener true
+            }
+            R.id.navigation_developers -> {
+                //message.setText(R.string.title_dev)
                 return@OnNavigationItemSelectedListener true
             }
         }
@@ -35,9 +43,8 @@ class HomeScreen : AppCompatActivity()
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.fragment_test)
+        setContentView(R.layout.fragment_fragment_main_quiz)
 
-        //navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         var fragment=FragmentMainQuiz()
         val manager = supportFragmentManager
         val transaction = manager.beginTransaction()
