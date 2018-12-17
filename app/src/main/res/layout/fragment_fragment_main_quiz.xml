@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <ProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/ProgressBarMainQuiz"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_margin="@dimen/margin_16"/>
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/TextViewQuestion"
+            app:layout_constraintTop_toBottomOf="@id/ProgressBarMainQuiz"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_margin="@dimen/margin_16"
+            android:text="Question"/>
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/Option1"
+            app:layout_constraintTop_toBottomOf="@id/TextViewQuestion"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_margin="@dimen/margin_16"
+            android:text="Option 1"/>
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/Option2"
+            app:layout_constraintTop_toBottomOf="@id/Option1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_margin="@dimen/margin_16"
+            android:text="Option 2"/>
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/Option3"
+            app:layout_constraintTop_toBottomOf="@id/Option2"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_margin="@dimen/margin_16"
+            android:text="Option 3"/>
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/Option4"
+            app:layout_constraintTop_toBottomOf="@id/Option3"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_margin="@dimen/margin_16"
+            android:text="Option 4"/>
+
+</android.support.constraint.ConstraintLayout>
