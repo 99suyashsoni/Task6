@@ -3,106 +3,122 @@ package com.example.prarabdh.task6;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
+import com.google.firebase.database.*;
+
+import java.util.ArrayList;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link FragmentMainQuiz.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link FragmentMainQuiz#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class FragmentMainQuiz extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+public class FragmentMainQuiz extends Fragment
+{
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    final int NUMBER_OF_QUESTIONS_TOTAL=3;     //Stores the total number of questions that are stored in the database for the given category
+    int NUMBER_OF_QUESTIONS_PER_ROUND=2; //Stores the number of Questions the user will play per round of the quiz
+    final String CATEGORY="Cricket";           //Stores the category user has selected for playing
+    int askedQuestionIndices[]=new int[NUMBER_OF_QUESTIONS_TOTAL+1];//Stores the indices of the questions already asked to the user in this round
+    int i;                                   //Stores the number of questions asked in this particular round
+    TextView questionTextView, option1TextView, option2TextView, option3TextView, option4TextView;
+    ArrayList<QuestionModel> arrayList= new ArrayList<>();  //Array to store all questions available in that category in the form of QuestionModel objects
+    boolean flag=true;
 
-    private OnFragmentInteractionListener mListener;
+    //Function to generate a random number
 
-    public FragmentMainQuiz() {
+    public int randomGenerator()
+    {
+        int rand=0;
+        do {
+            double x=Math.random()*100;
+            rand=(int)x%NUMBER_OF_QUESTIONS_TOTAL;
+            for(int j=0;j<i;j++)
+            {
+                if(askedQuestionIndices[i]==rand)
+                {
+                    rand=NUMBER_OF_QUESTIONS_TOTAL;
+                    break;
+                }
+            }
+        }while(rand==NUMBER_OF_QUESTIONS_TOTAL);
+        askedQuestionIndices[i]=rand;
+        return rand+1;
+    }
+
+
+    public FragmentMainQuiz()
+    {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment FragmentMainQuiz.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static FragmentMainQuiz newInstance(String param1, String param2) {
-        FragmentMainQuiz fragment = new FragmentMainQuiz();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_fragment_main_quiz, container, false);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
+    {
+        questionTextView=view.findViewById(R.id.TextViewQuestion);
+        option1TextView=view.findViewById(R.id.Option1);
+        option2TextView=view.findViewById(R.id.Option2);
+        option3TextView=view.findViewById(R.id.Option3);
+        option4TextView=view.findViewById(R.id.Option4);
+        super.onViewCreated(view, savedInstanceState);
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(final Context context)
+    {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("Categories").child("Cricket").child("Q&A");
+
+        //Gets all the questions stored on the database at that particular instant, and stores them as an array of QuestionModels
+        //This is defined outside the for loop, to minimize the read time, and also prevent high data usage
+
+        myRef.addValueEventListener(new ValueEventListener()
+        {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Iterable<DataSnapshot> contactChildren = dataSnapshot.getChildren();
+                for (DataSnapshot contact : contactChildren)
+                {
+                    QuestionModel questionModel=new QuestionModel(contact.child("Ques").getValue().toString(), contact.child("Option1").getValue().toString(),contact.child("Option2").getValue().toString() ,contact.child("Option3").getValue().toString() ,contact.child("Option4").getValue().toString() , contact.child("Answer").getValue().toString());
+                    arrayList.add(questionModel);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+        for(i=0;i<NUMBER_OF_QUESTIONS_PER_ROUND && flag==true;i++)
+        {
+            flag=false;
+            final int randomQuestionIndex=randomGenerator();
+            askedQuestionIndices[randomQuestionIndex]=randomQuestionIndex;
+            questionTextView.setText(arrayList.get(randomQuestionIndex).getQuestion());
+            option1TextView.setText(arrayList.get(randomQuestionIndex).getOption1());
+            option2TextView.setText(arrayList.get(randomQuestionIndex).getOption2());
+            option3TextView.setText(arrayList.get(randomQuestionIndex).getOption3());
+            option4TextView.setText(arrayList.get(randomQuestionIndex).getOption4());
+            String correctAnswer=arrayList.get(randomQuestionIndex).getAnswer();
+
+
         }
+
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
 }
