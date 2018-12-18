@@ -6,32 +6,41 @@ import android.support.v4.app.FragmentManager
 import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_home_screen.*
 import android.R.attr.fragment
-
+import android.net.wifi.hotspot2.pps.HomeSp
+import android.support.v4.app.Fragment
+import com.example.prarabdh.task6.R.id.navigation_home
 
 
 class HomeScreen : AppCompatActivity()
 {
 
-    private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+    private val navListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+
+        var selectedFragment: Fragment
         when (item.itemId) {
-            R.id.navigation_home -> {
-                //message.setText(R.string.title_home)
+            navigation_home -> {
+                selectedFragment = HomeFragment()
+                supportFragmentManager.beginTransaction().replace(R.id.homeFragment, selectedFragment).commit()
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_profile -> {
-                //message.setText(R.string.title_profile)
+                selectedFragment = ProfileFragment()
+                supportFragmentManager.beginTransaction().replace(R.id.homeFragment, selectedFragment).commit()
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_leaderboard -> {
-               // message.setText(R.string.title_leaderboard)
+                selectedFragment = LeaderboardFragment()
+                supportFragmentManager.beginTransaction().replace(R.id.homeFragment, selectedFragment).commit()
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_random -> {
-                //message.setText(R.string.title_random)
+                selectedFragment = RandomFragment()
+                supportFragmentManager.beginTransaction().replace(R.id.homeFragment, selectedFragment).commit()
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_developers -> {
-                //message.setText(R.string.title_dev)
+                selectedFragment = DevelopersFragment()
+                supportFragmentManager.beginTransaction().replace(R.id.homeFragment, selectedFragment).commit()
                 return@OnNavigationItemSelectedListener true
             }
         }
@@ -43,13 +52,15 @@ class HomeScreen : AppCompatActivity()
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.fragment_fragment_main_quiz)
+        setContentView(R.layout.activity_home_screen)
 
-        var fragment=FragmentMainQuiz()
-        val manager = supportFragmentManager
-        val transaction = manager.beginTransaction()
-        transaction.add(R.id.Frame, fragment)
-        transaction.commit()
+        var bottomNav: BottomNavigationView = findViewById(R.id.navigation)
+        bottomNav.setOnNavigationItemSelectedListener(navListener)
 
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction().replace(R.id.homeFragment, HomeFragment()).commit()
+            bottomNav.selectedItemId = navigation_home
+        }
+        
     }
 }
