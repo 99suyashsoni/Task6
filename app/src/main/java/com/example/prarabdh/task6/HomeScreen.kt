@@ -61,6 +61,6 @@ class HomeScreen : AppCompatActivity()
             supportFragmentManager.beginTransaction().replace(R.id.homeFragment, HomeFragment()).commit()
             bottomNav.selectedItemId = navigation_home
         }
-        
+
     }
 }
