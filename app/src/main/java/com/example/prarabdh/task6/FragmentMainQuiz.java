@@ -30,15 +30,9 @@ public class FragmentMainQuiz extends Fragment
 
     MediaPlayer mediaPlayer;
     
-    int status=0;
     private Handler handler=new Handler();
     final int NUMBER_OF_QUESTIONS_TOTAL = 4;     //Stores the total number of questions that are stored in the database for the given category
-
     int status=100;
-    private Handler handler=new Handler();
-
-    final int NUMBER_OF_QUESTIONS_TOTAL = 3;     //Stores the total number of questions that are stored in the database for the given category
-
     int NUMBER_OF_QUESTIONS_PER_ROUND = 2; //Stores the number of Questions the user will play per round of the quiz
     final String CATEGORY = "Cricket";           //Stores the category user has selected for playing
     int askedQuestionIndices[] = new int[NUMBER_OF_QUESTIONS_TOTAL + 1];//Stores the indices of the questions already asked to the user in this round
@@ -155,9 +149,9 @@ public class FragmentMainQuiz extends Fragment
 
             public void run()
             {
-                while (status<100)
+                while (status>0)
                 {
-                    status += 1;
+                    status -= 1;
 
                     // Update the progress bar
                     handler.post(new Runnable()
