@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="CorrectAnswer">#FF00FF00</color>
+    <color name="WrongAnswer">#FFFF0000</color>
+    <color name="DefaultBackground">#00FFFFFF</color>  <!--Transparent Colour-->
+  <color name="navItem">#FFFFFF</color>
 </resources>

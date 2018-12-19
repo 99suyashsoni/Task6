@@ -18,6 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/TextViewQuestion"
+            android:backgroundTint="@color/DefaultBackground"
             app:layout_constraintTop_toBottomOf="@id/ProgressBarMainQuiz"
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_margin="@dimen/margin_16"
@@ -26,6 +27,7 @@
     <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/DefaultBackground"
             android:id="@+id/Option1"
             app:layout_constraintTop_toBottomOf="@id/TextViewQuestion"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -35,6 +37,7 @@
     <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/DefaultBackground"
             android:id="@+id/Option2"
             app:layout_constraintTop_toBottomOf="@id/Option1"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -44,6 +47,7 @@
     <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/DefaultBackground"
             android:id="@+id/Option3"
             app:layout_constraintTop_toBottomOf="@id/Option2"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -52,6 +56,7 @@
 
     <TextView
             android:layout_width="match_parent"
+            android:backgroundTint="@color/DefaultBackground"
             android:layout_height="wrap_content"
             android:id="@+id/Option4"
             app:layout_constraintTop_toBottomOf="@id/Option3"
