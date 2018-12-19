@@ -19,7 +19,7 @@ class HomeActivity : AppCompatActivity()
         var selectedFragment: Fragment
         when (item.itemId) {
             navigation_home -> {
-                selectedFragment = FragmentMainQuiz()
+                selectedFragment = Countdown()
                 supportFragmentManager.beginTransaction().replace(R.id.homeFragment, selectedFragment).commit()
                 return@OnNavigationItemSelectedListener true
             }
@@ -60,7 +60,7 @@ class HomeActivity : AppCompatActivity()
         bottomNav.setOnNavigationItemSelectedListener(navListener)
 
         if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction().replace(R.id.homeFragment, FragmentMainQuiz()).commit()
+            supportFragmentManager.beginTransaction().replace(R.id.homeFragment, Countdown()).commit()
             bottomNav.selectedItemId = navigation_home
         }
 

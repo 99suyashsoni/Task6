@@ -1,19 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<<<<<<< HEAD
 
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="CorrectAnswer">#00FF00</color>
     <color name="WrongAnswer">#FF0000</color>
-=======
-    <color name="colorPrimary">#000000</color>
-    <color name="colorPrimaryDark">#000000</color>
-    <color name="colorAccent">#d81b60</color>
     <color name="navItem">#ffffff</color>
-    <color name="CorrectAnswer">#FF00FF00</color>
-    <color name="WrongAnswer">#FFFF0000</color>
->>>>>>> 717bbd3d9635ffc5684a7649aa9638ba381e834f
     <color name="DefaultBackground">#00FFFFFF</color>  <!--Transparent Colour-->
+    <color name="CountdownColour">#EFBF0404</color>
+    <color name="CountdownColourTransparent">#00BF0404</color>
 </resources>

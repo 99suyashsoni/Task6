@@ -28,7 +28,9 @@ public class FragmentMainQuiz extends Fragment
     TextView option_3;
     TextView option_4;
 
-    MediaPlayer mediaPlayer;
+    MediaPlayer mediaPlayerBackground;
+    MediaPlayer mediaPlayerCorrect;
+    MediaPlayer mediaPlayerWrong;
     
     private Handler handler=new Handler();
     final int NUMBER_OF_QUESTIONS_TOTAL = 4;     //Stores the total number of questions that are stored in the database for the given category
@@ -102,7 +104,9 @@ public class FragmentMainQuiz extends Fragment
         super.onStart();
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("Categories").child(CATEGORY).child("Q&A");
-        mediaPlayer=MediaPlayer.create(getContext(),R.raw.main_quiz_background);
+        mediaPlayerBackground=MediaPlayer.create(getContext(),R.raw.main_quiz_background);
+        mediaPlayerWrong=MediaPlayer.create(getContext(),R.raw.wrong_answer );
+        mediaPlayerCorrect=MediaPlayer.create(getContext(), R.raw.correct_answer);
 
         //Gets all the questions stored on the database at that particular instant, and stores them as an array of QuestionModels
         //This is defined outside the for loop, to minimize the read time, and also prevent high data usage
@@ -114,7 +118,7 @@ public class FragmentMainQuiz extends Fragment
                     QuestionModel questionModel = new QuestionModel(contact.child("Ques").getValue().toString(), contact.child("Option1").getValue().toString(), contact.child("Option2").getValue().toString(), contact.child("Option3").getValue().toString(), contact.child("Option4").getValue().toString(), contact.child("Answer").getValue().toString());
                     arrayList.add(questionModel);
                 }
-                mediaPlayer.start();
+                mediaPlayerBackground.start();
                 newQuestion();
             }
 
@@ -228,13 +232,14 @@ public class FragmentMainQuiz extends Fragment
             option_4.setClickable(false);
 
             //Stopping the background sound, and resetting it for the next question
-            mediaPlayer.pause();
-            mediaPlayer.seekTo(0);
+            mediaPlayerBackground.pause();
+            mediaPlayerBackground.seekTo(0);
 
             if (textView.getText().toString().equals(correct))
             {
                 //Setting background colour to green if the answer is correct
                 textView.setBackgroundColor(0xFF00FF00);
+                mediaPlayerCorrect.start();
                 points+=1;
                 correct+=1;
             }
@@ -242,6 +247,7 @@ public class FragmentMainQuiz extends Fragment
             {
                 textView.setBackgroundColor(0xFFFF0000);
                 wrong+=1;
+                mediaPlayerWrong.start();
                 //Setting green background colour to the textView with the right answer
                 if(option_1.getText().toString().equals(correct))
                 {
@@ -268,10 +274,21 @@ public class FragmentMainQuiz extends Fragment
                 {
                     //Resetting every textView before changing the question
                     resetButtons();
+                    //Stopping and resetting the Correct or Wrong Answer sound that was being played in the background
+                    if(mediaPlayerCorrect.isPlaying())
+                    {
+                        mediaPlayerCorrect.pause();
+                        mediaPlayerCorrect.seekTo(0);
+                    }
+                    if(mediaPlayerWrong.isPlaying())
+                    {
+                        mediaPlayerWrong.pause();
+                        mediaPlayerWrong.seekTo(0);
+                    }
 
                     if(i<NUMBER_OF_QUESTIONS_PER_ROUND)
                     {
-                        mediaPlayer.start();
+                        mediaPlayerBackground.start();
                         newQuestion();
                         i++;
                     }
@@ -300,7 +317,7 @@ public class FragmentMainQuiz extends Fragment
     @Override
     public void onDestroy()
     {
-        //mediaPlayer.release();
+        //mediaPlayerBackground.release();
         super.onDestroy();
     }
 
@@ -309,6 +326,8 @@ public class FragmentMainQuiz extends Fragment
     public void onPause()
     {
         super.onPause();
-        mediaPlayer.release();
+        mediaPlayerBackground.release();
+        mediaPlayerCorrect.release();
+        mediaPlayerWrong.release();
     }
 }
