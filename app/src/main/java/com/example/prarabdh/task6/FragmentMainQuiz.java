@@ -1,35 +1,28 @@
 package com.example.prarabdh.task6;
-
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-<<<<<<< HEAD
 import android.os.Handler;
-=======
 import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
->>>>>>> b891409967994207a0660c54b8280fd3764db170
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-<<<<<<< HEAD
 import android.widget.ProgressBar;
 import android.widget.TextView;
-=======
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.firebase.database.*;
 
 import java.util.ArrayList;
->>>>>>> b891409967994207a0660c54b8280fd3764db170
+
 
 
 public class FragmentMainQuiz extends Fragment {
 
-<<<<<<< HEAD
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -42,7 +35,6 @@ public class FragmentMainQuiz extends Fragment {
     int status=0;
     private Handler handler=new Handler();
     private OnFragmentInteractionListener mListener;
-=======
     final int NUMBER_OF_QUESTIONS_TOTAL = 3;     //Stores the total number of questions that are stored in the database for the given category
     int NUMBER_OF_QUESTIONS_PER_ROUND = 2; //Stores the number of Questions the user will play per round of the quiz
     final String CATEGORY = "Cricket";           //Stores the category user has selected for playing
@@ -53,8 +45,6 @@ public class FragmentMainQuiz extends Fragment {
     int currentRandom;                     //Stores the index of the currently generated random Question
 
     //Function to generate a random number
->>>>>>> b891409967994207a0660c54b8280fd3764db170
-
     public int randomGenerator() {
         int rand = 0;
         do {
@@ -111,7 +101,6 @@ public class FragmentMainQuiz extends Fragment {
     }
 
     @Override
-<<<<<<< HEAD
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_fragment_main_quiz, container, false);
         progressBar=view.findViewById(R.id.ProgressBarMainQuiz);
@@ -123,7 +112,7 @@ public class FragmentMainQuiz extends Fragment {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                while (status<30){
+                while (status<100){
                     status += 1;
                     // Update the progress bar
                     handler.post(new Runnable() {
@@ -132,18 +121,14 @@ public class FragmentMainQuiz extends Fragment {
                         }
         });
                     try {
-                        // Sleep for 200 milliseconds.
-                        Thread.sleep(200);
+                        // Sleep for 300 milliseconds.
+                        Thread.sleep(300);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 }
             }
         }).start();
-
-=======
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
->>>>>>> b891409967994207a0660c54b8280fd3764db170
         // Inflate the layout for this fragment
         return view;
     }
