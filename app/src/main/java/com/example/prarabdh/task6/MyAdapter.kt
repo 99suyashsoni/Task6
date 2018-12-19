@@ -4,13 +4,14 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
+import android.widget.Button
+
 
 class MyAdapter(private val images: IntArray): RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
 
     inner class MyViewHolder(val view:View) : RecyclerView.ViewHolder(view){
 
-        internal var imageButton: ImageButton = view.findViewById(R.id.imageButton)
+        internal var imageButton: Button = view.findViewById(R.id.button)
 
     }
 
@@ -25,7 +26,8 @@ class MyAdapter(private val images: IntArray): RecyclerView.Adapter<MyAdapter.My
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 
-        holder.imageButton.setImageResource(images[position])
+        holder.imageButton.setBackgroundResource(images[position])
+        holder.imageButton.setText(R.string.categories)
 
     }
 }
