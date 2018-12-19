@@ -54,6 +54,8 @@ class HomeActivity : AppCompatActivity()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home_screen)
 
+        setSupportActionBar(findViewById(R.id.my_toolbar))
+
         var bottomNav: BottomNavigationView = findViewById(R.id.navigation)
         bottomNav.setOnNavigationItemSelectedListener(navListener)
 
