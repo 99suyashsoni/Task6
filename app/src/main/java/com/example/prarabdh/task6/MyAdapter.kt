@@ -29,5 +29,9 @@ class MyAdapter(private val images: IntArray, private val names: Array<String>, 
         holder.button.setBackgroundResource(images[position])
         holder.button.text = names[position]
         holder.button.isClickable = (playerPoints >= pointsToUnlock[position])
+        holder.button.setOnClickListener {
+
+            //supportFragmentManager.beginTransaction().replace(R.id.homeFragment, GameDesc()).commit()
+        }
     }
 }
