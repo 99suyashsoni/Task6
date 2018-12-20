@@ -15,38 +15,23 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.google.firebase.database.*;
 import java.util.ArrayList;
-<<<<<<< HEAD
-public class FragmentMainQuiz extends Fragment {
-
-    private String mParam1;
-    private String mParam2;
-=======
-
 
 public class FragmentMainQuiz extends Fragment
 {
 
->>>>>>> 93e7f6dedb996f4994e82ddc3495b75c65331c5c
     ProgressBar progressBar;
     TextView question;
     TextView option_1;
     TextView option_2;
     TextView option_3;
     TextView option_4;
-<<<<<<< HEAD
+
     int status=100;
     private Handler handler=new Handler();
     final int NUMBER_OF_QUESTIONS_TOTAL = 3;     //Stores the total number of questions that are stored in the database for the given category
-=======
-
     MediaPlayer mediaPlayerBackground;
     MediaPlayer mediaPlayerCorrect;
     MediaPlayer mediaPlayerWrong;
-    
-    private Handler handler=new Handler();
-    final int NUMBER_OF_QUESTIONS_TOTAL = 4;     //Stores the total number of questions that are stored in the database for the given category
-    int status=100;
->>>>>>> 93e7f6dedb996f4994e82ddc3495b75c65331c5c
     int NUMBER_OF_QUESTIONS_PER_ROUND = 2; //Stores the number of Questions the user will play per round of the quiz
     final String CATEGORY = "Cricket";           //Stores the category user has selected for playing
     int askedQuestionIndices[] = new int[NUMBER_OF_QUESTIONS_TOTAL + 1];//Stores the indices of the questions already asked to the user in this round
@@ -90,8 +75,6 @@ public class FragmentMainQuiz extends Fragment
         return rand;
     }
 
-<<<<<<< HEAD
-=======
     //This functions resets all properties of textViews to prepare it for the next question
     public void resetButtons()
     {
@@ -112,8 +95,6 @@ public class FragmentMainQuiz extends Fragment
         option_1.setText("");
     }
 
-
->>>>>>> 93e7f6dedb996f4994e82ddc3495b75c65331c5c
     @Override
     public void onStart() {
         super.onStart();
@@ -161,7 +142,6 @@ public class FragmentMainQuiz extends Fragment
     {
         // Inflate the layout for this fragment
         View view=inflater.inflate(R.layout.fragment_fragment_main_quiz, container, false);
-<<<<<<< HEAD
         progressBar=view.findViewById(R.id.ProgressBarMainQuiz);
         Progress();
         // Inflate the layout for this fragment
@@ -173,19 +153,6 @@ public class FragmentMainQuiz extends Fragment
             public void run() {
                 while (status>0){
                     status -= 1;
-=======
-
-        new Thread(new Runnable()
-        {
-            @Override
-
-            public void run()
-            {
-                while (status>0)
-                {
-                    status -= 1;
-
->>>>>>> 93e7f6dedb996f4994e82ddc3495b75c65331c5c
                     // Update the progress bar
                     handler.post(new Runnable()
                     {
@@ -193,14 +160,9 @@ public class FragmentMainQuiz extends Fragment
                         {
                             progressBar.setProgress(status);
                         }
-<<<<<<< HEAD
+
                     });
                     try {
-=======
-        });
-                    try
-                    {
->>>>>>> 93e7f6dedb996f4994e82ddc3495b75c65331c5c
                         // Sleep for 300 milliseconds.
                         Thread.sleep(300);
                     } catch (InterruptedException e)
@@ -211,10 +173,6 @@ public class FragmentMainQuiz extends Fragment
             }
         }).start();
 
-<<<<<<< HEAD
-=======
-        return view;
->>>>>>> 93e7f6dedb996f4994e82ddc3495b75c65331c5c
     }
 
     @Override
