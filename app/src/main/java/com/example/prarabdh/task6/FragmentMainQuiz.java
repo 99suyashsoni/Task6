@@ -39,7 +39,7 @@ public class FragmentMainQuiz extends Fragment
     ArrayList<QuestionModel> arrayList = new ArrayList<>();  //Array to store all questions available in that category in the form of QuestionModel objects
     int currentRandom;                     //Stores the index of the currently generated random Question
     int points,wrong,corect;       //Points variable stores the points of current quiz, wrong variable stores number of incorrect answers, and correct variable stores number of correct answers
-
+    private boolean val=true;
     //Function to generate a random number
     public int randomGenerator()
     {
@@ -154,27 +154,42 @@ public class FragmentMainQuiz extends Fragment
                 while (status>0){
                     status -= 1;
                     // Update the progress bar
-                    handler.post(new Runnable()
-                    {
-                        public void run()
-                        {
-                            progressBar.setProgress(status);
-                        }
+                    handler.post(new Runnable() {
+                        public void run() {
+                            if(val)
+                            {
+                                progressBar.setProgress(status);
+                            }
+                            else{
+                                new CountDownTimer(800,1000){          //pauses the progress bar if the user clicks an option
 
+                                    @Override
+                                    public void onFinish() {
+                                        val=true;
+                                        status=100;
+                                        progressBar.setProgress(status);
+                                    }
+                                    @Override
+                                    public void onTick(long l) { }
+                                }.start();
+                            }
+                        }
                     });
                     try {
                         // Sleep for 300 milliseconds.
                         Thread.sleep(300);
-                    } catch (InterruptedException e)
-                    {
+                    } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 }
+                if(status<=0){          //resets the progress bar
+                    status=100;
+                    Progress();}
             }
+
         }).start();
 
     }
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
     {
@@ -217,7 +232,7 @@ public class FragmentMainQuiz extends Fragment
         public void onClick(View v)
         {
             String correct=arrayList.get(currentRandom).getAnswer(); //Stores the correct answer for the current question
-                                                                    //Introduced a new variable instead of using the expression at the right again and again to save the time required by the computer to read the arrayList
+             val=false;                                                       //Introduced a new variable instead of using the expression at the right again and again to save the time required by the computer to read the arrayList
                                                                     //and execute the getAnswer() function multiple number of times
 
             //Disable other textViews so that multiple answers cannot be selected
@@ -264,8 +279,8 @@ public class FragmentMainQuiz extends Fragment
                 }
             }
 
-            //Introduces a delay of 3 seconds between the display of result of the current question, and the display of the next question
-            new CountDownTimer(3000, 1000)
+            //Introduces a delay of 2 seconds between the display of result of the current question, and the display of the next question
+            new CountDownTimer(2000, 1000)
             {
                 public void onFinish()
                 {
