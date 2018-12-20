@@ -16,14 +16,9 @@ import android.widget.TextView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.firebase.database.*;
-
 import java.util.ArrayList;
-
-
-
 public class FragmentMainQuiz extends Fragment {
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
     ProgressBar progressBar;
@@ -32,9 +27,8 @@ public class FragmentMainQuiz extends Fragment {
     TextView option_2;
     TextView option_3;
     TextView option_4;
-    int status=0;
+    int status=100;
     private Handler handler=new Handler();
-    private OnFragmentInteractionListener mListener;
     final int NUMBER_OF_QUESTIONS_TOTAL = 3;     //Stores the total number of questions that are stored in the database for the given category
     int NUMBER_OF_QUESTIONS_PER_ROUND = 2; //Stores the number of Questions the user will play per round of the quiz
     final String CATEGORY = "Cricket";           //Stores the category user has selected for playing
@@ -60,7 +54,6 @@ public class FragmentMainQuiz extends Fragment {
         askedQuestionIndices[i] = rand;
         return rand;
     }
-
 
     @Override
     public void onStart() {
@@ -104,22 +97,22 @@ public class FragmentMainQuiz extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_fragment_main_quiz, container, false);
         progressBar=view.findViewById(R.id.ProgressBarMainQuiz);
-        question=view.findViewById(R.id.TextViewQuestion);
-        option_1=view.findViewById(R.id.Option1);
-        option_2=view.findViewById(R.id.Option2);
-        option_3=view.findViewById(R.id.Option3);
-        option_4=view.findViewById(R.id.Option4);
+        Progress();
+        // Inflate the layout for this fragment
+        return view;
+    }
+    public void Progress(){
         new Thread(new Runnable() {
             @Override
             public void run() {
-                while (status<100){
-                    status += 1;
+                while (status>0){
+                    status -= 1;
                     // Update the progress bar
                     handler.post(new Runnable() {
                         public void run() {
                             progressBar.setProgress(status);
                         }
-        });
+                    });
                     try {
                         // Sleep for 300 milliseconds.
                         Thread.sleep(300);
@@ -129,8 +122,7 @@ public class FragmentMainQuiz extends Fragment {
                 }
             }
         }).start();
-        // Inflate the layout for this fragment
-        return view;
+
     }
 
     @Override
