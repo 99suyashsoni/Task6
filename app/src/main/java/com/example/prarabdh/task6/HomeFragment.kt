@@ -10,6 +10,8 @@ import android.view.ViewGroup
 
 class HomeFragment: Fragment(){
 
+    private val email = "Retrieve from firebase"
+    private val player = Player(email)
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
     private var recyclerView: RecyclerView? = null
@@ -21,7 +23,7 @@ class HomeFragment: Fragment(){
 
     private val pointsToUnlock = intArrayOf(500,750,1000,1250,1500,2000,2500,3000,4000,6000)
 
-    private val playerPoints = 3000
+    private val playerPoints = player.points()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 

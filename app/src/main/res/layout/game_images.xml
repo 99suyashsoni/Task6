@@ -9,6 +9,7 @@
         android:id="@+id/button"
         android:layout_width="147dp"
         android:layout_height="206dp"
+        android:fontFamily="casual"
         android:text="Button"
         android:textSize="30sp"
         android:textStyle="bold"
