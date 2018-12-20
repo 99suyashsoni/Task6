@@ -13,4 +13,8 @@
     <string name="question">Question</string>
     <string name="categories">Categories</string>
     <string name="game_name">GAME NAME</string>
+    <string name="replay">Replay</string>
+    <string name="achievements">Achievements</string>
+    <string name="score">Score</string>
+    <string name="final_score">FINAL SCORE</string>
 </resources>
