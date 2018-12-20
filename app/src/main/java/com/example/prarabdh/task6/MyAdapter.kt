@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import android.widget.Button
 
 
-class MyAdapter(private val images: IntArray): RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
+class MyAdapter(private val images: IntArray, private val names: Array<String>, private val pointsToUnlock: IntArray, private val playerPoints: Int): RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
 
     inner class MyViewHolder(val view:View) : RecyclerView.ViewHolder(view){
 
-        internal var imageButton: Button = view.findViewById(R.id.button)
+        internal var button: Button = view.findViewById(R.id.button)
 
     }
 
@@ -26,8 +26,8 @@ class MyAdapter(private val images: IntArray): RecyclerView.Adapter<MyAdapter.My
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 
-        holder.imageButton.setBackgroundResource(images[position])
-        holder.imageButton.setText(R.string.categories)
-
+        holder.button.setBackgroundResource(images[position])
+        holder.button.text = names[position]
+        holder.button.isClickable = (playerPoints >= pointsToUnlock[position])
     }
 }
