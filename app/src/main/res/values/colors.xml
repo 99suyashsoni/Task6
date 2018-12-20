@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<<<<<<< HEAD
 
-=======
->>>>>>> 4df251607b3343184fe10d1ebd6b19c9d0533651
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorBlack">#000000</color>
@@ -12,10 +9,7 @@
     <color name="WrongAnswer">#FF0000</color>
     <color name="navItem">#ffffff</color>
     <color name="DefaultBackground">#00FFFFFF</color>  <!--Transparent Colour-->
-<<<<<<< HEAD
     <color name="CountdownColour">#EFBF0404</color>
     <color name="CountdownColourTransparent">#00BF0404</color>
 </resources>
-=======
-</resources>
->>>>>>> 4df251607b3343184fe10d1ebd6b19c9d0533651
+

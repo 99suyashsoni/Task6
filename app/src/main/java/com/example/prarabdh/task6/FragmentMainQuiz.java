@@ -239,6 +239,7 @@ public class FragmentMainQuiz extends Fragment
             {
                 //Setting background colour to green if the answer is correct
                 textView.setBackgroundColor(0xFF00FF00);
+                mediaPlayerCorrect.seekTo(2000);
                 mediaPlayerCorrect.start();
                 points+=1;
                 correct+=1;
@@ -247,6 +248,7 @@ public class FragmentMainQuiz extends Fragment
             {
                 textView.setBackgroundColor(0xFFFF0000);
                 wrong+=1;
+                mediaPlayerWrong.seekTo(1000);
                 mediaPlayerWrong.start();
                 //Setting green background colour to the textView with the right answer
                 if(option_1.getText().toString().equals(correct))
