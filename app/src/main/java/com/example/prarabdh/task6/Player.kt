@@ -10,13 +10,13 @@ class Player(email: String){
 
     fun avatar(): Int {
 
-        val avatarImage = R.drawable.ic_profile  //Retrieve from firebase
+        val avatarImage = R.drawable.ic_man  //Retrieve from firebase
         return avatarImage
     }
 
     fun userName(): String {
 
-        val name = "User Name"  //Retrieve from firebase
+        val name = "DVM AppD"  //Retrieve from firebase
         return name
     }
 }
