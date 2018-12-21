@@ -24,22 +24,22 @@ class HomeActivity : AppCompatActivity()
             }
             R.id.navigation_profile -> {
                 selectedFragment = ProfileFragment()
-                supportFragmentManager.beginTransaction().replace(R.id.homeFragment, selectedFragment).commit()
+                supportFragmentManager.beginTransaction().replace(R.id.homeFragment, selectedFragment).addToBackStack(null).commit()
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_leaderboard -> {
                 selectedFragment = LeaderboardFragment()
-                supportFragmentManager.beginTransaction().replace(R.id.homeFragment, selectedFragment).commit()
+                supportFragmentManager.beginTransaction().replace(R.id.homeFragment, selectedFragment).addToBackStack(null).commit()
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_random -> {
                 selectedFragment = RandomFragment()
-                supportFragmentManager.beginTransaction().replace(R.id.homeFragment, selectedFragment).commit()
+                supportFragmentManager.beginTransaction().replace(R.id.homeFragment, selectedFragment).addToBackStack(null).commit()
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_developers -> {
                 selectedFragment = DevelopersFragment()
-                supportFragmentManager.beginTransaction().replace(R.id.homeFragment, selectedFragment).commit()
+                supportFragmentManager.beginTransaction().replace(R.id.homeFragment, selectedFragment).addToBackStack(null).commit()
                 return@OnNavigationItemSelectedListener true
             }
         }
@@ -64,7 +64,7 @@ class HomeActivity : AppCompatActivity()
 
         setSupportActionBar(findViewById(R.id.my_toolbar))
 
-        var bottomNav: BottomNavigationView = findViewById(R.id.navigation)
+        val bottomNav: BottomNavigationView = findViewById(R.id.navigation)
         bottomNav.setOnNavigationItemSelectedListener(navListener)
 
         if (savedInstanceState == null) {
