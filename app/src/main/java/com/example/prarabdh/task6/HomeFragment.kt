@@ -30,7 +30,7 @@ class HomeFragment: Fragment(){
         val view = inflater.inflate(R.layout.home_fragment,container,false)
 
         viewManager = GridLayoutManager(activity,2)
-        viewAdapter = MyAdapter(images, names, pointsToUnlock, playerPoints)
+        viewAdapter = MyAdapter(images, names, pointsToUnlock, playerPoints, HomeActivity())
         recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView).apply {
 
             layoutManager = viewManager

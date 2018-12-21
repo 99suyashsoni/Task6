@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.Button
 
 
-class MyAdapter(private val images: IntArray, private val names: Array<String>, private val pointsToUnlock: IntArray, private val playerPoints: Int): RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
+class MyAdapter(private val images: IntArray, private val names: Array<String>, private val pointsToUnlock: IntArray, private val playerPoints: Int, private val activity: HomeActivity): RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
 
     inner class MyViewHolder(val view:View) : RecyclerView.ViewHolder(view){
 
@@ -31,7 +31,7 @@ class MyAdapter(private val images: IntArray, private val names: Array<String>, 
         holder.button.isClickable = (playerPoints >= pointsToUnlock[position])
         holder.button.setOnClickListener {
 
-            //supportFragmentManager.beginTransaction().replace(R.id.homeFragment, GameDesc()).commit()
+            activity.supportFragmentManager.beginTransaction().replace(R.id.homeFragment, GameDesc()).commit()
         }
     }
 }
