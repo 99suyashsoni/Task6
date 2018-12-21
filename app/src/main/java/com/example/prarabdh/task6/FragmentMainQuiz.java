@@ -40,29 +40,14 @@ public class FragmentMainQuiz extends Fragment
     int currentRandom;                     //Stores the index of the currently generated random Question
     int points,wrong,corect;       //Points variable stores the points of current quiz, wrong variable stores number of incorrect answers, and correct variable stores number of correct answers
     private boolean val=true;
+
     //Function to generate a random number
     public int randomGenerator()
     {
         int rand = 0;
         do {
-            double x = Math.random() * 100;
-            double y = Math.random() * 100;
-            if(x%2==0 && y%2==0)
-            {
-                x=x+y;
-            }
-            else if(x%2==0 && y%2==1)
-            {
-                x=x*y;
-            }
-            else if(x%2==1 && y%2==0)
-            {
-                x=Math.abs(x-y);
-            }
-            else
-            {
-                x=(x/y)*100;
-            }
+            double d=Math.random()*1000;
+            int x=(int) d%NUMBER_OF_QUESTIONS_TOTAL;
             rand = (int) x % NUMBER_OF_QUESTIONS_TOTAL;
             for (int j = 0; j < i; j++) {
                 if (askedQuestionIndices[i] == rand) {
@@ -71,7 +56,7 @@ public class FragmentMainQuiz extends Fragment
                 }
             }
         } while (rand == NUMBER_OF_QUESTIONS_TOTAL);
-        askedQuestionIndices[i] = rand;
+        //askedQuestionIndices[i] = rand;
         return rand;
     }
 
@@ -115,6 +100,7 @@ public class FragmentMainQuiz extends Fragment
                     arrayList.add(questionModel);
                 }
                 mediaPlayerBackground.start();
+                Progress();
                 newQuestion();
             }
 
@@ -143,11 +129,13 @@ public class FragmentMainQuiz extends Fragment
         // Inflate the layout for this fragment
         View view=inflater.inflate(R.layout.fragment_fragment_main_quiz, container, false);
         progressBar=view.findViewById(R.id.ProgressBarMainQuiz);
-        Progress();
+        //Progress();
         // Inflate the layout for this fragment
         return view;
     }
-    public void Progress(){
+
+    public void Progress()
+    {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -155,16 +143,20 @@ public class FragmentMainQuiz extends Fragment
                     status -= 1;
                     // Update the progress bar
                     handler.post(new Runnable() {
-                        public void run() {
+                        public void run()
+                        {
                             if(val)
                             {
                                 progressBar.setProgress(status);
                             }
-                            else{
-                                new CountDownTimer(800,1000){          //pauses the progress bar if the user clicks an option
+                            else
+                                {
+                                new CountDownTimer(800,1000)
+                                {          //pauses the progress bar if the user clicks an option
 
                                     @Override
-                                    public void onFinish() {
+                                    public void onFinish()
+                                    {
                                         val=true;
                                         status=100;
                                         progressBar.setProgress(status);
@@ -184,12 +176,14 @@ public class FragmentMainQuiz extends Fragment
                 }
                 if(status<=0){          //resets the progress bar
                     status=100;
+                    newQuestion();
                     Progress();}
             }
 
         }).start();
 
     }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
     {
