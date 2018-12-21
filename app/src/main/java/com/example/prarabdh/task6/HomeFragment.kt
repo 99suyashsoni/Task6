@@ -1,12 +1,14 @@
 package com.example.prarabdh.task6
 
 import android.os.Bundle
+import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.prarabdh.task6.R.id.navigation_home
 
 class HomeFragment: Fragment(){
 
@@ -28,9 +30,11 @@ class HomeFragment: Fragment(){
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val view = inflater.inflate(R.layout.home_fragment,container,false)
+//        val bottomNav: BottomNavigationView = HomeActivity().findViewById(R.id.navigation)
+//        bottomNav.selectedItemId = navigation_home
 
         viewManager = GridLayoutManager(activity,2)
-        viewAdapter = MyAdapter(images, names, pointsToUnlock, playerPoints, HomeActivity())
+        viewAdapter = MyAdapter(images, names, pointsToUnlock, playerPoints)
         recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView).apply {
 
             layoutManager = viewManager

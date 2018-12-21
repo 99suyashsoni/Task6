@@ -1,13 +1,14 @@
 package com.example.prarabdh.task6
 
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 
 
-class MyAdapter(private val images: IntArray, private val names: Array<String>, private val pointsToUnlock: IntArray, private val playerPoints: Int, private val activity: HomeActivity): RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
+class MyAdapter(private val images: IntArray, private val names: Array<String>, private val pointsToUnlock: IntArray, private val playerPoints: Int): RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
 
     inner class MyViewHolder(val view:View) : RecyclerView.ViewHolder(view){
 
@@ -31,7 +32,8 @@ class MyAdapter(private val images: IntArray, private val names: Array<String>, 
         holder.button.isClickable = (playerPoints >= pointsToUnlock[position])
         holder.button.setOnClickListener {
 
-            activity.supportFragmentManager.beginTransaction().replace(R.id.homeFragment, GameDesc()).commit()
+            Log.i("Button Check","Button Click Works")
+            //HomeActivity().supportFragmentManager.beginTransaction().replace(R.id.homeFragment, GameDesc()).addToBackStack(null).commit()
         }
     }
 }

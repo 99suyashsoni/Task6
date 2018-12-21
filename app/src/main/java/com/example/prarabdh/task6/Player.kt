@@ -4,7 +4,7 @@ class Player(email: String){
 
     fun points(): Int {
 
-        val playerPoints = 3000   //Retrieve from firebase
+        val playerPoints = 1000   //Retrieve from firebase
         return playerPoints
     }
 
