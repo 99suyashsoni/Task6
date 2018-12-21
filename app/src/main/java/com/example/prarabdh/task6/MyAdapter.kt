@@ -10,6 +10,8 @@ import android.widget.Button
 
 class MyAdapter(private val images: IntArray, private val names: Array<String>, private val pointsToUnlock: IntArray, private val playerPoints: Int): RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
 
+    //private val gameDesc = GameDesc()
+
     inner class MyViewHolder(val view:View) : RecyclerView.ViewHolder(view){
 
         internal var button: Button = view.findViewById(R.id.button)
@@ -34,6 +36,7 @@ class MyAdapter(private val images: IntArray, private val names: Array<String>, 
 
             Log.i("Button Check","Button Click Works")
             //HomeActivity().supportFragmentManager.beginTransaction().replace(R.id.homeFragment, GameDesc()).addToBackStack(null).commit()
+
         }
     }
 }
