@@ -128,9 +128,6 @@ public class FragmentMainQuiz extends Fragment
             option_2.setOnClickListener(new onClickButton(option_2));
             option_3.setOnClickListener(new onClickButton(option_3));
             option_4.setOnClickListener(new onClickButton(option_4));
-
-
-
     }
 
     public FragmentMainQuiz() {

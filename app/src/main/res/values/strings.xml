@@ -17,4 +17,5 @@
     <string name="achievements">Achievements</string>
     <string name="score">Score</string>
     <string name="final_score">FINAL SCORE</string>
+    <string name="category">Category</string>
 </resources>
