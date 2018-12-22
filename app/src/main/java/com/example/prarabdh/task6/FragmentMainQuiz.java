@@ -31,11 +31,14 @@ public class FragmentMainQuiz extends Fragment
 
     int status=100;
     private Handler handler=new Handler();
+
+    //Will have to extract this from firebase
     final int NUMBER_OF_QUESTIONS_TOTAL = 5;     //Stores the total number of questions that are stored in the database for the given category
+
     MediaPlayer mediaPlayerBackground;
     MediaPlayer mediaPlayerCorrect;
     MediaPlayer mediaPlayerWrong;
-    int NUMBER_OF_QUESTIONS_PER_ROUND = 3; //Stores the number of Questions the user will play per round of the quiz
+    int NUMBER_OF_QUESTIONS_PER_ROUND = getResources().getInteger(R.integer.Number_Of_Rounds_Per_Match); //Stores the number of Questions the user will play per round of the quiz
     final String CATEGORY = "Cricket";           //Stores the category user has selected for playing
     int askedQuestionIndices[] = new int[NUMBER_OF_QUESTIONS_TOTAL];//Stores the indices of the questions already asked to the user in this round
     int i = 1;                                   //Stores the number of questions asked in this particular round
