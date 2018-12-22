@@ -1,4 +1,5 @@
 package com.example.prarabdh.task6;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -15,7 +16,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.google.firebase.database.*;
 import java.util.ArrayList;
+import java.util.Random;
 
+@SuppressLint("ValidFragment")
 public class FragmentMainQuiz extends Fragment
 {
 
@@ -28,27 +31,26 @@ public class FragmentMainQuiz extends Fragment
 
     int status=100;
     private Handler handler=new Handler();
-    final int NUMBER_OF_QUESTIONS_TOTAL = 3;     //Stores the total number of questions that are stored in the database for the given category
+    final int NUMBER_OF_QUESTIONS_TOTAL = 5;     //Stores the total number of questions that are stored in the database for the given category
     MediaPlayer mediaPlayerBackground;
     MediaPlayer mediaPlayerCorrect;
     MediaPlayer mediaPlayerWrong;
-    int NUMBER_OF_QUESTIONS_PER_ROUND = 2; //Stores the number of Questions the user will play per round of the quiz
+    int NUMBER_OF_QUESTIONS_PER_ROUND = 3; //Stores the number of Questions the user will play per round of the quiz
     final String CATEGORY = "Cricket";           //Stores the category user has selected for playing
-    int askedQuestionIndices[] = new int[NUMBER_OF_QUESTIONS_TOTAL + 1];//Stores the indices of the questions already asked to the user in this round
+    int askedQuestionIndices[] = new int[NUMBER_OF_QUESTIONS_TOTAL];//Stores the indices of the questions already asked to the user in this round
     int i = 1;                                   //Stores the number of questions asked in this particular round
-    ArrayList<QuestionModel> arrayList = new ArrayList<>();  //Array to store all questions available in that category in the form of QuestionModel objects
-    int currentRandom;                     //Stores the index of the currently generated random Question
-    int points,wrong,corect;       //Points variable stores the points of current quiz, wrong variable stores number of incorrect answers, and correct variable stores number of correct answers
+    ArrayList<QuestionModel> arrayList;  //Array to store all questions available in that category in the form of QuestionModel objects
+    int currentRandom=0;                     //Stores the index of the currently generated random Question
+    int points=1000,wrong=0,corect=0;       //Points variable stores the points of current quiz, wrong variable stores number of incorrect answers, and correct variable stores number of correct answers
     private boolean val=true;
 
     //Function to generate a random number
-    public int randomGenerator()
+    public int Random()
     {
-        int rand = 0;
+        int rand = 1;
         do {
-            double d=Math.random()*1000;
-            int x=(int) d%NUMBER_OF_QUESTIONS_TOTAL;
-            rand = (int) x % NUMBER_OF_QUESTIONS_TOTAL;
+            double d=Math.random()*1000+rand;
+            rand = (int) d % NUMBER_OF_QUESTIONS_TOTAL;
             for (int j = 0; j < i; j++) {
                 if (askedQuestionIndices[i] == rand) {
                     rand = NUMBER_OF_QUESTIONS_TOTAL;
@@ -81,46 +83,36 @@ public class FragmentMainQuiz extends Fragment
     }
 
     @Override
-    public void onStart() {
+    public void onStart()
+    {
         super.onStart();
-        final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("Categories").child(CATEGORY).child("Q&A");
+
+        //Assigning songs to the various mediaPlayer objects so that they can be played as and when required
         mediaPlayerBackground=MediaPlayer.create(getContext(),R.raw.main_quiz_background);
         mediaPlayerWrong=MediaPlayer.create(getContext(),R.raw.wrong_answer );
         mediaPlayerCorrect=MediaPlayer.create(getContext(), R.raw.correct_answer);
 
-        //Gets all the questions stored on the database at that particular instant, and stores them as an array of QuestionModels
-        //This is defined outside the for loop, to minimize the read time, and also prevent high data usage
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Iterable<DataSnapshot> contactChildren = dataSnapshot.getChildren();
-                for (DataSnapshot contact : contactChildren) {
-                    QuestionModel questionModel = new QuestionModel(contact.child("Ques").getValue().toString(), contact.child("Option1").getValue().toString(), contact.child("Option2").getValue().toString(), contact.child("Option3").getValue().toString(), contact.child("Option4").getValue().toString(), contact.child("Answer").getValue().toString());
-                    arrayList.add(questionModel);
-                }
-                mediaPlayerBackground.start();
-                Progress();
-                newQuestion();
-            }
+        //Initializing all elements of array to avoid errors due to garbage values
+        for (int b=0;b<NUMBER_OF_QUESTIONS_TOTAL;b++)
+        {
+            askedQuestionIndices[b]=Integer.MAX_VALUE;
+        }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+        //Starting the progressBar and display of the first question
 
-            }
-        });
+        newQuestion();
 
-            option_1.setOnClickListener(new onClickButton(option_1));
-            option_2.setOnClickListener(new onClickButton(option_2));
-            option_3.setOnClickListener(new onClickButton(option_3));
-            option_4.setOnClickListener(new onClickButton(option_4));
-
-
-
+        //Setting onClickListeners to all the TextViews to know which option is selected by the user
+        option_1.setOnClickListener(new onClickButton(option_1));
+        option_2.setOnClickListener(new onClickButton(option_2));
+        option_3.setOnClickListener(new onClickButton(option_3));
+        option_4.setOnClickListener(new onClickButton(option_4));
     }
 
-    public FragmentMainQuiz() {
-        // Required empty public constructor
+    //Default Constructor for the fragment that receives array list of questionModels from the Countdown Fragment
+    @SuppressLint("ValidFragment")
+    public FragmentMainQuiz(ArrayList<QuestionModel> list) {
+        arrayList=list;
     }
 
     @Override
@@ -128,12 +120,15 @@ public class FragmentMainQuiz extends Fragment
     {
         // Inflate the layout for this fragment
         View view=inflater.inflate(R.layout.fragment_fragment_main_quiz, container, false);
-        progressBar=view.findViewById(R.id.ProgressBarMainQuiz);
-        //Progress();
+        Progress();
         // Inflate the layout for this fragment
         return view;
     }
 
+    /**This function controls the functioning of the progress bar
+     * The progress bar is reset at the start of every question
+     * It also stops once the user has selected an option
+     * Also, if the time of the Progress Bar is over, It starts a new question if the questions for that round are not over*/
     public void Progress()
     {
         new Thread(new Runnable() {
@@ -174,10 +169,17 @@ public class FragmentMainQuiz extends Fragment
                         e.printStackTrace();
                     }
                 }
-                if(status<=0){          //resets the progress bar
+                if(status<=0)
+                {          //resets the progress bar
                     status=100;
-                    newQuestion();
-                    Progress();}
+                    if(i<NUMBER_OF_QUESTIONS_PER_ROUND)
+                    {
+                        i++;
+                        newQuestion();
+                        Progress();
+                    }
+
+                }
             }
 
         }).start();
@@ -200,15 +202,14 @@ public class FragmentMainQuiz extends Fragment
     //This function is called whenever a new question is to be displayed on the screen
     public void newQuestion()
     {
-        currentRandom = randomGenerator();
-        askedQuestionIndices[i - 1] = currentRandom;
+        currentRandom = Random();
+        askedQuestionIndices[i-1] = currentRandom;
         question.setText(arrayList.get(currentRandom).getQuestion());
         option_1.setText(arrayList.get(currentRandom).getOption1());
         option_2.setText(arrayList.get(currentRandom).getOption2());
         option_3.setText(arrayList.get(currentRandom).getOption3());
         option_4.setText(arrayList.get(currentRandom).getOption4());
     }
-
 
     /**Creating a class for onClickListener as the same logic is to be implemented with all the 4 option buttons
      * Didnot crate a new object as I needed a parameter regarding which option was clicked, which was not possible in an object*/
@@ -239,7 +240,7 @@ public class FragmentMainQuiz extends Fragment
             mediaPlayerBackground.pause();
             mediaPlayerBackground.seekTo(0);
 
-            if (textView.getText().toString().equals(correct))
+            if (textView.getText().toString().equals(correct))   //The answer is correct
             {
                 //Setting background colour to green if the answer is correct
                 textView.setBackgroundColor(0xFF00FF00);
@@ -248,7 +249,7 @@ public class FragmentMainQuiz extends Fragment
                 points+=1;
                 correct+=1;
             }
-            else
+            else    //The answer is wrong
             {
                 textView.setBackgroundColor(0xFFFF0000);
                 wrong+=1;
@@ -314,21 +315,6 @@ public class FragmentMainQuiz extends Fragment
     }
 
     @Override
-    public void onAttach(final Context context)
-    {
-        super.onAttach(context);
-    }
-
-
-    @Override
-    public void onDestroy()
-    {
-        //mediaPlayerBackground.release();
-        super.onDestroy();
-    }
-
-
-    @Override
     public void onPause()
     {
         super.onPause();
@@ -336,4 +322,6 @@ public class FragmentMainQuiz extends Fragment
         mediaPlayerCorrect.release();
         mediaPlayerWrong.release();
     }
+
+
 }
