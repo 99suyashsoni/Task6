@@ -6,9 +6,9 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
-class Player(userid: String)
+class  Player(userid: String)
 {
-
+    // No Longer Need this class
     val Userid=userid
     var points=0
     var email=""
@@ -16,9 +16,9 @@ class Player(userid: String)
     var avtar=""
     var wins=0
     var losses=0
-    var NUMBER_OF_ACHIVEMENTS=R.integer.Number_of_Achivements
-    var achivementsNames = Array<String>(NUMBER_OF_ACHIVEMENTS,{""})
-    var acivivementStatus = Array<Int>(NUMBER_OF_ACHIVEMENTS,{0})
+//    var NUMBER_OF_ACHIVEMENTS=R.integer.Number_of_Achivements
+//    var achivementsNames = Array<String>(NUMBER_OF_ACHIVEMENTS,{""})
+//    var acivivementStatus = Array<Int>(NUMBER_OF_ACHIVEMENTS,{0})
 
 
     fun Player()
@@ -34,15 +34,17 @@ class Player(userid: String)
                 avtar= dataSnapshot.child("Avtar Img").getValue() as String
                 wins= dataSnapshot.child("Wins").getValue() as Int
                 losses= dataSnapshot.child("Losses").getValue() as Int
-                val x=dataSnapshot.child("Achivements").children
-                var i=0;
-                for (contact in x)
-                {
-                    var y=contact.key;
-                    var z=contact.value
-                    achivementsNames[i]=y.toString()
-                    acivivementStatus[i]=x.toString() as Int
-                }
+
+// Disabled loops for retriving Achievements since they were causing OutOfMemory exception
+//                val x=dataSnapshot.child("Achivements").children
+//                var i=0;
+//                for (contact in x)
+//                {
+//                    var y=contact.key;
+//                    var z=contact.value
+//                    achivementsNames[i]=y.toString()
+//                    acivivementStatus[i]=x.toString() as Int
+//                }
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
@@ -54,21 +56,21 @@ class Player(userid: String)
     fun points(): Int
     {
 
-        val playerPoints = 1000   //Retrieve from firebase
+        val playerPoints = points   //Retrieve from firebase
         return playerPoints
     }
 
-    fun avatar(): Int
+    fun avatar(): String
     {
 
-        val avatarImage = R.drawable.ic_man  //Retrieve from firebase
+        val avatarImage = avtar //Retrieve from firebase
         return avatarImage
     }
 
     fun userName(): String
     {
 
-        val name = "DVM AppD"  //Retrieve from firebase
+        val name = username  //Retrieve from firebase
         return name
     }
 }
