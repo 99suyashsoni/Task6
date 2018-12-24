@@ -1,8 +1,10 @@
 package com.example.prarabdh.task6;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
@@ -18,6 +20,14 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+
 
 public class Countdown extends Fragment 
 {
@@ -26,9 +36,12 @@ public class Countdown extends Fragment
     TextView textView1;
     TextView textView2;
     TextView textView3;
+    ArrayList<QuestionModel> arrayList=new ArrayList<>();
+    String CATEGORY="Cricket";
 
     
-    public Countdown() {
+    public Countdown()
+    {
         // Required empty public constructor
     }
     
@@ -68,8 +81,7 @@ public class Countdown extends Fragment
 
     }
 
-    @Override
-    public void onStart() 
+    public void startCountdown()
     {
         final Animation animation=AnimationUtils.loadAnimation(getContext(),R.anim.animation_countdown_new );
         textView3.startAnimation(animation);
@@ -120,7 +132,7 @@ public class Countdown extends Fragment
 
                                 mediaPlayer.stop();
                                 textView1.setTextColor(getResources().getColor(R.color.DefaultBackground));
-                                FragmentMainQuiz fragmentMainQuiz=new FragmentMainQuiz();
+                                FragmentMainQuiz fragmentMainQuiz=new FragmentMainQuiz(arrayList);
                                 FragmentManager fragmentManager=getFragmentManager();
                                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                                 fragmentTransaction.add(R.id.homeFragment, fragmentMainQuiz);
@@ -135,9 +147,81 @@ public class Countdown extends Fragment
 
             }
         }.start();
+    }
 
+    @Override
+    public void onStart() 
+    {
+        new dataDownload().execute();
 
+        /*final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("Categories").child(CATEGORY).child("Q&A");
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+            {
+                Iterable<DataSnapshot> contactChildren = dataSnapshot.getChildren();
+                for (DataSnapshot contact : contactChildren) {
+                    QuestionModel questionModel = new QuestionModel(contact.child("Ques").getValue().toString(), contact.child("Option1").getValue().toString(), contact.child("Option2").getValue().toString(), contact.child("Option3").getValue().toString(), contact.child("Option4").getValue().toString(), contact.child("Answer").getValue().toString());
+                    arrayList.add(questionModel);
+                }
+
+                startCountdown();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });*/
 
         super.onStart();
+    }
+
+    private class dataDownload extends AsyncTask<Void,Void,Void>
+    {
+        ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute()
+        {
+            progressDialog=new ProgressDialog(getContext());
+            progressDialog.setMessage("Please Wait while we download your questions");
+            progressDialog.show();
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids)
+        {
+            final FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference myRef = database.getReference("Categories").child(CATEGORY).child("Q&A");
+            myRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+                {
+                    Iterable<DataSnapshot> contactChildren = dataSnapshot.getChildren();
+                    for (DataSnapshot contact : contactChildren) {
+                        QuestionModel questionModel = new QuestionModel(contact.child("Ques").getValue().toString(), contact.child("Option1").getValue().toString(), contact.child("Option2").getValue().toString(), contact.child("Option3").getValue().toString(), contact.child("Option4").getValue().toString(), contact.child("Answer").getValue().toString());
+                        arrayList.add(questionModel);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid)
+        {
+            progressDialog.dismiss();
+            startCountdown();
+            super.onPostExecute(aVoid);
+        }
     }
 }

@@ -10,7 +10,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/ProgressBarMainQuiz"
-            style="@android:style/Widget.ProgressBar.Horizontal"
+            style="@android:style/Widget.Holo.ProgressBar.Horizontal"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_margin="@dimen/margin_16"/>
 
@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/TextViewQuestion"
-
+            android:textAlignment="center"
             app:layout_constraintTop_toBottomOf="@id/ProgressBarMainQuiz"
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_margin="@dimen/margin_16"
@@ -27,7 +27,7 @@
     <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
+            android:textAlignment="center"
             android:id="@+id/Option1"
             app:layout_constraintTop_toBottomOf="@id/TextViewQuestion"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -37,7 +37,7 @@
     <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
+            android:textAlignment="center"
             android:id="@+id/Option2"
             app:layout_constraintTop_toBottomOf="@id/Option1"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -47,7 +47,7 @@
     <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
+            android:textAlignment="center"
             android:id="@+id/Option3"
             app:layout_constraintTop_toBottomOf="@id/Option2"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -56,7 +56,7 @@
 
     <TextView
             android:layout_width="match_parent"
-
+            android:textAlignment="center"
             android:layout_height="wrap_content"
             android:id="@+id/Option4"
             app:layout_constraintTop_toBottomOf="@id/Option3"
