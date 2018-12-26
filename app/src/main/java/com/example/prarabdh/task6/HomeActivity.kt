@@ -102,7 +102,7 @@ class HomeActivity : AppCompatActivity()
 
     }
 
-    private fun updateUI(currentUser: FirebaseUser?) {
+     fun updateUI(currentUser: FirebaseUser?) {
 
         if (currentUser == null)
         {

@@ -26,14 +26,13 @@ class  Player(userid: String)
         val database = FirebaseDatabase.getInstance()
         val myRef = database.getReference("Users").child(Userid)
         myRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot)
-            {
-                points= dataSnapshot.child("Total Points").getValue() as Int
-                email= dataSnapshot.child("Email-id").getValue() as String
-                username= dataSnapshot.child("Username").getValue() as String
-                avtar= dataSnapshot.child("Avtar Img").getValue() as String
-                wins= dataSnapshot.child("Wins").getValue() as Int
-                losses= dataSnapshot.child("Losses").getValue() as Int
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                points = dataSnapshot.child("Total Points").getValue() as Int
+                email = dataSnapshot.child("Email-id").getValue() as String
+                username = dataSnapshot.child("Username").getValue() as String
+                avtar = dataSnapshot.child("Avtar Img").getValue() as String
+                wins = dataSnapshot.child("Wins").getValue() as Int
+                losses = dataSnapshot.child("Losses").getValue() as Int
 
 // Disabled loops for retriving Achievements since they were causing OutOfMemory exception
 //                val x=dataSnapshot.child("Achivements").children
@@ -45,9 +44,11 @@ class  Player(userid: String)
 //                    achivementsNames[i]=y.toString()
 //                    acivivementStatus[i]=x.toString() as Int
 //                }
-            }
+//
 
-            override fun onCancelled(databaseError: DatabaseError) {
+//                A1 = dataSnapshot.child("Achievements").child("A1").getValue() as String
+
+            } override fun onCancelled(databaseError: DatabaseError) {
 
             }
         })
