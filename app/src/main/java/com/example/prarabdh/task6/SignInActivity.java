@@ -28,11 +28,7 @@ public class SignInActivity extends AppCompatActivity {
     private Button buttonSignIn;
     private EditText editTextPassword;
     private EditText editTextEmail;
-   // private String email="w";
-    //private String password="e";
     private boolean newUserClicked=false;
-   // private String uname="aa";
-   // private FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,10 +36,10 @@ public class SignInActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_in);
 
         //finding all views
-        buttonNewUser=findViewById(R.id.buttonNewUser);
-        buttonSignIn=findViewById(R.id.buttonSignIn);
-        editTextPassword =findViewById(R.id.editTextPassword);
-        editTextEmail=findViewById(R.id.editTextEmail);
+        buttonNewUser = findViewById(R.id.buttonNewUser);
+        buttonSignIn = findViewById(R.id.buttonSignIn);
+        editTextPassword = findViewById(R.id.editTextPassword);
+        editTextEmail = findViewById(R.id.editTextEmail);
         mDatabase = FirebaseDatabase.getInstance().getReference("Users");
         mAuth = FirebaseAuth.getInstance();
 

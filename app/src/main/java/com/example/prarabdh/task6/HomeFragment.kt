@@ -1,19 +1,17 @@
 package com.example.prarabdh.task6
 
 import android.os.Bundle
-import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.prarabdh.task6.R.id.navigation_home
 
 class HomeFragment: Fragment(){
 //No Longer need them since using static variables
    // private val email = "Retrieve from firebase"
- //  private val player= Player(email)
+ //  private val player= PlayerDataRetrieve(email)
 
 
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
@@ -28,7 +26,7 @@ class HomeFragment: Fragment(){
     private val pointsToUnlock = intArrayOf(500,750,1000,1250,1500,2000,2500,3000,4000,6000)
 
     //private val playerPoints = player.points()
-    private val playerPoints = (UserDataRetrive.udrPoints).toInt()
+    private val playerPoints = (PlayerData.udrPoints).toInt()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 

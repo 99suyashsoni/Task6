@@ -18,7 +18,7 @@ class HomeActivity : AppCompatActivity()
 {
      // Initialised database and authentication variables and moved all UI items to updateUI method to Successfully
 //    fill them with logged in users data
-    // Removed all uses of Player.kt class with static variables of UserDataRetrive Class starting with usr**
+    // Removed all uses of PlayerDataRetrieveDataRetrieve.kt class with static variables of PlayerData Class starting with usr**
     // anytime u need usrers data access UserDataRetrieve class static variables
     //IMP note*****
     // Loops for retreiving Achivements were causing OutOfMemory error and thus was unable to retrieve Achievements
@@ -91,47 +91,28 @@ class HomeActivity : AppCompatActivity()
             //if user is logged in  retrieve its data and save in static variables except Achievemets
             val uid = currentUser.uid
 
-            database = FirebaseDatabase.getInstance().getReference("Users").child(uid)
-            database.addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
+            PlayerDataRetrieve().dataRetrieve(uid)
 
-                   // val player = Player(uid)*****
+            setSupportActionBar(findViewById(R.id.my_toolbar))
 
-                    UserDataRetrive.udrUserId=uid
-                    UserDataRetrive.udrPoints= dataSnapshot.child("Total Points").value as String
-                    UserDataRetrive.udrEmail= dataSnapshot.child("Email-id").value as String
-                    UserDataRetrive.udrUserName= dataSnapshot.child("Username").value as String
-                    UserDataRetrive.udrAvtar= dataSnapshot.child("Avtar Img").value as String
-                    UserDataRetrive.udrWins= dataSnapshot.child("Wins").value as String
-                    UserDataRetrive.udrLosses= dataSnapshot.child("Losses").value as String
+            val imageView:ImageView = findViewById(R.id.imageView)
+            Glide.with(this@HomeActivity).load( PlayerData.udrAvtar).into(imageView)
 
-                    setSupportActionBar(findViewById(R.id.my_toolbar))
+            val userName:TextView = findViewById(R.id.textView6)
+            userName.text = PlayerData.udrUserName
 
-                    val imageView:ImageView = findViewById(R.id.imageView)
-                    Glide.with(this@HomeActivity).load( UserDataRetrive.udrAvtar).into(imageView)
-                    // imageView.setImageResource(player.avatar())
+            val points:TextView = findViewById(R.id.textView7)
+            points.text = PlayerData.udrPoints
 
-                    val userName:TextView = findViewById(R.id.textView6)
-                    userName.text = UserDataRetrive.udrUserName
+            bottomNav.setOnNavigationItemSelectedListener(navListener)
 
-                    val points:TextView = findViewById(R.id.textView7)
-                    points.text = UserDataRetrive.udrPoints
-
-                    bottomNav.setOnNavigationItemSelectedListener(navListener)
-
-                    supportFragmentManager.beginTransaction().replace(R.id.homeFragment, HomeFragment()).commit()
-                    bottomNav.selectedItemId = navigation_home
-               }
-
-                override fun onCancelled(databaseError: DatabaseError) {
-                    println("The read failed: " + databaseError.code)
-                }
-            })
-
+            supportFragmentManager.beginTransaction().replace(R.id.homeFragment, HomeFragment()).commit()
+            bottomNav.selectedItemId = navigation_home
 
         }
 
+
     }
 
-
 }
+

@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 
 class ProfileFragment: Fragment(){
+
     private lateinit var auth: FirebaseAuth
     private var btnSignOut: Button? = null
     private var txtUname: TextView? = null
@@ -41,12 +42,12 @@ class ProfileFragment: Fragment(){
             signOut()
         }
 
-        txtUname!!.text= UserDataRetrive.udrUserName
-        txtEmail!!.text= UserDataRetrive.udrEmail
-        txtWin!!.text= UserDataRetrive.udrWins
-        txtLoose!!.text= UserDataRetrive.udrLosses
-        txtTotal!!.text= UserDataRetrive.udrPoints
-        Glide.with(this@ProfileFragment).load( UserDataRetrive.udrAvtar).into(imageView!!)
+        txtUname!!.text= PlayerData.udrUserName
+        txtEmail!!.text= PlayerData.udrEmail
+        txtWin!!.text= PlayerData.udrWins
+        txtLoose!!.text= PlayerData.udrLosses
+        txtTotal!!.text= PlayerData.udrPoints
+        Glide.with(this@ProfileFragment).load( PlayerData.udrAvtar).into(imageView!!)
 
         return view
     }
