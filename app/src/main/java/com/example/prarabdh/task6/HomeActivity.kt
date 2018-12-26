@@ -71,19 +71,18 @@ class HomeActivity : AppCompatActivity()
 
 
 
-        public override fun onStart() {
-            super.onStart()
-            // Check if user is signed in (non-null) and update UI accordingly.
-            val currentUser = auth.currentUser
-            updateUI(currentUser)
-
+    public override fun onStart() {
+        super.onStart()
+        // Check if user is signed in (non-null) and update UI accordingly.
+        val currentUser = auth.currentUser
+        updateUI(currentUser)
     }
 
-     fun updateUI(currentUser: FirebaseUser?) {
+    private fun updateUI(currentUser: FirebaseUser?) {
 
         if (currentUser == null)
         {
-          //If no user is logged in open sigin activity
+            //If no user is logged in open sigin activity
             startActivity(Intent(this@HomeActivity, SignInActivity::class.java))
 
         }
@@ -96,7 +95,7 @@ class HomeActivity : AppCompatActivity()
             database.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
 
-                   // val player= Player(uid)*****
+                   // val player = Player(uid)*****
 
                     UserDataRetrive.udrUserId=uid
                     UserDataRetrive.udrPoints= dataSnapshot.child("Total Points").value as String

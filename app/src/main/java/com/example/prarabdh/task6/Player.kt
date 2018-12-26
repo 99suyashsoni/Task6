@@ -26,7 +26,9 @@ class  Player(private var userId: String)
         val myRef = database.getReference("Users").child(userId)
 
         myRef.addValueEventListener(object : ValueEventListener {
+
             override fun onDataChange(dataSnapshot: DataSnapshot) {
+
                 points = dataSnapshot.child("Total Points").value as Int
                 email = dataSnapshot.child("Email-id").value as String
                 username = dataSnapshot.child("Username").value as String
@@ -34,7 +36,7 @@ class  Player(private var userId: String)
                 wins = dataSnapshot.child("Wins").value as Int
                 losses = dataSnapshot.child("Losses").value as Int
 
-// Disabled loops for retriving Achievements since they were causing OutOfMemory exception
+//                Disabled loops for retriving Achievements since they were causing OutOfMemory exception
 //                val x=dataSnapshot.child("Achivements").children
 //                var i=0;
 //                for (contact in x)
