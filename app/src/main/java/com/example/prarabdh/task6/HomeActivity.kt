@@ -89,11 +89,26 @@ class HomeActivity : AppCompatActivity()
         else
         {
             //if user is logged in  retrieve its data and save in static variables except Achievemets
-            val uid = currentUser.uid
+            //val uid = currentUser.uid
 
-            PlayerDataRetrieve().dataRetrieve(uid)
+          //  PlayerDataRetrieve().dataRetrieve(uid)
 
-            setSupportActionBar(findViewById(R.id.my_toolbar))
+            var uid = currentUser.uid
+            database = FirebaseDatabase.getInstance().getReference("Users").child(uid)
+            database.addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+                    // val player= Player(uid)*****
+
+                    PlayerData.udrUserId = uid
+                    PlayerData.udrPoints = dataSnapshot.child("Total Points").value as String
+                    PlayerData.udrEmail= dataSnapshot.child("Email-id").value as String
+                    PlayerData.udrUserName= dataSnapshot.child("Username").value as String
+                    PlayerData.udrAvtar= dataSnapshot.child("Avtar Img").value as String
+                    PlayerData.udrWins= dataSnapshot.child("Wins").value as String
+                    PlayerData.udrLosses= dataSnapshot.child("Losses").value as String
+
+                    setSupportActionBar(findViewById(R.id.my_toolbar))
 
             val imageView:ImageView = findViewById(R.id.imageView)
             Glide.with(this@HomeActivity).load( PlayerData.udrAvtar).into(imageView)
@@ -104,10 +119,18 @@ class HomeActivity : AppCompatActivity()
             val points:TextView = findViewById(R.id.textView7)
             points.text = PlayerData.udrPoints
 
+            val bottomNav: BottomNavigationView = findViewById(R.id.navigation)
             bottomNav.setOnNavigationItemSelectedListener(navListener)
 
             supportFragmentManager.beginTransaction().replace(R.id.homeFragment, HomeFragment()).commit()
             bottomNav.selectedItemId = navigation_home
+
+                }
+
+                override fun onCancelled(databaseError: DatabaseError) {
+                    println("The read failed: " + databaseError.code)
+                }
+            })
 
         }
 
