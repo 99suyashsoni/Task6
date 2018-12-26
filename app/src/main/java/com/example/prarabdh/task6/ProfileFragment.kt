@@ -21,6 +21,7 @@ class ProfileFragment: Fragment(){
     private var txtTotal: TextView? = null
     private var txtEmail: TextView? = null
     private var imageView: ImageView? = null
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.profile_fragment,container,false)
 //        val bottomNav: BottomNavigationView = HomeActivity().findViewById(R.id.navigation)
@@ -29,33 +30,35 @@ class ProfileFragment: Fragment(){
         auth = FirebaseAuth.getInstance()
 
         btnSignOut = view.findViewById(R.id.btnSignOut)
-        txtUname = view.findViewById(R.id.txtuname)
-        txtWin = view.findViewById(R.id.txtwin)
-        txtLoose = view.findViewById(R.id.txtloose)
-        txtTotal = view.findViewById(R.id.txttotal)
-
-        txtEmail = view.findViewById(R.id.txtemail)
-        imageView = view.findViewById(R.id.imageViewAvatar)
-       // SignOut not implemented perfectly after pressing signout close the app and then open again u will be logged out
-
         btnSignOut!!.setOnClickListener {
             signOut()
         }
 
+        txtUname = view.findViewById(R.id.txtuname)
         txtUname!!.text= PlayerData.udrUserName
-        txtEmail!!.text= PlayerData.udrEmail
-        txtWin!!.text= PlayerData.udrWins
-        txtLoose!!.text= PlayerData.udrLosses
-        txtTotal!!.text= PlayerData.udrPoints
-        Glide.with(this@ProfileFragment).load( PlayerData.udrAvtar).into(imageView!!)
 
+        txtWin = view.findViewById(R.id.txtwin)
+        txtWin!!.text= PlayerData.udrWins
+
+        txtLoose = view.findViewById(R.id.txtloose)
+        txtLoose!!.text= PlayerData.udrLosses
+
+        txtTotal = view.findViewById(R.id.txttotal)
+        txtTotal!!.text= PlayerData.udrPoints
+
+        txtEmail = view.findViewById(R.id.txtemail)
+        txtEmail!!.text= PlayerData.udrEmail
+
+        imageView = view.findViewById(R.id.imageViewAvatar)
+        Glide.with(this@ProfileFragment).load( PlayerData.udrAvtar).into(imageView!!)
+        // SignOut not implemented perfectly after pressing signout close the app and then open again u will be logged out
         return view
     }
 
 
     private fun signOut() {
         auth.signOut()
-       // startActivity(Intent(this@ProfileFragment, SignInActivity::class.java))
+        // startActivity(Intent(this@ProfileFragment, SignInActivity::class.java))
     }
 
 }

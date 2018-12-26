@@ -26,7 +26,7 @@ class HomeFragment: Fragment(){
     private val pointsToUnlock = intArrayOf(500,750,1000,1250,1500,2000,2500,3000,4000,6000)
 
     //private val playerPoints = player.points()
-    private val playerPoints = (PlayerData.udrPoints).toInt()
+    //private val playerPoints = (PlayerData.udrPoints).toInt()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -35,7 +35,7 @@ class HomeFragment: Fragment(){
 //        bottomNav.selectedItemId = navigation_home
 
         viewManager = GridLayoutManager(activity,2)
-        viewAdapter = MyAdapter(images, names, pointsToUnlock, playerPoints)
+        viewAdapter = MyAdapter(images, names, pointsToUnlock/*, playerPoints*/)
         recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView).apply {
 
             layoutManager = viewManager
