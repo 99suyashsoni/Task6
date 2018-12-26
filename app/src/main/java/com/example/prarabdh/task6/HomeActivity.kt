@@ -25,6 +25,7 @@ class HomeActivity : AppCompatActivity()
     private lateinit var auth: FirebaseAuth
     private lateinit var database: DatabaseReference
     private lateinit var  bottomNav: BottomNavigationView
+
     private val navListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
 
         var selectedFragment: Fragment
@@ -66,30 +67,6 @@ class HomeActivity : AppCompatActivity()
         setContentView(R.layout.activity_home_screen)
 
         auth = FirebaseAuth.getInstance()
-
-/// Suyash's  old code******************
-
-//        val imageView:ImageView = findViewById(R.id.imageView)
-//       // imageView.setImageResource(player.avatar())
-//
-//        val userName:TextView = findViewById(R.id.textView6)
-//        userName.text = player.userName()
-//
-//        val points:TextView = findViewById(R.id.textView7)
-//        points.text = player.points().toString()
-
-//        setSupportActionBar(findViewById(R.id.my_toolbar))
-
-//        val bottomNav: BottomNavigationView = findViewById(R.id.navigation)
-//        bottomNav.setOnNavigationItemSelectedListener(navListener)
-
-//        if (savedInstanceState == null) {
-//            supportFragmentManager.beginTransaction().replace(R.id.homeFragment, HomeFragment()).commit()
-//            bottomNav.selectedItemId = navigation_home
-//        }
-
-        ////********************
-
     }
 
 
@@ -113,41 +90,38 @@ class HomeActivity : AppCompatActivity()
         else
         {
             //if user is logged in  retrieve its data and save in static variables except Achievemets
-           var uid = currentUser.uid
-           database = FirebaseDatabase.getInstance().getReference("Users").child(uid)
-           database.addValueEventListener(object : ValueEventListener {
+            val uid = currentUser.uid
+
+            database = FirebaseDatabase.getInstance().getReference("Users").child(uid)
+            database.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
 
                    // val player= Player(uid)*****
 
                     UserDataRetrive.udrUserId=uid
-                    UserDataRetrive.udrPoints= dataSnapshot.child("Total Points").getValue() as String
-                    UserDataRetrive.udrEmail= dataSnapshot.child("Email-id").getValue() as String
-                    UserDataRetrive.udrUserName= dataSnapshot.child("Username").getValue() as String
-                    UserDataRetrive.udrAvtar= dataSnapshot.child("Avtar Img").getValue() as String
-                    UserDataRetrive.udrWins= dataSnapshot.child("Wins").getValue() as String
-                    UserDataRetrive.udrLosses= dataSnapshot.child("Losses").getValue() as String
+                    UserDataRetrive.udrPoints= dataSnapshot.child("Total Points").value as String
+                    UserDataRetrive.udrEmail= dataSnapshot.child("Email-id").value as String
+                    UserDataRetrive.udrUserName= dataSnapshot.child("Username").value as String
+                    UserDataRetrive.udrAvtar= dataSnapshot.child("Avtar Img").value as String
+                    UserDataRetrive.udrWins= dataSnapshot.child("Wins").value as String
+                    UserDataRetrive.udrLosses= dataSnapshot.child("Losses").value as String
 
-                  setSupportActionBar(findViewById(R.id.my_toolbar))
+                    setSupportActionBar(findViewById(R.id.my_toolbar))
 
-                   val imageView:ImageView = findViewById(R.id.imageView)
-                   Glide.with(this@HomeActivity).load( UserDataRetrive.udrAvtar).into(imageView)
-                   // imageView.setImageResource(player.avatar())
+                    val imageView:ImageView = findViewById(R.id.imageView)
+                    Glide.with(this@HomeActivity).load( UserDataRetrive.udrAvtar).into(imageView)
+                    // imageView.setImageResource(player.avatar())
 
-                   val userName:TextView = findViewById(R.id.textView6)
-                   userName.text = UserDataRetrive.udrUserName
+                    val userName:TextView = findViewById(R.id.textView6)
+                    userName.text = UserDataRetrive.udrUserName
 
-                   val points:TextView = findViewById(R.id.textView7)
-                   points.text = UserDataRetrive.udrPoints
+                    val points:TextView = findViewById(R.id.textView7)
+                    points.text = UserDataRetrive.udrPoints
 
-                    val bottomNav: BottomNavigationView = findViewById(R.id.navigation)
                     bottomNav.setOnNavigationItemSelectedListener(navListener)
-
 
                     supportFragmentManager.beginTransaction().replace(R.id.homeFragment, HomeFragment()).commit()
                     bottomNav.selectedItemId = navigation_home
-
-
                }
 
                 override fun onCancelled(databaseError: DatabaseError) {

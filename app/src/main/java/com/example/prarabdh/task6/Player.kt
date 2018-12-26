@@ -6,14 +6,13 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
-class  Player(userid: String)
+class  Player(private var userId: String)
 {
     // No Longer Need this class
-    val Userid=userid
     var points=0
     var email=""
     var username=""
-    var avtar=""
+    var avatar=""
     var wins=0
     var losses=0
 //    var NUMBER_OF_ACHIVEMENTS=R.integer.Number_of_Achivements
@@ -24,15 +23,16 @@ class  Player(userid: String)
     fun Player()
     {
         val database = FirebaseDatabase.getInstance()
-        val myRef = database.getReference("Users").child(Userid)
+        val myRef = database.getReference("Users").child(userId)
+
         myRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                points = dataSnapshot.child("Total Points").getValue() as Int
-                email = dataSnapshot.child("Email-id").getValue() as String
-                username = dataSnapshot.child("Username").getValue() as String
-                avtar = dataSnapshot.child("Avtar Img").getValue() as String
-                wins = dataSnapshot.child("Wins").getValue() as Int
-                losses = dataSnapshot.child("Losses").getValue() as Int
+                points = dataSnapshot.child("Total Points").value as Int
+                email = dataSnapshot.child("Email-id").value as String
+                username = dataSnapshot.child("Username").value as String
+                avatar = dataSnapshot.child("Avtar Img").value as String
+                wins = dataSnapshot.child("Wins").value as Int
+                losses = dataSnapshot.child("Losses").value as Int
 
 // Disabled loops for retriving Achievements since they were causing OutOfMemory exception
 //                val x=dataSnapshot.child("Achivements").children
@@ -64,7 +64,7 @@ class  Player(userid: String)
     fun avatar(): String
     {
 
-        val avatarImage = avtar //Retrieve from firebase
+        val avatarImage = avatar //Retrieve from firebase
         return avatarImage
     }
 
