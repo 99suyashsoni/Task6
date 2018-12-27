@@ -8,6 +8,7 @@ import com.google.firebase.database.ValueEventListener
 internal class  DataRetrieve {
 
     val database = FirebaseDatabase.getInstance()
+    
     fun playerDataRetrieve(uId: String) {
 
         val ref1 = database.getReference("Users").child(uId)
