@@ -34,7 +34,7 @@ public class ScoreFragment extends Fragment {
      public ScoreFragment(){
          Glide.with(Objects.requireNonNull(getContext()))
               .asBitmap()
-              .load(UserDataRetrive.udrAvtar)
+              .load(PlayerData.udrAvtar)
               .into(avtar);
      }
 
@@ -69,7 +69,7 @@ public class ScoreFragment extends Fragment {
                 for (DataSnapshot Category : allCategory) {
                     unlock = Objects.requireNonNull(Category.child("Unlock points").getValue()).toString();
                     int val=FinalScore.compareTo(unlock);
-                    int val2=unlock.compareTo(UserDataRetrive.udrPoints);
+                    int val2=unlock.compareTo(PlayerData.udrPoints);
                     if((val>=0)&&(val2>0)){
                         nImages.add(Objects.requireNonNull(Category.child("Images").getValue()).toString());
                         ncategories.add(Objects.requireNonNull(Category.getValue()).toString());

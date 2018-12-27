@@ -1,6 +1,6 @@
 package com.example.prarabdh.task6;
 
-public  class UserDataRetrive {
+public  class PlayerData {
 
     public static String udrUserId="";
     public static String udrPoints="";
