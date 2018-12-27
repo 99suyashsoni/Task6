@@ -38,9 +38,9 @@ class MyAdapter(private val images: IntArray, private val names: Array<String>, 
             if (playerPoints >= pointsToUnlock[position])
             {
                 Log.i("Button", "This quiz is unlocked")
-//                DataRetrieve().gameDescData(names[position])
-//                GameDescData.background = images[position]
-//                GameDescData.heading = names[position]
+                //DataRetrieve().gameDescData(names[position])
+                GameDescData.background = images[position]
+                GameDescData.heading = names[position]
                 activity.supportFragmentManager.beginTransaction().replace(R.id.homeFragment, GameDesc()).addToBackStack(null).commit()
             }
             else
