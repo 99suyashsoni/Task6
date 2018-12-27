@@ -41,7 +41,7 @@ class MyAdapter(private val images: IntArray, private val names: Array<String>, 
 //                DataRetrieve().gameDescData(names[position])
 //                GameDescData.background = images[position]
 //                GameDescData.heading = names[position]
-//                activity.supportFragmentManager.beginTransaction().replace(R.id.homeFragment, GameDesc()).addToBackStack(null).commit()
+                activity.supportFragmentManager.beginTransaction().replace(R.id.homeFragment, GameDesc()).addToBackStack(null).commit()
             }
             else
             {
