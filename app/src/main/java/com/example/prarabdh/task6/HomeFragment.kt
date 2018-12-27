@@ -19,7 +19,7 @@ class HomeFragment: Fragment(){
 
     private val names= arrayOf("Game 1", "Game 2", "Game 3", "Game 4", "Game 5", "Game 6", "Game 7", "Game 8", "Game 9", "Game 10")
 
-    private val pointsToUnlock = intArrayOf(500,750,1000,1250,1500,2000,2500,3000,4000,6000)
+    private val pointsToUnlock = intArrayOf(0,0,0,100,200,500,1000,1500,2000,4000)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
