@@ -7,10 +7,11 @@ import com.google.firebase.database.ValueEventListener
 
 internal class  DataRetrieve {
 
+    val database = FirebaseDatabase.getInstance()
     fun playerDataRetrieve(uId: String) {
 
-        val database = FirebaseDatabase.getInstance().getReference("Users").child(uId)
-        database.addValueEventListener(object : ValueEventListener {
+        val ref1 = database.getReference("Users").child(uId)
+        ref1.addValueEventListener(object : ValueEventListener {
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
 
@@ -32,8 +33,8 @@ internal class  DataRetrieve {
 
     fun gameDescData(gameName: String){
 
-        val database = FirebaseDatabase.getInstance().getReference("Categories").child(gameName)
-        database.addValueEventListener(object : ValueEventListener{
+        val ref2 = database.getReference("Categories").child(gameName)
+        ref2.addValueEventListener(object : ValueEventListener{
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
 
