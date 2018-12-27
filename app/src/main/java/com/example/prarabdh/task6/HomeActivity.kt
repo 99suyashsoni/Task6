@@ -93,7 +93,7 @@ class HomeActivity : AppCompatActivity()
             //if user is logged in  retrieve its data and save in static variables except Achievemets
             val uid = currentUser.uid
 
-            PlayerDataRetrieve().dataRetrieve(uid)
+            DataRetrieve().playerDataRetrieve(uid)
 
             setSupportActionBar(findViewById(R.id.my_toolbar))
 

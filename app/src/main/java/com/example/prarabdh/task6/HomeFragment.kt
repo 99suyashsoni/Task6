@@ -11,7 +11,7 @@ import android.view.ViewGroup
 class HomeFragment: Fragment(){
 //No Longer need them since using static variables
 // private val email = "Retrieve from firebase"
-//  private val player= PlayerDataRetrieve(email)
+//  private val player= DataRetrieve(email)
 
 
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
