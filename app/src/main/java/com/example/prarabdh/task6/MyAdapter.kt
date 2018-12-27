@@ -1,5 +1,6 @@
 package com.example.prarabdh.task6
 
+import android.app.Activity
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
@@ -36,7 +37,6 @@ class MyAdapter(private val images: IntArray, private val names: Array<String>, 
 
             Log.i("Button Check","Button Click Works")
             //HomeActivity().supportFragmentManager.beginTransaction().replace(R.id.homeFragment, GameDesc()).addToBackStack(null).commit()
-
         }
     }
 }

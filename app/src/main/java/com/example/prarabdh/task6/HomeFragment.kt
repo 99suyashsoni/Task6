@@ -10,8 +10,8 @@ import android.view.ViewGroup
 
 class HomeFragment: Fragment(){
 //No Longer need them since using static variables
-   // private val email = "Retrieve from firebase"
- //  private val player= PlayerDataRetrieve(email)
+// private val email = "Retrieve from firebase"
+//  private val player= PlayerDataRetrieve(email)
 
 
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
@@ -25,8 +25,8 @@ class HomeFragment: Fragment(){
 
     private val pointsToUnlock = intArrayOf(500,750,1000,1250,1500,2000,2500,3000,4000,6000)
 
-    //private val playerPoints = player.points()
-    //private val playerPoints = (PlayerData.udrPoints).toInt()
+
+    //private val playerPoints:Int = PlayerData.udrPoints.toInt()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
