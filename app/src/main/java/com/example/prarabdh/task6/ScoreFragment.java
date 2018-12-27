@@ -1,9 +1,7 @@
 package com.example.prarabdh.task6;
 
 import android.content.Context;
-import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,8 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-
+import com.bumptech.glide.Glide;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,6 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class ScoreFragment extends Fragment {
     public ArrayList<String > nImages=new ArrayList<>();
@@ -31,21 +29,20 @@ public class ScoreFragment extends Fragment {
     TextView head,middle,score;
     Button replay;
     RecyclerView recyclerView;
-    ImageView avtar;
-    public ArrayList<String> acateg=new ArrayList<>();
-    public ArrayList<String> nUnlockPoints=new ArrayList<>();
-    private FirebaseDatabase firebaseDatabase;
-    private DatabaseReference databaseReference;
+    private ImageView avtar;
+    String FinalScore,unlock;
      public ScoreFragment(){
-         //required empty public constructor
+         Glide.with(Objects.requireNonNull(getContext()))
+              .asBitmap()
+              .load(UserDataRetrive.udrAvtar)
+              .into(avtar);
      }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View view=inflater.inflate(R.layout.fragment_score, container, false);
         // Inflate the layout for this fragment
-        return view;
+        return inflater.inflate(R.layout.fragment_score, container, false);
     }
 
     @Override
@@ -63,14 +60,20 @@ public class ScoreFragment extends Fragment {
     public void onStart() {
 
         super.onStart();
-        firebaseDatabase=FirebaseDatabase.getInstance();
-        databaseReference= firebaseDatabase.getReference("Categories");
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = firebaseDatabase.getReference("Categories");
+         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Iterable<DataSnapshot> allCategory=dataSnapshot.getChildren();
-                for(DataSnapshot Category:allCategory ){
-
+                Iterable<DataSnapshot> allCategory = dataSnapshot.getChildren();
+                for (DataSnapshot Category : allCategory) {
+                    unlock = Objects.requireNonNull(Category.child("Unlock points").getValue()).toString();
+                    int val=FinalScore.compareTo(unlock);
+                    int val2=unlock.compareTo(UserDataRetrive.udrPoints);
+                    if((val>=0)&&(val2>0)){
+                        nImages.add(Objects.requireNonNull(Category.child("Images").getValue()).toString());
+                        ncategories.add(Objects.requireNonNull(Category.getValue()).toString());
+                    }
                 }
             }
 
@@ -79,6 +82,7 @@ public class ScoreFragment extends Fragment {
 
             }
         });
+         initiate();
     }
 
     public void initiate(){

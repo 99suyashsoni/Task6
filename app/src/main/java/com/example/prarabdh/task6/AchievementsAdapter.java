@@ -16,8 +16,8 @@ import java.util.ArrayList;
 
 public class AchievementsAdapter extends RecyclerView.Adapter<AchievementsAdapter.ViewHolder>{
      private Context context;
-     private ArrayList<String> categories=new ArrayList<>();
-     private ArrayList<String> images= new ArrayList<>();
+     private ArrayList<String> categories;
+     private ArrayList<String> images;
      AchievementsAdapter(Context ncontext, ArrayList<String> ncategories, ArrayList<String> nimages){
          context=ncontext;
          categories=ncategories;
@@ -46,11 +46,11 @@ public class AchievementsAdapter extends RecyclerView.Adapter<AchievementsAdapte
         return categories.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+     class ViewHolder extends RecyclerView.ViewHolder {
         CardView parent;
         ImageView imageView;
         TextView textView;
-        public ViewHolder(@NonNull View itemView) {
+        ViewHolder(@NonNull View itemView) {
             super(itemView);
             parent=itemView.findViewById(R.id.cardView);
             imageView=itemView.findViewById(R.id.imageView3);
