@@ -33,9 +33,9 @@ class HomeFragment: Fragment(){
         val view = inflater.inflate(R.layout.home_fragment,container,false)
 //        val bottomNav: BottomNavigationView = HomeActivity().findViewById(R.id.navigation)
 //        bottomNav.selectedItemId = navigation_home
-
+        val playerPoints = 700    //Used for checking
         viewManager = GridLayoutManager(activity,2)
-        viewAdapter = MyAdapter(images, names, pointsToUnlock/*, playerPoints*/)
+        viewAdapter = MyAdapter(images, names, pointsToUnlock, playerPoints)
         recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView).apply {
 
             layoutManager = viewManager

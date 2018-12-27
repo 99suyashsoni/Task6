@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 
 
-class MyAdapter(private val images: IntArray, private val names: Array<String>, private val pointsToUnlock: IntArray/*, private val playerPoints: Int*/): RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
+class MyAdapter(private val images: IntArray, private val names: Array<String>, private val pointsToUnlock: IntArray, private val playerPoints: Int): RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
 
     //private val gameDesc = GameDesc()
 
@@ -32,11 +32,21 @@ class MyAdapter(private val images: IntArray, private val names: Array<String>, 
 
         holder.button.setBackgroundResource(images[position])
         holder.button.text = names[position]
-        //holder.button.isClickable = (playerPoints >= pointsToUnlock[position])
         holder.button.setOnClickListener {
 
-            Log.i("Button Check","Button Click Works")
-            //HomeActivity().supportFragmentManager.beginTransaction().replace(R.id.homeFragment, GameDesc()).addToBackStack(null).commit()
+            if (playerPoints >= pointsToUnlock[position])
+            {
+                Log.i("Button", "This quiz is unlocked")
+//                    DataRetrieve().gameDescData(names[position])
+//                    GameDescData.background = images[position]
+//                    GameDescData.heading = names[position]
+//                    Log.i("Button Check","Button Click Works")
+//                    HomeActivity().supportFragmentManager.beginTransaction().replace(R.id.homeFragment, GameDesc()).addToBackStack(null).commit()
+            }
+            else
+            {
+                Log.i("Button","This quiz is locked")
+            }
         }
     }
 }
