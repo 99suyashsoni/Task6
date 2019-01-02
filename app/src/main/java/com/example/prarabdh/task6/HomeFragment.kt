@@ -9,10 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 
 class HomeFragment: Fragment(){
-//No Longer need them since using static variables
-   // private val email = "Retrieve from firebase"
- //  private val player= PlayerDataRetrieve(email)
-
 
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
@@ -23,10 +19,7 @@ class HomeFragment: Fragment(){
 
     private val names= arrayOf("Game 1", "Game 2", "Game 3", "Game 4", "Game 5", "Game 6", "Game 7", "Game 8", "Game 9", "Game 10")
 
-    private val pointsToUnlock = intArrayOf(500,750,1000,1250,1500,2000,2500,3000,4000,6000)
-
-    //private val playerPoints = player.points()
-    //private val playerPoints = (PlayerData.udrPoints).toInt()
+    private val pointsToUnlock = intArrayOf(0,0,0,100,200,500,1000,1500,2000,4000)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -34,8 +27,10 @@ class HomeFragment: Fragment(){
 //        val bottomNav: BottomNavigationView = HomeActivity().findViewById(R.id.navigation)
 //        bottomNav.selectedItemId = navigation_home
 
-        viewManager = GridLayoutManager(activity,2)
-        viewAdapter = MyAdapter(images, names, pointsToUnlock/*, playerPoints*/)
+        val playerPoints = 1000//PlayerData.udrPoints.toInt()
+
+        viewManager = GridLayoutManager(activity!!,2)
+        viewAdapter = MyAdapter(images, names, pointsToUnlock, playerPoints, activity!!)
         recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView).apply {
 
             layoutManager = viewManager

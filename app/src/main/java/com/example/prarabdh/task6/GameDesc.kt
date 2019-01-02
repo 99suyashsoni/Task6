@@ -23,11 +23,9 @@ class GameDesc: Fragment(){
         gameName = view.findViewById(R.id.textView8)
         gameDescription = view.findViewById(R.id.textView9)
 
-        gameName!!.text = "Game 1"
-        gameDescription!!.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore " +
-                             "magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
-
-        view.setBackgroundResource(R.drawable.blue_wall)
+        gameName!!.text = GameDescData.heading
+        gameDescription!!.text = GameDescData.description
+        view.setBackgroundResource(GameDescData.background)
 
         singlePlayer!!.setOnClickListener {
 

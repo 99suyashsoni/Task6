@@ -5,12 +5,14 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
-internal class  PlayerDataRetrieve {
+internal class  DataRetrieve {
 
-    fun dataRetrieve(uId: String) {
+    val database = FirebaseDatabase.getInstance()
+    
+    fun playerDataRetrieve(uId: String) {
 
-        val database = FirebaseDatabase.getInstance().getReference("Users").child(uId)
-        database.addValueEventListener(object : ValueEventListener {
+        val ref1 = database.getReference("Users").child(uId)
+        ref1.addValueEventListener(object : ValueEventListener {
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
 
@@ -28,5 +30,21 @@ internal class  PlayerDataRetrieve {
             }
         })
 
+    }
+
+    fun gameDescData(gameName: String){
+
+        val ref2 = database.getReference("Categories").child(gameName)
+        ref2.addValueEventListener(object : ValueEventListener{
+
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+                GameDescData.description = dataSnapshot.child("Description").value as String
+            }
+
+            override fun onCancelled(p0: DatabaseError) {
+
+            }
+        })
     }
 }

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.constraint.motion.MotionLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -32,7 +33,7 @@ import java.util.ArrayList;
 public class Countdown extends Fragment 
 {
 
-    MotionLayout motionLayout;
+    ConstraintLayout motionLayout;
     TextView textView1;
     TextView textView2;
     TextView textView3;

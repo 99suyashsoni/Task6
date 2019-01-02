@@ -1,5 +1,6 @@
 package com.example.prarabdh.task6
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -58,7 +59,7 @@ class ProfileFragment: Fragment(){
 
     private fun signOut() {
         auth.signOut()
-        // startActivity(Intent(this@ProfileFragment, SignInActivity::class.java))
+        startActivity(Intent(activity, SignInActivity::class.java))
     }
 
 }

@@ -38,7 +38,7 @@ public class FragmentMainQuiz extends Fragment
     MediaPlayer mediaPlayerBackground;
     MediaPlayer mediaPlayerCorrect;
     MediaPlayer mediaPlayerWrong;
-    int NUMBER_OF_QUESTIONS_PER_ROUND = getResources().getInteger(R.integer.Number_Of_Rounds_Per_Match); //Stores the number of Questions the user will play per round of the quiz
+    int NUMBER_OF_QUESTIONS_PER_ROUND ; //Stores the number of Questions the user will play per round of the quiz
     final String CATEGORY = "Cricket";           //Stores the category user has selected for playing
     int askedQuestionIndices[] = new int[NUMBER_OF_QUESTIONS_TOTAL];//Stores the indices of the questions already asked to the user in this round
     int i = 1;                                   //Stores the number of questions asked in this particular round
@@ -100,6 +100,8 @@ public class FragmentMainQuiz extends Fragment
         {
             askedQuestionIndices[b]=Integer.MAX_VALUE;
         }
+
+        NUMBER_OF_QUESTIONS_PER_ROUND= getResources().getInteger(R.integer.Number_Of_Rounds_Per_Match);
 
         //Starting the progressBar and display of the first question
 
@@ -206,6 +208,7 @@ public class FragmentMainQuiz extends Fragment
     //This function is called whenever a new question is to be displayed on the screen
     public void newQuestion()
     {
+        mediaPlayerBackground.start();
         currentRandom = Random();
         askedQuestionIndices[i-1] = currentRandom;
         question.setText(arrayList.get(currentRandom).getQuestion());
