@@ -87,8 +87,9 @@ public class ScoreFragment extends Fragment {
 
     public void initiate(){
          AchievementsAdapter adapter=new AchievementsAdapter(getContext(),ncategories,nImages);
-        recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
+        recyclerView.setAdapter(adapter);
+
     }
     @Override
     public void onAttach(final Context context)

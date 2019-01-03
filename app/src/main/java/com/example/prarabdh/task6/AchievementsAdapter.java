@@ -47,12 +47,11 @@ public class AchievementsAdapter extends RecyclerView.Adapter<AchievementsAdapte
     }
 
      class ViewHolder extends RecyclerView.ViewHolder {
-        CardView parent;
+
         ImageView imageView;
         TextView textView;
         ViewHolder(@NonNull View itemView) {
             super(itemView);
-            parent=itemView.findViewById(R.id.cardView);
             imageView=itemView.findViewById(R.id.imageView3);
             textView=itemView.findViewById(R.id.textView11);
         }
