@@ -1,5 +1,6 @@
 package com.example.prarabdh.task6;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -23,6 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Objects;
 
+@SuppressLint("ValidFragment")
 public class ScoreFragment extends Fragment {
     public ArrayList<String > nImages=new ArrayList<>();
     public ArrayList<String> ncategories=new ArrayList<>();
@@ -30,12 +32,11 @@ public class ScoreFragment extends Fragment {
     Button replay;
     RecyclerView recyclerView;
     private ImageView avtar;
-    String FinalScore,unlock;
-     public ScoreFragment(){
-         Glide.with(Objects.requireNonNull(getContext()))
-              .asBitmap()
-              .load(PlayerData.udrAvtar)
-              .into(avtar);
+    int FinalScore,unlock;
+     @SuppressLint("ValidFragment")
+     public ScoreFragment(int x)
+     {
+         FinalScore=x;
      }
 
     @Override
@@ -60,6 +61,12 @@ public class ScoreFragment extends Fragment {
     public void onStart() {
 
         super.onStart();
+
+        Glide.with(Objects.requireNonNull(getContext()))
+                .asBitmap()
+                .load(PlayerData.udrAvtar)
+                .into(avtar);
+
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = firebaseDatabase.getReference("Categories");
          databaseReference.addValueEventListener(new ValueEventListener() {
@@ -67,10 +74,11 @@ public class ScoreFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Iterable<DataSnapshot> allCategory = dataSnapshot.getChildren();
                 for (DataSnapshot Category : allCategory) {
-                    unlock = Objects.requireNonNull(Category.child("Unlock points").getValue()).toString();
-                    int val=FinalScore.compareTo(unlock);
-                    int val2=unlock.compareTo(PlayerData.udrPoints);
-                    if((val>=0)&&(val2>0)){
+                    unlock = Integer.parseInt(Objects.requireNonNull(Category.child("Unlock points").getValue()).toString());
+                    int val=FinalScore-unlock;
+                    int val2=unlock-Integer.parseInt(PlayerData.udrPoints);
+                    if((val>=0)&&(val2>0))
+                    {
                         nImages.add(Objects.requireNonNull(Category.child("Images").getValue()).toString());
                         ncategories.add(Objects.requireNonNull(Category.getValue()).toString());
                     }
