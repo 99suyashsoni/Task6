@@ -1,5 +1,6 @@
 package com.example.prarabdh.task6;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.media.MediaPlayer;
@@ -30,7 +31,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 
-public class Countdown extends Fragment 
+@SuppressLint("ValidFragment")
+public class Countdown extends Fragment
 {
 
     ConstraintLayout motionLayout;
@@ -38,12 +40,13 @@ public class Countdown extends Fragment
     TextView textView2;
     TextView textView3;
     ArrayList<QuestionModel> arrayList=new ArrayList<>();
-    String CATEGORY="Cricket";
+    String CATEGORY;
 
     
-    public Countdown()
+    @SuppressLint("ValidFragment")
+    public Countdown(String CATEGORY)
     {
-        // Required empty public constructor
+        this.CATEGORY=CATEGORY;
     }
     
     @Override
@@ -133,7 +136,7 @@ public class Countdown extends Fragment
 
                                 mediaPlayer.stop();
                                 textView1.setTextColor(getResources().getColor(R.color.DefaultBackground));
-                                FragmentMainQuiz fragmentMainQuiz=new FragmentMainQuiz(arrayList);
+                                FragmentMainQuiz fragmentMainQuiz=new FragmentMainQuiz(arrayList,CATEGORY);
                                 FragmentManager fragmentManager=getFragmentManager();
                                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                                 fragmentTransaction.add(R.id.homeFragment, fragmentMainQuiz);
