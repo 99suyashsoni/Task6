@@ -5,9 +5,12 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.CountDownTimer;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,8 +41,8 @@ public class FragmentMainQuiz extends Fragment
     MediaPlayer mediaPlayerBackground;
     MediaPlayer mediaPlayerCorrect;
     MediaPlayer mediaPlayerWrong;
-    int NUMBER_OF_QUESTIONS_PER_ROUND = getResources().getInteger(R.integer.Number_Of_Rounds_Per_Match); //Stores the number of Questions the user will play per round of the quiz
-    final String CATEGORY = "Cricket";           //Stores the category user has selected for playing
+    int NUMBER_OF_QUESTIONS_PER_ROUND ; //Stores the number of Questions the user will play per round of the quiz
+    String CATEGORY;           //Stores the category user has selected for playing
     int askedQuestionIndices[] = new int[NUMBER_OF_QUESTIONS_TOTAL];//Stores the indices of the questions already asked to the user in this round
     int i = 1;                                   //Stores the number of questions asked in this particular round
     ArrayList<QuestionModel> arrayList;  //Array to store all questions available in that category in the form of QuestionModel objects
@@ -90,6 +93,8 @@ public class FragmentMainQuiz extends Fragment
     {
         super.onStart();
 
+        points = Integer.parseInt(PlayerData.udrPoints);
+
         //Assigning songs to the various mediaPlayer objects so that they can be played as and when required
         mediaPlayerBackground=MediaPlayer.create(getContext(),R.raw.main_quiz_background);
         mediaPlayerWrong=MediaPlayer.create(getContext(),R.raw.wrong_answer );
@@ -100,6 +105,8 @@ public class FragmentMainQuiz extends Fragment
         {
             askedQuestionIndices[b]=Integer.MAX_VALUE;
         }
+
+        NUMBER_OF_QUESTIONS_PER_ROUND= getResources().getInteger(R.integer.Number_Of_Rounds_Per_Match);
 
         //Starting the progressBar and display of the first question
 
@@ -115,8 +122,9 @@ public class FragmentMainQuiz extends Fragment
 
     //Default Constructor for the fragment that receives array list of questionModels from the Countdown Fragment
     @SuppressLint("ValidFragment")
-    public FragmentMainQuiz(ArrayList<QuestionModel> list) {
+    public FragmentMainQuiz(ArrayList<QuestionModel> list, String CATEGORY) {
         arrayList=list;
+        this.CATEGORY=CATEGORY;
     }
 
     @Override
@@ -182,6 +190,11 @@ public class FragmentMainQuiz extends Fragment
                         newQuestion();
                         Progress();
                     }
+                    else
+                    {
+                        endQuestions();
+                        //resetButtons();
+                    }
 
                 }
             }
@@ -206,6 +219,7 @@ public class FragmentMainQuiz extends Fragment
     //This function is called whenever a new question is to be displayed on the screen
     public void newQuestion()
     {
+        mediaPlayerBackground.start();
         currentRandom = Random();
         askedQuestionIndices[i-1] = currentRandom;
         question.setText(arrayList.get(currentRandom).getQuestion());
@@ -305,7 +319,8 @@ public class FragmentMainQuiz extends Fragment
                     }
                     else
                     {
-                        Toast.makeText(getContext(),"Game Over\nScore"+points ,Toast.LENGTH_LONG ).show();
+                        endQuestions();
+                        //Toast.makeText(getContext(),"Game Over\nScore"+points ,Toast.LENGTH_LONG ).show();
                     }
                 }
 
@@ -325,6 +340,16 @@ public class FragmentMainQuiz extends Fragment
         mediaPlayerBackground.release();
         mediaPlayerCorrect.release();
         mediaPlayerWrong.release();
+    }
+
+
+    public void endQuestions()
+    {
+        ScoreFragment fragmentMainQuiz=new ScoreFragment(points);
+        FragmentManager fragmentManager=getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.homeFragment, fragmentMainQuiz);
+        fragmentTransaction.commit();
     }
 
 

@@ -28,6 +28,8 @@ class GameDesc: Fragment(){
         view.setBackgroundResource(GameDescData.background)
 
         singlePlayer!!.setOnClickListener {
+            gameName!!.setText("Cricket")
+            activity?.supportFragmentManager?.beginTransaction()!!.replace(R.id.homeFragment, Countdown(gameName!!.text as String?)).commit()
 
         }
 
