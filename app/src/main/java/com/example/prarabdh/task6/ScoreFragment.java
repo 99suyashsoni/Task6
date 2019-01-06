@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,11 +33,13 @@ public class ScoreFragment extends Fragment {
     Button replay;
     RecyclerView recyclerView;
     private ImageView avtar;
-    int FinalScore,unlock;
+    int FinalScore,unlock,count=0;
+    int val,val2;
      @SuppressLint("ValidFragment")
      public ScoreFragment(int x)
      {
          FinalScore=x;
+         Log.d("FinalScore", String.valueOf(FinalScore));
      }
 
     @Override
@@ -75,13 +78,16 @@ public class ScoreFragment extends Fragment {
                 Iterable<DataSnapshot> allCategory = dataSnapshot.getChildren();
                 for (DataSnapshot Category : allCategory) {
                     unlock = Integer.parseInt(Objects.requireNonNull(Category.child("Unlock points").getValue()).toString());
-                    int val=FinalScore-unlock;
-                    int val2=unlock-Integer.parseInt(PlayerData.udrPoints);
-                    if((val>=0)&&(val2>0))
+                    val=FinalScore-unlock;
+                    val2=unlock-Integer.parseInt(PlayerData.udrPoints);
+                    Log.d("valuecheck", String.valueOf(val2));
+                    if((val>=0))
                     {
+                        count++;
                         nImages.add(Objects.requireNonNull(Category.child("Images").getValue()).toString());
                         ncategories.add(Objects.requireNonNull(Category.getValue()).toString());
                     }
+
                 }
             }
 
@@ -92,11 +98,11 @@ public class ScoreFragment extends Fragment {
         });
          initiate();
     }
-
     public void initiate(){
+        Log.d("initiate", String.valueOf(count));
          AchievementsAdapter adapter=new AchievementsAdapter(getContext(),ncategories,nImages);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
         recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
 
     }
     @Override

@@ -11,6 +11,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -133,7 +134,6 @@ public class FragmentMainQuiz extends Fragment
         // Inflate the layout for this fragment
         View view=inflater.inflate(R.layout.fragment_fragment_main_quiz, container, false);
         Progress();
-        // Inflate the layout for this fragment
         return view;
     }
 
@@ -264,8 +264,8 @@ public class FragmentMainQuiz extends Fragment
                 textView.setBackgroundColor(0xFF00FF00);
                 mediaPlayerCorrect.seekTo(2000);
                 mediaPlayerCorrect.start();
-                points+=1;
-                correct+=1;
+                points++;
+                corect+=1;
             }
             else    //The answer is wrong
             {
@@ -345,6 +345,7 @@ public class FragmentMainQuiz extends Fragment
 
     public void endQuestions()
     {
+        Log.d("points", String.valueOf(points));
         ScoreFragment fragmentMainQuiz=new ScoreFragment(points);
         FragmentManager fragmentManager=getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
