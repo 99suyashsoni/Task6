@@ -52,7 +52,7 @@ class ProfileFragment: Fragment(){
 
         imageView = view.findViewById(R.id.imageViewAvatar)
         Glide.with(this@ProfileFragment).load( PlayerData.udrAvtar).into(imageView!!)
-        // SignOut not implemented perfectly after pressing signout close the app and then open again u will be logged out
+
         return view
     }
 

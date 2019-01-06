@@ -127,14 +127,14 @@ public class SignUpActivity extends AppCompatActivity {
                     {
                         int i = 0;
                         for(DataSnapshot dsp:dataSnapshot.getChildren()){
-                           String uname=dsp.child("Username").getValue().toString();
+                            String uname=dsp.child("Username").getValue().toString();
                             // UserR userR = dsp.getValue(UserR.class);
                             if(editTextUserName.getText().toString().equals(uname)){
 
                                 Toast.makeText(SignUpActivity.this,"Username already taken",Toast.LENGTH_LONG).show();
-                                editTextPassword.setText("");
+
                                 editTextUserName.setText("");
-                                editTextEmail.setText("");
+
                                 editTextUserName.setHint("Choose different username");
                                 i = 1;
                                 break;
