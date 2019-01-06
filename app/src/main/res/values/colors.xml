@@ -8,6 +8,7 @@
     <color name="CorrectAnswer">#00FF00</color>
     <color name="WrongAnswer">#FF0000</color>
     <color name="navItem">#ffffff</color>
+    <color name="leaderboard">#043D84</color>
     <color name="DefaultBackground">#00FFFFFF</color>  <!--Transparent Colour-->
     <color name="CountdownColour">#EFBF0404</color>
     <color name="CountdownColourTransparent">#00BF0404</color>
