@@ -11,6 +11,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -148,57 +149,70 @@ public class FragmentMainQuiz extends Fragment
             @Override
             public void run()
             {
-                while (status>0){
-                    status -= 1;
-                    // Update the progress bar
-                    handler.post(new Runnable() {
-                        public void run()
+                try {
+                    while (status>0)
+                    {
+                        if(Thread.interrupted())
                         {
-                            if(val)
-                            {
-                                progressBar.setProgress(status);
-                            }
-                            else
-                                {
-                                new CountDownTimer(800,1000)
-                                {          //pauses the progress bar if the user clicks an option
-
-                                    @Override
-                                    public void onFinish()
-                                    {
-                                        val=true;
-                                        status=100;
-                                        progressBar.setProgress(status);
-                                    }
-                                    @Override
-                                    public void onTick(long l) { }
-                                }.start();
-                            }
+                            throw new InterruptedException();
                         }
-                    });
-                    try {
-                        // Sleep for 300 milliseconds.
-                        Thread.sleep(300);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-                if(status<=0)
-                {          //resets the progress bar
-                    status=100;
-                    if(i<NUMBER_OF_QUESTIONS_PER_ROUND)
-                    {
-                        i++;
-                        newQuestion();
-                        Progress();
-                    }
-                    else
-                    {
-                        endQuestions();
-                        //resetButtons();
-                    }
+                        status -= 1;
+                        // Update the progress bar
+                        handler.post(new Runnable() {
+                            public void run()
+                            {
+                                if(val)
+                                {
+                                    progressBar.setProgress(status);
+                                }
+                                else
+                                {
+                                    new CountDownTimer(800,1000)
+                                    {          //pauses the progress bar if the user clicks an option
 
+                                        @Override
+                                        public void onFinish()
+                                        {
+                                            val=true;
+                                            status=100;
+                                            progressBar.setProgress(status);
+                                        }
+                                        @Override
+                                        public void onTick(long l) { }
+                                    }.start();
+                                }
+                            }
+                        });
+                        try
+                        {
+                            // Sleep for 300 milliseconds.
+                            Thread.sleep(300);
+                        } catch (InterruptedException e)
+                        {
+                            e.printStackTrace();
+                        }
+                    }
+                    if(status<=0)
+                    {          //resets the progress bar
+                        status=100;
+                        if(i<NUMBER_OF_QUESTIONS_PER_ROUND)
+                        {
+                            i++;
+                            newQuestion();
+                            Progress();
+                        }
+                        else
+                        {
+                            endQuestions();
+                            //resetButtons();
+                        }
+
+                    }
+                }catch (InterruptedException e)
+                {
+                    Log.d("Interruption","Thread interrupted correctly");
                 }
+
             }
 
         });
@@ -344,17 +358,13 @@ public class FragmentMainQuiz extends Fragment
         mediaPlayerWrong.release();
     }
 
-
     public void endQuestions()
     {
         t.interrupt();
-
-        ScoreFragment fragmentMainQuiz=new ScoreFragment(points);
+        ScoreFragment fragmentMainQuiz=new ScoreFragment(points,CATEGORY);
         FragmentManager fragmentManager=getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.homeFragment, fragmentMainQuiz);
         fragmentTransaction.commit();
     }
-
-
 }

@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -34,11 +36,13 @@ public class ScoreFragment extends Fragment {
     Button replay;
     RecyclerView recyclerView;
     private ImageView avtar;
+    String CATEGORY="";
     int FinalScore,unlock;
      @SuppressLint("ValidFragment")
-     public ScoreFragment(int x)
+     public ScoreFragment(int x,String y)
      {
          FinalScore=x;
+         CATEGORY=y;
      }
 
     @Override
@@ -68,6 +72,7 @@ public class ScoreFragment extends Fragment {
                 .asBitmap()
                 .load(PlayerData.udrAvtar)
                 .into(avtar);
+        score.setText(FinalScore);
         final AchievementsAdapter adapter=new AchievementsAdapter(getContext(),ncategories,nImages);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
@@ -97,6 +102,17 @@ public class ScoreFragment extends Fragment {
                 Toast.makeText(getContext(),"Database Error",Toast.LENGTH_LONG).show();
             }
         });
+
+         replay.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 Countdown fragmentMainQuiz=new Countdown(CATEGORY);
+                 FragmentManager fragmentManager=getFragmentManager();
+                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                 fragmentTransaction.add(R.id.homeFragment, fragmentMainQuiz);
+                 fragmentTransaction.commit();
+             }
+         });
 
     }
 

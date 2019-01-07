@@ -23,7 +23,7 @@
 
         <TextView
             android:id="@+id/txtloose"
-            android:layout_width="51dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="104dp"
             android:layout_marginTop="56dp"
@@ -47,7 +47,7 @@
 
         <TextView
             android:id="@+id/textView16"
-            android:layout_width="163dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="208dp"
             android:layout_marginTop="24dp"
@@ -82,7 +82,7 @@
             android:textColor="#FFFFFF"
             app:layout_constraintBottom_toTopOf="@+id/txtuname"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.884"
+            app:layout_constraintHorizontal_bias="0.346"
             app:layout_constraintStart_toEndOf="@+id/txtuname"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
