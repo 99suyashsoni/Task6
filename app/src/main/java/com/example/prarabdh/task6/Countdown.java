@@ -41,6 +41,7 @@ public class Countdown extends Fragment
     TextView textView3;
     ArrayList<QuestionModel> arrayList=new ArrayList<>();
     String CATEGORY;
+    CountDownTimer c1,c2,c3;
 
     
     @SuppressLint("ValidFragment")
@@ -80,9 +81,9 @@ public class Countdown extends Fragment
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
-
+    public void onPause()
+    {
+        super.onPause();
     }
 
     public void startCountdown()
@@ -93,7 +94,8 @@ public class Countdown extends Fragment
         mediaPlayer=MediaPlayer.create(getContext(),R.raw.countdown );
         mediaPlayer.seekTo(3000);
         mediaPlayer.start();
-        new CountDownTimer(1000, 100)
+        //CountDownTimer c1=null;
+        c1=new CountDownTimer(1000, 100)
         {
 
             @Override
@@ -106,9 +108,8 @@ public class Countdown extends Fragment
             {
                 textView3.setTextColor(getResources().getColor(R.color.DefaultBackground ));
                 textView2.startAnimation(animation);
-
-
-                new CountDownTimer(1000,100 )
+                //CountDownTimer c2=null;
+                c2=new CountDownTimer(1000,100 )
                 {
 
                     @Override
@@ -121,8 +122,8 @@ public class Countdown extends Fragment
                     {
                         textView2.setTextColor(getResources().getColor(R.color.DefaultBackground));
                         textView1.startAnimation(animation);
-
-                        new CountDownTimer(1000,100 )
+                        //CountDownTimer c3=null;
+                        c3=new CountDownTimer(1000,100 )
                         {
 
                             @Override
@@ -144,13 +145,16 @@ public class Countdown extends Fragment
                                 //supportFragmentManager.beginTransaction().replace(R.id.homeFragment, FragmentMainQuiz()).commit()
 
                             }
-                        }.start();
+                        };
+                        c3.start();
 
                     }
-                }.start();
+                };
+                c2.start();
 
             }
-        }.start();
+        };
+        c1.start();
     }
 
     @Override
@@ -181,6 +185,21 @@ public class Countdown extends Fragment
         });*/
 
         super.onStart();
+    }
+
+    @Override
+    public void onDestroy()
+    {
+        super.onDestroy();
+    }
+
+    @Override
+    public void onDetach()
+    {
+        c1.cancel();
+        c2.cancel();
+        c3.cancel();
+        super.onDetach();
     }
 
     private class dataDownload extends AsyncTask<Void,Void,Void>

@@ -31,6 +31,7 @@ public class FragmentMainQuiz extends Fragment
     TextView option_2;
     TextView option_3;
     TextView option_4;
+    Thread t;
 
     int status=100;
     private Handler handler=new Handler();
@@ -143,9 +144,10 @@ public class FragmentMainQuiz extends Fragment
      * Also, if the time of the Progress Bar is over, It starts a new question if the questions for that round are not over*/
     public void Progress()
     {
-        new Thread(new Runnable() {
+        t=new Thread(new Runnable() {
             @Override
-            public void run() {
+            public void run()
+            {
                 while (status>0){
                     status -= 1;
                     // Update the progress bar
@@ -199,8 +201,8 @@ public class FragmentMainQuiz extends Fragment
                 }
             }
 
-        }).start();
-
+        });
+        t.start();
     }
 
     @Override
@@ -345,6 +347,8 @@ public class FragmentMainQuiz extends Fragment
 
     public void endQuestions()
     {
+        t.interrupt();
+
         ScoreFragment fragmentMainQuiz=new ScoreFragment(points);
         FragmentManager fragmentManager=getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

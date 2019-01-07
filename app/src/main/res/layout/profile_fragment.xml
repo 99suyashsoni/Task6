@@ -152,11 +152,4 @@
 
     </android.support.constraint.ConstraintLayout>
 
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintVertical_weight="3"
-        android:background="@colo"></android.support.constraint.ConstraintLayout>
-
-
 </android.support.constraint.ConstraintLayout>
