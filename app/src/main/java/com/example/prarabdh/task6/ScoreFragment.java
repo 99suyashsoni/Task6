@@ -38,7 +38,7 @@ public class ScoreFragment extends Fragment {
     RecyclerView recyclerView;
     private ImageView avtar;
 
-    String CATEGORY="";
+    String CATEGORY;
     int FinalScore,unlock;
      @SuppressLint("ValidFragment")
      public ScoreFragment(int x,String y)
@@ -89,7 +89,7 @@ public class ScoreFragment extends Fragment {
                     int val=FinalScore-unlock;
                     int val2=unlock-Integer.parseInt(PlayerData.udrPoints);
                     String x=Category.child("Images").getValue().toString();
-                    String y=Category.getKey().toString();
+                    String y=Category.getKey();
                     if((val>=0))
                     {
                         nImages.add(x);
