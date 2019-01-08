@@ -9,7 +9,8 @@ internal class  DataRetrieve {
 
     val database = FirebaseDatabase.getInstance()
     
-    fun playerDataRetrieve(uId: String) {
+    fun playerDataRetrieve(uId: String)
+    {
 
         val ref1 = database.getReference("Users").child(uId)
         ref1.addValueEventListener(object : ValueEventListener {

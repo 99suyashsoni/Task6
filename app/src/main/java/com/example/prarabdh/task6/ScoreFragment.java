@@ -30,40 +30,39 @@ import java.util.Objects;
 
 @SuppressLint("ValidFragment")
 public class ScoreFragment extends Fragment {
-    public ArrayList<String> nImages=new ArrayList<>();
-    public ArrayList<String> ncategories=new ArrayList<>();
-    TextView head,middle,score;
+    public ArrayList<String> nImages = new ArrayList<>();
+    public ArrayList<String> ncategories = new ArrayList<>();
+    TextView head, middle, score;
     Button replay;
     RecyclerView recyclerView;
     private ImageView avtar;
-    String CATEGORY="";
-    int FinalScore,unlock;
-     @SuppressLint("ValidFragment")
-     public ScoreFragment(int x,String y)
-     {
-         FinalScore=x;
-         CATEGORY=y;
-     }
+    String CATEGORY = "";
+    int FinalScore, unlock;
+
+    @SuppressLint("ValidFragment")
+    public ScoreFragment(int x, String y) {
+        FinalScore = x;
+        CATEGORY = y;
+    }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_score, container, false);
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
-    {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         //Initializing all the Views so that they need not be initialized again and again in the code, hence making the code concise
-        head=view.findViewById(R.id.textView8);
-        middle=view.findViewById(R.id.textView10);
-        score=view.findViewById(R.id.textView9);
-        replay=view.findViewById(R.id.button2);
-        recyclerView=view.findViewById(R.id.achieveRecycler);
-        avtar=view.findViewById(R.id.imageView4);
+        head = view.findViewById(R.id.textView8);
+        middle = view.findViewById(R.id.textView10);
+        score = view.findViewById(R.id.textView9);
+        replay = view.findViewById(R.id.button2);
+        recyclerView = view.findViewById(R.id.achieveRecycler);
+        avtar = view.findViewById(R.id.imageView4);
         super.onViewCreated(view, savedInstanceState);
     }
+
     public void onStart() {
 
         super.onStart();
@@ -72,24 +71,22 @@ public class ScoreFragment extends Fragment {
                 .asBitmap()
                 .load(PlayerData.udrAvtar)
                 .into(avtar);
-        score.setText(FinalScore);
-        final AchievementsAdapter adapter=new AchievementsAdapter(getContext(),ncategories,nImages);
+        final AchievementsAdapter adapter = new AchievementsAdapter(getContext(), ncategories, nImages);
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = firebaseDatabase.getReference("Categories");
-         databaseReference.addValueEventListener(new ValueEventListener() {
+        databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Iterable<DataSnapshot> allCategory = dataSnapshot.getChildren();
                 for (DataSnapshot Category : allCategory) {
                     unlock = Integer.parseInt(Objects.requireNonNull(Category.child("Unlock points").getValue()).toString());
-                    int val=FinalScore-unlock;
-                    int val2=unlock-Integer.parseInt(PlayerData.udrPoints);
-                    String x=Category.child("Images").getValue().toString();
-                    String y=Category.getKey().toString();
-                    if((val>=0))
-                    {
+                    int val = FinalScore - unlock;
+                    int val2 = unlock - Integer.parseInt(PlayerData.udrPoints);
+                    String x = Category.child("Images").getValue().toString();
+                    String y = Category.getKey().toString();
+                    if ((val >= 0)) {
                         nImages.add(x);
                         ncategories.add(y);
                         adapter.notifyDataSetChanged();
@@ -99,26 +96,26 @@ public class ScoreFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(getContext(),"Database Error",Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "Database Error", Toast.LENGTH_LONG).show();
             }
         });
-
-         replay.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View v) {
-                 Countdown fragmentMainQuiz=new Countdown(CATEGORY);
-                 FragmentManager fragmentManager=getFragmentManager();
-                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                 fragmentTransaction.add(R.id.homeFragment, fragmentMainQuiz);
-                 fragmentTransaction.commit();
-             }
-         });
+        score.setText(Integer.toString(FinalScore));
+        firebaseDatabase.getReference("Users").child(PlayerData.udrUserId).child("Total Points").setValue(Integer.toString(FinalScore));
+        replay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Countdown fragmentMainQuiz = new Countdown(CATEGORY);
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.homeFragment, fragmentMainQuiz);
+                fragmentTransaction.commit();
+            }
+        });
 
     }
 
     @Override
-    public void onAttach(final Context context)
-    {
+    public void onAttach(final Context context) {
         super.onAttach(context);
     }
 }
