@@ -38,6 +38,7 @@ class LeaderboardFragment: Fragment() {
     private var datasetPoints = ArrayList<String>()
     private var datasetAvatar = ArrayList<String>()
     private var mDatabase: DatabaseReference? = null
+    private var currentuserposition=0;
 
 
 
@@ -81,11 +82,10 @@ class LeaderboardFragment: Fragment() {
 //        })
 
 
-
         textViewUname!!.text = PlayerData.udrUserName
         textViewTotalPoints!!.text = PlayerData.udrPoints
         Glide.with(this@LeaderboardFragment).load(PlayerData.udrAvtar).into(imageViewAvatar!!)
-        textViewLeaderboard!!.text="jyygf"
+        textViewLeaderboard!!.text="Leadorboard"
 
 
 
@@ -125,29 +125,16 @@ class LeaderboardFragment: Fragment() {
                             }
                         }
                     }
+
+                  currentuserposition=  datasetUname.indexOf(PlayerData.udrUserName) +1
+                    textViewPosition!!.text= currentuserposition.toString()
                 }
 
                mleaderboardAdapter.notifyDataSetChanged()
 //                for (pass in 0 until (datasetPoints.size - 1)) {
 //                    // A single pass of bubble sort
 //                    for (currentPosition in 0 until (datasetPoints.size - pass - 1)) {
-//                        // This is a single step
-//
-//                        if (datasetPoints.get(currentPosition) > datasetPoints.get(currentPosition + 1)) {
-//                            var tmp = datasetPoints.get(currentPosition)
-//                            datasetPoints.set(currentPosition, datasetPoints.get(currentPosition + 1))
-//                            datasetPoints.set(currentPosition + 1, tmp)
-//                           // mleaderboardAdapter.notifyDataSetChanged()
-////                    var tmp1 = datasetUname[currentPosition]
-////                    datasetUname[currentPosition] = datasetUname[currentPosition + 1]
-////                    datasetUname[currentPosition + 1] = tmp1
-////
-////                    var tmp2 = datasetAvatar[currentPosition]
-////                    datasetAvatar[currentPosition] = datasetAvatar[currentPosition + 1]
-////                    datasetAvatar[currentPosition + 1] = tmp2
-//                        }
-//                    }
-//                }
+//                        // This is a sing
 
 
             }
@@ -160,7 +147,7 @@ class LeaderboardFragment: Fragment() {
 
 
 
-            textViewLeaderboard!!.text= datasetPoints.size.toString()
+
 
 
        // mleaderboardAdapter.notifyDataSetChanged()

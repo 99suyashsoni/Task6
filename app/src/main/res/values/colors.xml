@@ -5,6 +5,9 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorBlack">#000000</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="btnleadorboard">#228FCF</color>
+    <color name="border">#4fa5d5</color>
+    <color name="bgText">#FFFFFF</color>
     <color name="CorrectAnswer">#00FF00</color>
     <color name="WrongAnswer">#FF0000</color>
     <color name="navItem">#ffffff</color>
