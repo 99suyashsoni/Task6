@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SignUpActivity">
+    tools:context=".SignUpActivity"
+    android:background="@color/leaderboard">
 
     <Button
         android:id="@+id/buttonRegister"
@@ -20,17 +21,22 @@
         app:layout_constraintHorizontal_bias="0.757"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.984" />
+        app:layout_constraintVertical_bias="0.984"
+        android:background="@drawable/border_button"
+        android:textColor="@color/bgText"/>
 
     <Button
         android:id="@+id/buttonSignInInstead"
         android:layout_width="wrap_content"
+        android:padding="8dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:text="Sign In instead"
+        android:background="@drawable/border_button"
+        android:textColor="@color/bgText"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.227"
@@ -45,7 +51,10 @@
        android:layout_margin="8dp"
         android:ems="10"
         android:hint="EMAIL"
+        android:textColor="@color/bgText"
+        android:backgroundTint="@color/bgText"
         android:textAlignment="center"
+        android:textColorHint="@color/bgText"
         android:inputType="textEmailAddress"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -54,6 +63,8 @@
 
     <EditText
         android:id="@+id/editTextUserName"
+        android:textColor="@color/bgText"
+        android:backgroundTint="@color/bgText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
@@ -61,6 +72,7 @@
         android:hint="USERNAME"
         android:textAlignment="center"
         android:inputType="textEmailAddress"
+        android:textColorHint="@color/bgText"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -70,6 +82,9 @@
         android:id="@+id/editTextPassword"
         android:layout_width="match_parent"
         android:hint="PASSWORD"
+        android:textColor="@color/bgText"
+        android:textColorHint="@color/bgText"
+        android:backgroundTint="@color/bgText"
         android:textAlignment="center"
         android:layout_height="wrap_content"
      android:layout_margin="8dp"
@@ -89,13 +104,18 @@
         android:layout_marginEnd="8dp"
         android:text="Your Avatar"
         android:textSize="18sp"
+        android:padding="8dp"
+        android:background="@drawable/my_border"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.027"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@color/bgText"/>
 
     <TextView
         android:id="@+id/TextUn2"
+        android:padding="8dp"
+        android:background="@drawable/my_border"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -109,6 +129,7 @@
         app:layout_constraintHorizontal_bias="0.556"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@color/bgText"
         app:layout_constraintVertical_bias="0.678" />
 
     <TextView
@@ -119,14 +140,17 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:background="@drawable/my_border"
+        android:padding="8dp"
         android:text="Create a new Account"
+        android:textColor="@color/bgText"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.694"
+        app:layout_constraintHorizontal_bias="0.796"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.104" />
+        app:layout_constraintVertical_bias="0.1" />
 
     <TextView
         android:id="@+id/textView12"
@@ -134,6 +158,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:padding="8dp"
+        android:background="@drawable/my_border"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:text="App Name"
@@ -143,7 +169,8 @@
         app:layout_constraintHorizontal_bias="0.645"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.015" />
+        app:layout_constraintVertical_bias="0.015"
+        android:textColor="@color/bgText"/>
 
     <ImageButton
         android:id="@+id/imageButton1"

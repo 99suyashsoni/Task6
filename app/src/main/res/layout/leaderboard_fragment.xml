@@ -1,88 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                              xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
                                              android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@color/leaderboard">
-
     <TextView
         android:id="@+id/textViewLeaderBoard"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+android:textAllCaps="true"
+        android:textColorHighlight="@color/btnleadorboard"
+        android:padding="8dp"
         android:text="Leaderboard"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="28sp"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerView"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        android:background="@drawable/my_border"
+
+        />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="68dp"
-        app:layout_constraintBottom_toTopOf="@+id/textViewUser"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textViewLeaderBoard"
-        app:layout_constraintVertical_bias="0.0" />
+        android:layout_weight="8"
 
-    <TextView
-        android:id="@+id/textViewUser"
+        />
+
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="68dp"
-        android:textColor="#FFFFFF"
-        android:textSize="28sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.596"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_height="0dp"
+        android:layout_weight="1.5"
+        android:id="@+id/parent"
+        android:background="@drawable/my_border">
 
-    <ImageView
-        android:id="@+id/imageViewAvatar"
-        android:layout_width="47dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="8dp"
 
-        app:layout_constraintEnd_toEndOf="@+id/textViewUser"
-        app:layout_constraintTop_toTopOf="@+id/textViewUser"
-        app:srcCompat="@mipmap/ic_launcher_foreground" />
+        <ImageView
+            android:id="@+id/imageViewAvatar"
+            android:layout_width="47dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="8dp"
 
-    <TextView
-        android:id="@+id/textViewUname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="uname"
-        android:textColor="#FFFFFF"
-        android:textSize="28sp"
-        app:layout_constraintStart_toEndOf="@+id/textViewPosition"
-        app:layout_constraintTop_toTopOf="@+id/textViewUser" />
+            app:layout_constraintEnd_toEndOf="@+id/parent"
+            app:layout_constraintTop_toTopOf="@+id/parent"
+            app:srcCompat="@mipmap/ic_launcher_foreground" />
 
-    <TextView
-        android:id="@+id/textViewTotalPoints"
-        android:layout_width="wrap_content"
-        android:layout_height="58dp"
-        android:layout_marginStart="8dp"
-        android:text="points"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        app:layout_constraintStart_toEndOf="@+id/textViewPosition"
-        app:layout_constraintTop_toBottomOf="@+id/textViewUname" />
+        <TextView
+            android:id="@+id/textViewUname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="uname"
+            android:textColor="#FFFFFF"
+            android:textSize="28sp"
+            app:layout_constraintStart_toEndOf="@+id/textViewPosition"
+            app:layout_constraintTop_toTopOf="@+id/parent" />
 
-    <TextView
-        android:id="@+id/textViewPosition"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="20dp"
-        android:text="2000"
-        android:textSize="24sp"
-        android:textColor="#FFFFFF"
+        <TextView
+            android:id="@+id/textViewTotalPoints"
+            android:layout_width="wrap_content"
+            android:layout_height="58dp"
+            android:layout_marginStart="8dp"
+            android:text="points"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@+id/textViewPosition"
+            app:layout_constraintTop_toBottomOf="@+id/textViewUname" />
 
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textViewUser" />
-</android.support.constraint.ConstraintLayout>
+        <TextView
+            android:id="@+id/textViewPosition"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="20dp"
+            android:text="2000"
+            android:textSize="24sp"
+            android:textColor="#FFFFFF"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/parent" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</LinearLayout>
