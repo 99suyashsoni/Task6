@@ -30,7 +30,6 @@ class GameDesc: Fragment(){
         singlePlayer!!.setOnClickListener {
             gameName!!.setText("Cricket")
             activity?.supportFragmentManager?.beginTransaction()!!.replace(R.id.homeFragment, Countdown(gameName!!.text as String?)).commit()
-
         }
 
         multiPLayer!!.setOnClickListener {

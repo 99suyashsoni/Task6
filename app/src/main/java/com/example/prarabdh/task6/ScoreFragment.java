@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,6 +16,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.bumptech.glide.Glide;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,17 +30,19 @@ import java.util.Objects;
 
 @SuppressLint("ValidFragment")
 public class ScoreFragment extends Fragment {
-    public ArrayList<String > nImages=new ArrayList<>();
+    public ArrayList<String> nImages=new ArrayList<>();
     public ArrayList<String> ncategories=new ArrayList<>();
     TextView head,middle,score;
     Button replay;
     RecyclerView recyclerView;
     private ImageView avtar;
+    String CATEGORY="";
     int FinalScore,unlock;
      @SuppressLint("ValidFragment")
-     public ScoreFragment(int x)
+     public ScoreFragment(int x,String y)
      {
          FinalScore=x;
+         CATEGORY=y;
      }
 
     @Override
@@ -66,7 +72,10 @@ public class ScoreFragment extends Fragment {
                 .asBitmap()
                 .load(PlayerData.udrAvtar)
                 .into(avtar);
-
+        score.setText(FinalScore);
+        final AchievementsAdapter adapter=new AchievementsAdapter(getContext(),ncategories,nImages);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = firebaseDatabase.getReference("Categories");
          databaseReference.addValueEventListener(new ValueEventListener() {
@@ -77,27 +86,36 @@ public class ScoreFragment extends Fragment {
                     unlock = Integer.parseInt(Objects.requireNonNull(Category.child("Unlock points").getValue()).toString());
                     int val=FinalScore-unlock;
                     int val2=unlock-Integer.parseInt(PlayerData.udrPoints);
-                    if((val>=0)&&(val2>0))
+                    String x=Category.child("Images").getValue().toString();
+                    String y=Category.getKey().toString();
+                    if((val>=0))
                     {
-                        nImages.add(Objects.requireNonNull(Category.child("Images").getValue()).toString());
-                        ncategories.add(Objects.requireNonNull(Category.getValue()).toString());
+                        nImages.add(x);
+                        ncategories.add(y);
+                        adapter.notifyDataSetChanged();
                     }
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                Toast.makeText(getContext(),"Database Error",Toast.LENGTH_LONG).show();
             }
         });
-         initiate();
+
+         replay.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 Countdown fragmentMainQuiz=new Countdown(CATEGORY);
+                 FragmentManager fragmentManager=getFragmentManager();
+                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                 fragmentTransaction.add(R.id.homeFragment, fragmentMainQuiz);
+                 fragmentTransaction.commit();
+             }
+         });
+
     }
 
-    public void initiate(){
-         AchievementsAdapter adapter=new AchievementsAdapter(getContext(),ncategories,nImages);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
-    }
     @Override
     public void onAttach(final Context context)
     {
