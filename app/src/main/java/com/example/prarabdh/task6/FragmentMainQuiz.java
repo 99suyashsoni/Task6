@@ -141,7 +141,6 @@ public class FragmentMainQuiz extends Fragment
         // Inflate the layout for this fragment
         View view=inflater.inflate(R.layout.fragment_fragment_main_quiz, container, false);
         Progress();
-        // Inflate the layout for this fragment
         return view;
     }
 
@@ -156,7 +155,7 @@ public class FragmentMainQuiz extends Fragment
             public void run()
             {
                 try {
-                    while (status>0)
+                    while ((status>0)&&(!Thread.currentThread().isInterrupted()))
                     {
                         if(Thread.interrupted())
                         {
@@ -196,6 +195,8 @@ public class FragmentMainQuiz extends Fragment
                         } catch (InterruptedException e)
                         {
                             e.printStackTrace();
+                            Log.d("Interruption","Thread interrupted correctly");
+                            return;
                         }
                     }
                     if(status<=0)
@@ -214,9 +215,9 @@ public class FragmentMainQuiz extends Fragment
                         }
 
                     }
-                }catch (InterruptedException e)
+                }catch (InterruptedException ignored)
                 {
-                    Log.d("Interruption","Thread interrupted correctly");
+                    
                 }
 
             }
@@ -286,8 +287,8 @@ public class FragmentMainQuiz extends Fragment
                 textView.setBackgroundColor(0xFF00FF00);
                 mediaPlayerCorrect.seekTo(2000);
                 mediaPlayerCorrect.start();
-                points+=1;
-                correct+=1;
+                points++;
+                corect+=1;
             }
             else    //The answer is wrong
             {

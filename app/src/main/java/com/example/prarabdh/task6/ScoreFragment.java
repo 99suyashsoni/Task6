@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +46,7 @@ public class ScoreFragment extends Fragment {
         CATEGORY = y;
     }
 
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -72,6 +74,7 @@ public class ScoreFragment extends Fragment {
                 .load(PlayerData.udrAvtar)
                 .into(avtar);
         final AchievementsAdapter adapter = new AchievementsAdapter(getContext(), ncategories, nImages);
+        // score.setText(FinalScore);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
@@ -91,6 +94,7 @@ public class ScoreFragment extends Fragment {
                         ncategories.add(y);
                         adapter.notifyDataSetChanged();
                     }
+
                 }
             }
 
@@ -112,7 +116,18 @@ public class ScoreFragment extends Fragment {
             }
         });
 
+        replay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Countdown fragmentMainQuiz = new Countdown(CATEGORY);
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.add(R.id.homeFragment, fragmentMainQuiz);
+                fragmentTransaction.commit();
+            }
+        });
     }
+
 
     @Override
     public void onAttach(final Context context) {
