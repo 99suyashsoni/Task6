@@ -149,7 +149,7 @@ public class FragmentMainQuiz extends Fragment
             public void run()
             {
                 try {
-                    while (status>0)
+                    while ((status>0)&&(!Thread.currentThread().isInterrupted()))
                     {
                         if(Thread.interrupted())
                         {
@@ -189,6 +189,8 @@ public class FragmentMainQuiz extends Fragment
                         } catch (InterruptedException e)
                         {
                             e.printStackTrace();
+                            Log.d("Interruption","Thread interrupted correctly");
+                            return;
                         }
                     }
                     if(status<=0)
@@ -207,9 +209,9 @@ public class FragmentMainQuiz extends Fragment
                         }
 
                     }
-                }catch (InterruptedException e)
+                }catch (InterruptedException ignored)
                 {
-                    Log.d("Interruption","Thread interrupted correctly");
+                    
                 }
 
             }

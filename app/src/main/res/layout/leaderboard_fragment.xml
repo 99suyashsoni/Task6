@@ -1,19 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<<<<<<< HEAD
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                             xmlns:app="http://schemas.android.com/apk/res-auto"
-                                  xmlns:tools="http://schemas.android.com/tools"
-                                             android:layout_width="match_parent"
-                                             android:layout_height="match_parent"
-                                             android:background="@color/leaderboard">
-
-=======
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                              xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
                                              android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/leaderboard">
->>>>>>> 170cb24b9f725ac82f22f47d5829c3d2fc06821a
     <TextView
         android:id="@+id/textViewLeaderBoard"
         android:layout_width="match_parent"

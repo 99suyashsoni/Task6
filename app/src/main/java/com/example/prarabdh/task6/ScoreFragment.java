@@ -74,7 +74,7 @@ public class ScoreFragment extends Fragment {
                 .asBitmap()
                 .load(PlayerData.udrAvtar)
                 .into(avtar);
-        score.setText(FinalScore);
+      // score.setText(FinalScore);
         final AchievementsAdapter adapter=new AchievementsAdapter(getContext(),ncategories,nImages);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
