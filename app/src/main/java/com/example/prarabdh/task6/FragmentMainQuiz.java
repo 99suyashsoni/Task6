@@ -49,7 +49,7 @@ public class FragmentMainQuiz extends Fragment
     int i = 1;                                   //Stores the number of questions asked in this particular round
     ArrayList<QuestionModel> arrayList;  //Array to store all questions available in that category in the form of QuestionModel objects
     int currentRandom=0;                     //Stores the index of the currently generated random Question
-    int points=1000,wrong=0,corect=0;       //Points variable stores the points of current quiz, wrong variable stores number of incorrect answers, and correct variable stores number of correct answers
+    int points=1000;       //Points variable stores the points of current quiz, wrong variable stores number of incorrect answers, and correct variable stores number of correct answers
     private boolean val=true;
 
     //Function to generate a random number
@@ -209,9 +209,7 @@ public class FragmentMainQuiz extends Fragment
                         }
 
                     }
-                }catch (InterruptedException ignored)
-                {
-                    
+                }catch (InterruptedException ignored) {
                 }
 
             }
@@ -282,12 +280,10 @@ public class FragmentMainQuiz extends Fragment
                 mediaPlayerCorrect.seekTo(2000);
                 mediaPlayerCorrect.start();
                 points++;
-                corect+=1;
             }
             else    //The answer is wrong
             {
                 textView.setBackgroundColor(0xFFFF0000);
-                wrong+=1;
                 mediaPlayerWrong.seekTo(1000);
                 mediaPlayerWrong.start();
                 //Setting green background colour to the textView with the right answer
