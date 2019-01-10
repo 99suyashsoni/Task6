@@ -34,9 +34,11 @@ class LeaderboardFragment: Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var mleaderboardAdapter: RecyclerView.Adapter<*>
     private lateinit var mlayoutManager: LayoutManager
-    private var datasetUname = ArrayList<String>()
-    private var datasetPoints = ArrayList<String>()
-    private var datasetAvatar = ArrayList<String>()
+    private var datasetLeaderboard = ArrayList<LeaderboardDataModel>()
+    private var currentusermodel: LeaderboardDataModel? = null
+
+//    private var datasetPoints = ArrayList<String>()
+//    private var datasetAvatar = ArrayList<String>()
     private var mDatabase: DatabaseReference? = null
     private var currentuserposition=0;
 
@@ -54,7 +56,7 @@ class LeaderboardFragment: Fragment() {
         imageViewAvatar = view.findViewById(R.id.imageViewAvatar)
 
         mlayoutManager = LinearLayoutManager(activity)
-        mleaderboardAdapter = LeaderboardAdapter(context, datasetAvatar, datasetPoints, datasetUname)
+        mleaderboardAdapter = LeaderboardAdapter(context, datasetLeaderboard)
 
         recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView).apply {
             // use this setting to improve performance if you know that changes
@@ -68,6 +70,8 @@ class LeaderboardFragment: Fragment() {
             adapter = mleaderboardAdapter
 
         }
+
+        currentusermodel= LeaderboardDataModel(PlayerData.udrPoints,PlayerData.udrAvtar,PlayerData.udrUserName)
        // val `sort` = SortPoints()
 //
 //        `sort`.setSortPointsListener(object : SortPoints.SortPointsListener {
@@ -98,38 +102,43 @@ class LeaderboardFragment: Fragment() {
         mDatabase!!.addListenerForSingleValueEvent(object : ValueEventListener {
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-
+//                    var model: LeaderboardDataModel
 
                 for (dsp in dataSnapshot.children) {
                     var uname = dsp.child("Username").value!!.toString()
                     var points = dsp.child("Total Points").value!!.toString()
                     var avatar = dsp.child("Avtar Img").value!!.toString()
-                    datasetAvatar.add(avatar)
-                    datasetPoints.add(points)
-                    datasetUname.add(uname)
 
-                    for (i in 0 until datasetPoints.size - 1) {
-                        for (j in 0 until datasetPoints.size - i - 1) {
-                            if (Integer.parseInt(datasetPoints[j]) < Integer.parseInt(datasetPoints[j + 1])) {
-                                var temp = datasetPoints[j]
-                                datasetPoints[j] = datasetPoints[j + 1]
-                                datasetPoints[j + 1] = temp
+                  var  model =  LeaderboardDataModel(points,avatar,uname)
 
-                                temp = datasetAvatar[j]
-                                datasetAvatar[j] = datasetAvatar[j + 1]
-                                datasetAvatar[j + 1] = temp
-
-                                temp = datasetUname[j]
-                                datasetUname[j] = datasetUname[j + 1]
-                                datasetUname[j + 1] = temp
-                            }
-                        }
-                    }
-
-                  currentuserposition=  datasetUname.indexOf(PlayerData.udrUserName) +1
-                    textViewPosition!!.text= currentuserposition.toString()
+                    datasetLeaderboard.add(model)
+//                    datasetAvatar.add(avatar)
+//                    datasetPoints.add(points)
+//                    datasetUname.add(uname)
+//
+//                    for (i in 0 until datasetPoints.size - 1) {
+//                        for (j in 0 until datasetPoints.size - i - 1) {
+//                            if (Integer.parseInt(datasetPoints[j]) < Integer.parseInt(datasetPoints[j + 1])) {
+//                                var temp = datasetPoints[j]
+//                                datasetPoints[j] = datasetPoints[j + 1]
+//                                datasetPoints[j + 1] = temp
+//
+//                                temp = datasetAvatar[j]
+//                                datasetAvatar[j] = datasetAvatar[j + 1]
+//                                datasetAvatar[j + 1] = temp
+//
+//                                temp = datasetUname[j]
+//                                datasetUname[j] = datasetUname[j + 1]
+//                                datasetUname[j + 1] = temp
+//                            }
+//                        }
+//                    }
+               datasetLeaderboard.sortWith(compareByDescending { it.Points })
                 }
 
+
+                currentuserposition=  datasetLeaderboard.indexOf(currentusermodel!!)+1
+                textViewPosition!!.text= currentuserposition.toString()
                mleaderboardAdapter.notifyDataSetChanged()
 //                for (pass in 0 until (datasetPoints.size - 1)) {
 //                    // A single pass of bubble sort
