@@ -46,7 +46,7 @@ public class FragmentMainQuiz extends Fragment
     int NUMBER_OF_QUESTIONS_PER_ROUND ; //Stores the number of Questions the user will play per round of the quiz
     String CATEGORY;           //Stores the category user has selected for playing
     int askedQuestionIndices[] = new int[NUMBER_OF_QUESTIONS_TOTAL];//Stores the indices of the questions already asked to the user in this round
-    int i = 1;                                   //Stores the number of questions asked in this particular round
+    int i = 0;                                   //Stores the number of questions asked in this particular round
     ArrayList<QuestionModel> arrayList;  //Array to store all questions available in that category in the form of QuestionModel objects
     int currentRandom=0;                     //Stores the index of the currently generated random Question
     int points=1000,wrong=0,corect=0;       //Points variable stores the points of current quiz, wrong variable stores number of incorrect answers, and correct variable stores number of correct answers
@@ -55,18 +55,20 @@ public class FragmentMainQuiz extends Fragment
     //Function to generate a random number
     public int Random()
     {
-        int rand = 1;
+        int rand;
         do {
-            double d=Math.random()*1000+rand;
-            rand = (int) d % NUMBER_OF_QUESTIONS_TOTAL;
-            for (int j = 0; j < i; j++) {
-                if (askedQuestionIndices[i] == rand) {
-                    rand = NUMBER_OF_QUESTIONS_TOTAL;
-                    break;
+            double r=Math.random()*1000;
+            rand=(int)(r%NUMBER_OF_QUESTIONS_TOTAL);
+            for (int f=0;f<i;f++)
+            {
+                if(askedQuestionIndices[f]==rand)
+                {
+                    rand=NUMBER_OF_QUESTIONS_TOTAL;
                 }
             }
-        } while (rand == NUMBER_OF_QUESTIONS_TOTAL);
-        //askedQuestionIndices[i] = rand;
+        }while (rand==NUMBER_OF_QUESTIONS_TOTAL);
+        Log.d("Debug Random","Random" + rand + " added at "+ (i-1));
+        askedQuestionIndices[i-1]=rand;
         return rand;
     }
 
@@ -111,7 +113,7 @@ public class FragmentMainQuiz extends Fragment
         NUMBER_OF_QUESTIONS_PER_ROUND= getResources().getInteger(R.integer.Number_Of_Rounds_Per_Match);
 
         //Starting the progressBar and display of the first question
-
+        i++;
         newQuestion();
 
         //Setting onClickListeners to all the TextViews to know which option is selected by the user
@@ -135,7 +137,6 @@ public class FragmentMainQuiz extends Fragment
         // Inflate the layout for this fragment
         View view=inflater.inflate(R.layout.fragment_fragment_main_quiz, container, false);
         Progress();
-        // Inflate the layout for this fragment
         return view;
     }
 
@@ -150,12 +151,13 @@ public class FragmentMainQuiz extends Fragment
             public void run()
             {
                 try {
-                    while (status>0)
+                    if(Thread.interrupted())
                     {
-                        if(Thread.interrupted())
-                        {
-                            throw new InterruptedException();
-                        }
+                        throw new InterruptedException();
+                    }
+                    while ((status>0)&&(!Thread.currentThread().isInterrupted()))
+                    {
+
                         status -= 1;
                         // Update the progress bar
                         handler.post(new Runnable() {
@@ -189,13 +191,13 @@ public class FragmentMainQuiz extends Fragment
                             Thread.sleep(300);
                         } catch (InterruptedException e)
                         {
-                            e.printStackTrace();
+                            return;
                         }
                     }
-                    if(status<=0)
-                    {          //resets the progress bar
+                    if(status<=0&&(!Thread.currentThread().isInterrupted()))
+                    {    //resets the progress bar
                         status=100;
-                        if(i<NUMBER_OF_QUESTIONS_PER_ROUND)
+                        if(i<NUMBER_OF_QUESTIONS_PER_ROUND && i!=0)
                         {
                             i++;
                             newQuestion();
@@ -208,9 +210,9 @@ public class FragmentMainQuiz extends Fragment
                         }
 
                     }
-                }catch (InterruptedException e)
+                }catch (InterruptedException ignored)
                 {
-                    Log.d("Interruption","Thread interrupted correctly");
+
                 }
 
             }
@@ -237,7 +239,7 @@ public class FragmentMainQuiz extends Fragment
     {
         mediaPlayerBackground.start();
         currentRandom = Random();
-        askedQuestionIndices[i-1] = currentRandom;
+        //askedQuestionIndices[i-1] = currentRandom;
         question.setText(arrayList.get(currentRandom).getQuestion());
         option_1.setText(arrayList.get(currentRandom).getOption1());
         option_2.setText(arrayList.get(currentRandom).getOption2());
@@ -261,7 +263,7 @@ public class FragmentMainQuiz extends Fragment
         public void onClick(View v)
         {
             String correct=arrayList.get(currentRandom).getAnswer(); //Stores the correct answer for the current question
-             val=false;                                                       //Introduced a new variable instead of using the expression at the right again and again to save the time required by the computer to read the arrayList
+             val=false;                                              //Introduced a new variable instead of using the expression at the right again and again to save the time required by the computer to read the arrayList
                                                                     //and execute the getAnswer() function multiple number of times
 
             //Disable other textViews so that multiple answers cannot be selected
@@ -280,8 +282,8 @@ public class FragmentMainQuiz extends Fragment
                 textView.setBackgroundColor(0xFF00FF00);
                 mediaPlayerCorrect.seekTo(2000);
                 mediaPlayerCorrect.start();
-                points+=1;
-                correct+=1;
+                points++;
+                corect+=1;
             }
             else    //The answer is wrong
             {

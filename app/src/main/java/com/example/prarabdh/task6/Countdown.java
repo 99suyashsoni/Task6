@@ -140,7 +140,7 @@ public class Countdown extends Fragment
                                 FragmentMainQuiz fragmentMainQuiz=new FragmentMainQuiz(arrayList,CATEGORY);
                                 FragmentManager fragmentManager=getFragmentManager();
                                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                                fragmentTransaction.add(R.id.homeFragment, fragmentMainQuiz);
+                                fragmentTransaction.replace(R.id.homeFragment, fragmentMainQuiz);
                                 fragmentTransaction.commit();
                                 //supportFragmentManager.beginTransaction().replace(R.id.homeFragment, FragmentMainQuiz()).commit()
 
