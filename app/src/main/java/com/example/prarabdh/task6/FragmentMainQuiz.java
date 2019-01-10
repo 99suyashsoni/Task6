@@ -154,13 +154,15 @@ public class FragmentMainQuiz extends Fragment
             @Override
             public void run()
             {
+                boolean flag=true;
                 try {
+                    if(Thread.interrupted())
+                    {
+                        throw new InterruptedException();
+                    }
                     while ((status>0)&&(!Thread.currentThread().isInterrupted()))
                     {
-                        if(Thread.interrupted())
-                        {
-                            throw new InterruptedException();
-                        }
+
                         status -= 1;
                         // Update the progress bar
                         handler.post(new Runnable() {
@@ -199,7 +201,7 @@ public class FragmentMainQuiz extends Fragment
                             return;
                         }
                     }
-                    if(status<=0)
+                    if(status<=0&&(!Thread.currentThread().isInterrupted()))
                     {    //resets the progress bar
                         status=100;
                         if(i<NUMBER_OF_QUESTIONS_PER_ROUND && i!=0)
@@ -210,14 +212,22 @@ public class FragmentMainQuiz extends Fragment
                         }
                         else
                         {
-                            endQuestions();
+                            if(flag)
+                            {
+                                flag=false;
+                                Log.d("Flag value",Boolean.toString(flag));
+                                endQuestions();
+                            }
+
                             //resetButtons();
                         }
 
                     }
                 }catch (InterruptedException ignored)
                 {
-                    
+                    ignored.printStackTrace();
+                    Log.d("Interruption","Thread interrupted correctly");
+                    return;
                 }
 
             }
@@ -268,7 +278,7 @@ public class FragmentMainQuiz extends Fragment
         public void onClick(View v)
         {
             String correct=arrayList.get(currentRandom).getAnswer(); //Stores the correct answer for the current question
-             val=false;                                                       //Introduced a new variable instead of using the expression at the right again and again to save the time required by the computer to read the arrayList
+             val=false;                                              //Introduced a new variable instead of using the expression at the right again and again to save the time required by the computer to read the arrayList
                                                                     //and execute the getAnswer() function multiple number of times
 
             //Disable other textViews so that multiple answers cannot be selected
@@ -367,7 +377,7 @@ public class FragmentMainQuiz extends Fragment
 
     public void endQuestions()
     {
-        t.currentThread().interrupt();
+        t.interrupt();
         ScoreFragment fragmentMainQuiz=new ScoreFragment(points,CATEGORY);
         FragmentManager fragmentManager=getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
