@@ -116,16 +116,6 @@ public class ScoreFragment extends Fragment {
             }
         });
 
-        replay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Countdown fragmentMainQuiz = new Countdown(CATEGORY);
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.add(R.id.homeFragment, fragmentMainQuiz);
-                fragmentTransaction.commit();
-            }
-        });
     }
 
 

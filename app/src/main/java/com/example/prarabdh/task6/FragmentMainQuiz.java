@@ -55,24 +55,20 @@ public class FragmentMainQuiz extends Fragment
     //Function to generate a random number
     public int Random()
     {
-        if(i==1)
-        {
-            askedQuestionIndices[1]=Integer.MAX_VALUE;
-        }
-        int rand = 1;
+        int rand;
         do {
-            double d=Math.random()*1000+rand;
-            rand = (int) d % NUMBER_OF_QUESTIONS_TOTAL;
-            for (int j = 0; j < i; j++)
+            double r=Math.random()*1000;
+            rand=(int)(r%NUMBER_OF_QUESTIONS_TOTAL);
+            for (int f=0;f<i;f++)
             {
-                if (askedQuestionIndices[i] == rand)
+                if(askedQuestionIndices[f]==rand)
                 {
-                    rand = Integer.MAX_VALUE;
-                    break;
+                    rand=NUMBER_OF_QUESTIONS_TOTAL;
                 }
             }
-        } while (rand == Integer.MAX_VALUE);
-        askedQuestionIndices[i-1] = rand;
+        }while (rand==NUMBER_OF_QUESTIONS_TOTAL);
+        Log.d("Debug Random","Random" + rand + " added at "+ (i-1));
+        askedQuestionIndices[i-1]=rand;
         return rand;
     }
 
@@ -154,7 +150,6 @@ public class FragmentMainQuiz extends Fragment
             @Override
             public void run()
             {
-                boolean flag=true;
                 try {
                     if(Thread.interrupted())
                     {
@@ -196,8 +191,6 @@ public class FragmentMainQuiz extends Fragment
                             Thread.sleep(300);
                         } catch (InterruptedException e)
                         {
-                            e.printStackTrace();
-                            Log.d("Interruption","Thread interrupted correctly");
                             return;
                         }
                     }
@@ -212,22 +205,14 @@ public class FragmentMainQuiz extends Fragment
                         }
                         else
                         {
-                            if(flag)
-                            {
-                                flag=false;
-                                Log.d("Flag value",Boolean.toString(flag));
-                                endQuestions();
-                            }
-
+                            endQuestions();
                             //resetButtons();
                         }
 
                     }
                 }catch (InterruptedException ignored)
                 {
-                    ignored.printStackTrace();
-                    Log.d("Interruption","Thread interrupted correctly");
-                    return;
+
                 }
 
             }
