@@ -141,7 +141,7 @@ this.datasetLeaderboard=datasetLeaderboard;
         holder.textViewPosition.setText(Integer.toString(position+1));
 //        holder.textViewPosition.setText("kbhc");
        holder.textViewUname.setText(model.getUname());
-        holder.textViewTotalPoints.setText(model.getPoints());
+       holder.textViewTotalPoints.setText(Integer.toString(model.getPoints()));
        // holder.textViewUname.setText("kx");
       Glide.with(context).load(model.getAvatar()).into(holder.imageViewAvatar);
 

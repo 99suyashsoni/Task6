@@ -332,8 +332,9 @@ public class FragmentMainQuiz extends Fragment
                     if(i<NUMBER_OF_QUESTIONS_PER_ROUND)
                     {
                         mediaPlayerBackground.start();
-                        newQuestion();
                         i++;
+                        newQuestion();
+
                     }
                     else
                     {

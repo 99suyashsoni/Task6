@@ -71,7 +71,7 @@ class LeaderboardFragment: Fragment() {
 
         }
 
-        currentusermodel= LeaderboardDataModel(PlayerData.udrPoints,PlayerData.udrAvtar,PlayerData.udrUserName)
+        currentusermodel= LeaderboardDataModel(PlayerData.udrPoints.toInt(),PlayerData.udrAvtar,PlayerData.udrUserName)
        // val `sort` = SortPoints()
 //
 //        `sort`.setSortPointsListener(object : SortPoints.SortPointsListener {
@@ -106,7 +106,7 @@ class LeaderboardFragment: Fragment() {
 
                 for (dsp in dataSnapshot.children) {
                     var uname = dsp.child("Username").value!!.toString()
-                    var points = dsp.child("Total Points").value!!.toString()
+                    var points = dsp.child("Total Points").value!!.toString().toInt()
                     var avatar = dsp.child("Avtar Img").value!!.toString()
 
                   var  model =  LeaderboardDataModel(points,avatar,uname)
@@ -133,7 +133,8 @@ class LeaderboardFragment: Fragment() {
 //                            }
 //                        }
 //                    }
-               datasetLeaderboard.sortWith(compareByDescending { it.Points })
+//                  datasetLeaderboard.sortWith(compareByDescending { it.Points })
+                    datasetLeaderboard.sortByDescending { it.Points }
                 }
 
 
