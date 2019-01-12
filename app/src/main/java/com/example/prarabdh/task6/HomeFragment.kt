@@ -3,6 +3,7 @@ package com.example.prarabdh.task6
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -29,7 +30,7 @@ class HomeFragment: Fragment(){
 
         val playerPoints = 1000//PlayerData.udrPoints.toInt()
 
-        viewManager = GridLayoutManager(activity!!,2)
+        viewManager = LinearLayoutManager(activity)
         viewAdapter = MyAdapter(images, names, pointsToUnlock, playerPoints, activity!!)
         recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView).apply {
 
