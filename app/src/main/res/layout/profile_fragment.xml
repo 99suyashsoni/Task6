@@ -116,7 +116,7 @@
         android:id="@+id/btnSignOut"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/btnleadorboard"
+        android:background="#757575"
         android:text="SignOut"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
