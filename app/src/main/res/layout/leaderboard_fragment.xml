@@ -14,9 +14,7 @@
         android:padding="8dp"
         android:text="Leaderboard"
         android:textAlignment="center"
-        android:textAllCaps="true"
         android:textColor="#FFFFFF"
-        android:textColorHighlight="@color/btnleadorboard"
         android:textSize="28sp"
         android:background="#424242"
         />
