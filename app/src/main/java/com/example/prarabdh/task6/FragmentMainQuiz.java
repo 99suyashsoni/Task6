@@ -36,6 +36,7 @@ public class FragmentMainQuiz extends Fragment
 
     int status=100;
     private Handler handler=new Handler();
+    QuestionModel questionModel;
 
     //Will have to extract this from firebase
     final int NUMBER_OF_QUESTIONS_TOTAL = 5;     //Stores the total number of questions that are stored in the database for the given category
@@ -56,17 +57,10 @@ public class FragmentMainQuiz extends Fragment
     public int Random()
     {
         int rand;
-        do {
-            double r=Math.random()*1000;
-            rand=(int)(r%NUMBER_OF_QUESTIONS_TOTAL);
-            for (int f=0;f<i;f++)
-            {
-                if(askedQuestionIndices[f]==rand)
-                {
-                    rand=NUMBER_OF_QUESTIONS_TOTAL;
-                }
-            }
-        }while (rand==NUMBER_OF_QUESTIONS_TOTAL);
+        double r=Math.random()*1000;
+        rand=(int)(r%(NUMBER_OF_QUESTIONS_TOTAL-i));
+        questionModel=arrayList.get(i);
+        arrayList.remove(i);
         Log.d("Debug Random","Random" + rand + " added at "+ (i-1));
         askedQuestionIndices[i-1]=rand;
         return rand;
@@ -240,11 +234,11 @@ public class FragmentMainQuiz extends Fragment
         mediaPlayerBackground.start();
         currentRandom = Random();
         //askedQuestionIndices[i-1] = currentRandom;
-        question.setText(arrayList.get(currentRandom).getQuestion());
-        option_1.setText(arrayList.get(currentRandom).getOption1());
-        option_2.setText(arrayList.get(currentRandom).getOption2());
-        option_3.setText(arrayList.get(currentRandom).getOption3());
-        option_4.setText(arrayList.get(currentRandom).getOption4());
+        question.setText(questionModel.getQuestion());
+        option_1.setText(questionModel.getOption1());
+        option_2.setText(questionModel.getOption2());
+        option_3.setText(questionModel.getOption3());
+        option_4.setText(questionModel.getOption4());
     }
 
     /**Creating a class for onClickListener as the same logic is to be implemented with all the 4 option buttons
@@ -262,7 +256,7 @@ public class FragmentMainQuiz extends Fragment
         @Override
         public void onClick(View v)
         {
-            String correct=arrayList.get(currentRandom).getAnswer(); //Stores the correct answer for the current question
+            String correct=questionModel.getAnswer(); //Stores the correct answer for the current question
              val=false;                                              //Introduced a new variable instead of using the expression at the right again and again to save the time required by the computer to read the arrayList
                                                                     //and execute the getAnswer() function multiple number of times
 
