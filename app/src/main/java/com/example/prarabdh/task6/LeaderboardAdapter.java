@@ -18,9 +18,11 @@ import java.util.ArrayList;
 
 
 public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.MyViewHolder> {
-    private ArrayList datasetUname;
-    private ArrayList datasetPoints;
-    private ArrayList datasetAvatar;
+
+    ArrayList<LeaderboardDataModel> datasetLeaderboard;
+//    private ArrayList datasetUname;
+//    private ArrayList datasetPoints;
+//    private ArrayList datasetAvatar;
     private Context context ;
 
     // Provide a reference to the views for each data item
@@ -42,7 +44,7 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public LeaderboardAdapter(Context context ,ArrayList datasetAvatar,ArrayList datasetPoints,ArrayList datasetUname) {
+    public LeaderboardAdapter(Context context ,ArrayList datasetLeaderboard) {
 
 //        for (int i = 0; i < (datasetPoints.size() - 1 ); i++) {
 //            for (int j = 0; j < datasetPoints.size() - i - 1; j++) {
@@ -64,10 +66,11 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
 //        }
 
 
+this.datasetLeaderboard=datasetLeaderboard;
 
-        this.datasetAvatar=datasetAvatar;
-        this.datasetPoints=datasetPoints;
-        this.datasetUname=datasetUname;
+//        this.datasetAvatar=datasetAvatar;
+//        this.datasetPoints=datasetPoints;
+//        this.datasetUname=datasetUname;
         this.context =context;
 
       // sort();
@@ -134,12 +137,13 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
     public void onBindViewHolder(MyViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
+        LeaderboardDataModel model=datasetLeaderboard.get(position);
         holder.textViewPosition.setText(Integer.toString(position+1));
 //        holder.textViewPosition.setText("kbhc");
-       holder.textViewUname.setText(datasetUname.get(position).toString());
-        holder.textViewTotalPoints.setText(datasetPoints.get(position).toString());
+       holder.textViewUname.setText(model.getUname());
+       holder.textViewTotalPoints.setText(Integer.toString(model.getPoints()));
        // holder.textViewUname.setText("kx");
-      Glide.with(context).load(datasetAvatar.get(position).toString()).into(holder.imageViewAvatar);
+      Glide.with(context).load(model.getAvatar()).into(holder.imageViewAvatar);
 
 
     }
@@ -147,7 +151,7 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return datasetPoints.size();
+        return datasetLeaderboard.size();
     }
 
 

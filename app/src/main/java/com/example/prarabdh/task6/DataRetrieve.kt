@@ -15,7 +15,8 @@ internal class  DataRetrieve {
         val ref1 = database.getReference("Users").child(uId)
         ref1.addValueEventListener(object : ValueEventListener {
 
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
+            override fun onDataChange(
+                    dataSnapshot: DataSnapshot) {
 
                 PlayerData.udrUserId = uId
                 PlayerData.udrPoints = dataSnapshot.child("Total Points").value as String
