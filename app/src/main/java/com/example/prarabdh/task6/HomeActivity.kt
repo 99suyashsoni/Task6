@@ -31,6 +31,7 @@ class HomeActivity : AppCompatActivity()
     private var userName: TextView? = null
     private var points: TextView? = null
 
+
     private val navListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
 
         var selectedFragment: Fragment

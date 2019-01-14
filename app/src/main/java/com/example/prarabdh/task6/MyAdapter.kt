@@ -11,9 +11,11 @@ import android.widget.Button
 
 class MyAdapter(private val images: IntArray, private val names: Array<String>, private val pointsToUnlock: IntArray, private val playerPoints: Int, private val activity: FragmentActivity): RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
 
+
     inner class MyViewHolder(val view:View) : RecyclerView.ViewHolder(view){
 
-        internal var button: Button = view.findViewById(R.id.button)
+        internal var button1: Button = view.findViewById(R.id.button1)
+        internal var button2: Button = view.findViewById(R.id.button2)
 
     }
 
@@ -24,13 +26,15 @@ class MyAdapter(private val images: IntArray, private val names: Array<String>, 
         return MyViewHolder(view)
     }
 
-    override fun getItemCount() = images.size
+    override fun getItemCount() = images.size/2
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 
-        holder.button.setBackgroundResource(images[position])
-        holder.button.text = names[position]
-        holder.button.setOnClickListener {
+        holder.button1.setBackgroundResource(images[(2*position)])
+        holder.button2.setBackgroundResource(images[((2*position)+1)])
+        holder.button1.text = names[(2*position)]
+        holder.button2.text = names[((2*position)+1)]
+        holder.button1.setOnClickListener {
 
             if (playerPoints >= pointsToUnlock[position])
             {
@@ -45,5 +49,6 @@ class MyAdapter(private val images: IntArray, private val names: Array<String>, 
                 Log.i("Button","This quiz is locked")
             }
         }
+
     }
 }

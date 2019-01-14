@@ -44,9 +44,6 @@ class ProfileFragment: Fragment(){
         txtLoose = view.findViewById(R.id.txtloose)
         txtLoose!!.text= PlayerData.udrLosses
 
-        txtTotal = view.findViewById(R.id.txttotal)
-        txtTotal!!.text= PlayerData.udrPoints
-
         txtEmail = view.findViewById(R.id.txtemail)
         txtEmail!!.text= PlayerData.udrEmail
 

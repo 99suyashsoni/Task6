@@ -34,10 +34,10 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText editTextEmail;
     private EditText editTextPassword;
     private EditText editTextUserName;
-    private ImageButton imageButton1;
-    private ImageButton imageButton2;
-    private ImageButton imageButton3;
-    private ImageButton imageButton4;
+//    private ImageButton imageButton1;
+//    private ImageButton imageButton2;
+//    private ImageButton imageButton3;
+//    private ImageButton imageButton4;
     private ImageView imageViewAvatar;
 //    private  String email="w";
 //    private  String password="e";
@@ -60,55 +60,55 @@ public class SignUpActivity extends AppCompatActivity {
         editTextEmail=findViewById(R.id.editTextEmail);
         editTextPassword =findViewById(R.id.editTextPassword);
         editTextUserName=findViewById(R.id.editTextUserName);
-        imageButton1=findViewById(R.id.imageButton1);
-        imageButton2=findViewById(R.id.imageButton2);
-        imageButton3=findViewById(R.id.imageButton3);
-        imageButton4=findViewById(R.id.imageButton4);
+//        imageButton1=findViewById(R.id.imageButton1);
+//        imageButton2=findViewById(R.id.imageButton2);
+//        imageButton3=findViewById(R.id.imageButton3);
+//        imageButton4=findViewById(R.id.imageButton4);
         imageViewAvatar=findViewById(R.id.imageViewAvatar);
-        Glide.with(this).load(url1).into(imageViewAvatar);
-        Glide.with(this).load(url1).into(imageButton1);
-        Glide.with(this).load(url2).into(imageButton2);
-        Glide.with(this).load(url3).into(imageButton3);
-        Glide.with(this).load(url4).into(imageButton4);
+//        Glide.with(this).load(url1).into(imageViewAvatar);
+//        Glide.with(this).load(url1).into(imageButton1);
+//        Glide.with(this).load(url2).into(imageButton2);
+//        Glide.with(this).load(url3).into(imageButton3);
+//        Glide.with(this).load(url4).into(imageButton4);
 
         mDatabase = FirebaseDatabase.getInstance().getReference("Users");
         mAuth = FirebaseAuth.getInstance();
 
 
         //setting onClick Listeners
-        imageButton1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                imageChosen="1";
-                Glide.with(SignUpActivity.this).load(url1).into(imageViewAvatar);
-
-            }
-        });
-
-        imageButton2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                imageChosen="2";
-                Glide.with(SignUpActivity.this).load(url2).into(imageViewAvatar);
-            }
-        });
-
-        imageButton3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                imageChosen="3";
-                Glide.with(SignUpActivity.this).load(url3).into(imageViewAvatar);
-
-            }
-        });
-
-        imageButton4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                imageChosen="girl";
-                Glide.with(SignUpActivity.this).load(url4).into(imageViewAvatar);
-            }
-        });
+//        imageButton1.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                imageChosen="1";
+//                Glide.with(SignUpActivity.this).load(url1).into(imageViewAvatar);
+//
+//            }
+//        });
+//
+//        imageButton2.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                imageChosen="2";
+//                Glide.with(SignUpActivity.this).load(url2).into(imageViewAvatar);
+//            }
+//        });
+//
+//        imageButton3.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                imageChosen="3";
+//                Glide.with(SignUpActivity.this).load(url3).into(imageViewAvatar);
+//
+//            }
+//        });
+//
+//        imageButton4.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                imageChosen="girl";
+//                Glide.with(SignUpActivity.this).load(url4).into(imageViewAvatar);
+//            }
+//        });
 
         buttonSignInInstead.setOnClickListener(new View.OnClickListener() {
             @Override
