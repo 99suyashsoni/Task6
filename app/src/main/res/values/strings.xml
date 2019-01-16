@@ -22,4 +22,13 @@
     <string name="create_a_new_account">Create a new Account</string>
     <string name="register">REGISTER</string>
     <string name="sign_in_instead">Sign In instead</string>
+    <string name="avatar_url_1">https://vignette.wikia.nocookie.net/angry-birds-epic-fanon/images/f/fd/212px-AB_Epic_Avatar_Image_1.png/revision/latest?cb=20150110074525</string>
+    <string name="avatar_url_2">https://vignette.wikia.nocookie.net/angry-birds-epic-fanon/images/4/45/177px-AB_Epic_Avatar_Image_3.png/revision/latest?cb=20150314093014</string>
+    <string name="avatar_url_3">https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVCdo0Ck-v38cziOSMRVVhpXb2AUsF_EBSXPTYv3W2Zyv8mfJi</string>
+    <string name="avatar_url_4">https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQSVB6DvVjeTQxtDHtBAVQ6_wG4qA7_JPcC3sxJz25f3tWNo6r</string>
+    <string name="avatar_url_5">https://vignette.wikia.nocookie.net/angry-birds-epic-fanon/images/f/fd/212px-AB_Epic_Avatar_Image_1.png/revision/latest?cb=20150110074525</string>
+    <string name="avatar_url_6">https://vignette.wikia.nocookie.net/angry-birds-epic-fanon/images/4/45/177px-AB_Epic_Avatar_Image_3.png/revision/latest?cb=20150314093014</string>
+    <string name="avatar_url_7">https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVCdo0Ck-v38cziOSMRVVhpXb2AUsF_EBSXPTYv3W2Zyv8mfJi</string>
+    <string name="avatar_url_8">https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQSVB6DvVjeTQxtDHtBAVQ6_wG4qA7_JPcC3sxJz25f3tWNo6r</string>
+
 </resources>

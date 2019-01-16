@@ -25,7 +25,10 @@ internal class  DataRetrieve {
                 PlayerData.udrAvtar= dataSnapshot.child("Avtar Img").value as String
                 PlayerData.udrWins= dataSnapshot.child("Wins").value as String
                 PlayerData.udrLosses= dataSnapshot.child("Losses").value as String
+
+ 
             }
+
 
             override fun onCancelled(databaseError: DatabaseError) {
                 println("The read failed: " + databaseError.code)

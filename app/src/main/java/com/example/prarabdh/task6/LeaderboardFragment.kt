@@ -21,6 +21,9 @@ import com.example.prarabdh.task6.R.id.navigation_leaderboard
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.home_fragment.view.*
 import android.R.attr.name
+import android.support.v7.widget.RecyclerView.GONE
+import android.view.WindowManager
+import android.widget.ProgressBar
 import java.lang.System.console
 
 
@@ -36,6 +39,8 @@ class LeaderboardFragment: Fragment() {
     private lateinit var mlayoutManager: LayoutManager
     private var datasetLeaderboard = ArrayList<LeaderboardDataModel>()
     private var currentusermodel: LeaderboardDataModel? = null
+    private var progressBar: ProgressBar? = null
+    private var progressBarPresent = false
 
 //    private var datasetPoints = ArrayList<String>()
 //    private var datasetAvatar = ArrayList<String>()
@@ -48,7 +53,11 @@ class LeaderboardFragment: Fragment() {
         val view = inflater.inflate(R.layout.leaderboard_fragment, container, false)
 //        val bottomNav: BottomNavigationView = HomeActivity().findViewById(R.id.navigation)
 //        bottomNav.selectedItemId = R.id.navigation_leaderboard
-
+        progressBar = view.findViewById(R.id.progressBar)
+        progressBar!!.setVisibility(View.VISIBLE)
+        progressBar!!.setIndeterminate(true)
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+//                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
         textViewUname = view.findViewById(R.id.textViewUname)
         textViewLeaderboard = view.findViewById(R.id.textViewLeaderBoard)
         textViewTotalPoints = view.findViewById(R.id.textViewTotalPoints)
@@ -183,9 +192,12 @@ class LeaderboardFragment: Fragment() {
         mleaderboardAdapter.notifyDataSetChanged()
 
 
-
+progressBar!!.setVisibility(View.GONE)
         return view
     }
+
+
+
 }
 
 //
