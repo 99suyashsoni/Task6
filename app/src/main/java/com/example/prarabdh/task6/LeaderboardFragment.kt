@@ -98,7 +98,7 @@ class LeaderboardFragment: Fragment() {
         textViewUname!!.text = PlayerData.udrUserName
         textViewTotalPoints!!.text = PlayerData.udrPoints
         Glide.with(this@LeaderboardFragment).load(PlayerData.udrAvtar).into(imageViewAvatar!!)
-        textViewLeaderboard!!.text="Leadorboard"
+        textViewLeaderboard!!.text="Leaderboard"
 
 
 
