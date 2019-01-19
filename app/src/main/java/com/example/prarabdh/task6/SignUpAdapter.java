@@ -24,7 +24,7 @@ public class SignUpAdapter extends RecyclerView.Adapter<SignUpAdapter.MyViewHold
     //    private ArrayList datasetUname;
 //    private ArrayList datasetPoints;
 //    private ArrayList datasetAvatar;
-    private Context context ;
+    private Context context;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -33,6 +33,7 @@ public class SignUpAdapter extends RecyclerView.Adapter<SignUpAdapter.MyViewHold
         // each data item is just a string in this case
 
         public ImageButton imageButton;
+
         public MyViewHolder(View v) {
             super(v);
 
@@ -41,23 +42,22 @@ public class SignUpAdapter extends RecyclerView.Adapter<SignUpAdapter.MyViewHold
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public SignUpAdapter(Context context ,ArrayList datasetAvatar) {
+    public SignUpAdapter(Context context, ArrayList datasetAvatar) {
 
 
-        this.datasetAvatar=datasetAvatar;
-        this.context =context;
+        this.datasetAvatar = datasetAvatar;
+        this.context = context;
 
 
     }
 
 
-
     // Create new views (invoked by the layout manager)
     @Override
     public SignUpAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent,
-                                                              int viewType) {
+                                                         int viewType) {
         // create a new view
-        View v =  LayoutInflater.from(parent.getContext())
+        View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.signup_avatar, parent, false);
 
         // ...

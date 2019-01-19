@@ -20,10 +20,10 @@ import java.util.ArrayList;
 public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.MyViewHolder> {
 
     ArrayList<LeaderboardDataModel> datasetLeaderboard;
-//    private ArrayList datasetUname;
+    //    private ArrayList datasetUname;
 //    private ArrayList datasetPoints;
 //    private ArrayList datasetAvatar;
-    private Context context ;
+    private Context context;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -34,6 +34,7 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
         public TextView textViewUname;
         public TextView textViewPosition;
         public ImageView imageViewAvatar;
+
         public MyViewHolder(View v) {
             super(v);
             textViewTotalPoints = v.findViewById(R.id.textViewTotalPoints);
@@ -44,7 +45,7 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public LeaderboardAdapter(Context context ,ArrayList datasetLeaderboard) {
+    public LeaderboardAdapter(Context context, ArrayList datasetLeaderboard) {
 
 //        for (int i = 0; i < (datasetPoints.size() - 1 ); i++) {
 //            for (int j = 0; j < datasetPoints.size() - i - 1; j++) {
@@ -66,14 +67,14 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
 //        }
 
 
-this.datasetLeaderboard=datasetLeaderboard;
+        this.datasetLeaderboard = datasetLeaderboard;
 
 //        this.datasetAvatar=datasetAvatar;
 //        this.datasetPoints=datasetPoints;
 //        this.datasetUname=datasetUname;
-        this.context =context;
+        this.context = context;
 
-      // sort();
+        // sort();
 
 //                for (pass in 0 until (datasetPoints.size - 1)) {
 //                    // A single pass of bubble sort
@@ -122,12 +123,12 @@ this.datasetLeaderboard=datasetLeaderboard;
     // Create new views (invoked by the layout manager)
     @Override
     public LeaderboardAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent,
-                                                     int viewType) {
+                                                              int viewType) {
         // create a new view
-        View v =  LayoutInflater.from(parent.getContext())
+        View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.leaderboard_position, parent, false);
 
-       // ...
+        // ...
         MyViewHolder vh = new MyViewHolder(v);
         return vh;
     }
@@ -137,13 +138,13 @@ this.datasetLeaderboard=datasetLeaderboard;
     public void onBindViewHolder(MyViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        LeaderboardDataModel model=datasetLeaderboard.get(position);
-        holder.textViewPosition.setText(Integer.toString(position+1));
+        LeaderboardDataModel model = datasetLeaderboard.get(position);
+        holder.textViewPosition.setText(Integer.toString(position + 1));
 //        holder.textViewPosition.setText("kbhc");
-       holder.textViewUname.setText(model.getUname());
-       holder.textViewTotalPoints.setText(Integer.toString(model.getPoints()));
-       // holder.textViewUname.setText("kx");
-      Glide.with(context).load(model.getAvatar()).into(holder.imageViewAvatar);
+        holder.textViewUname.setText(model.getUname());
+        holder.textViewTotalPoints.setText(Integer.toString(model.getPoints()));
+        // holder.textViewUname.setText("kx");
+        Glide.with(context).load(model.getAvatar()).into(holder.imageViewAvatar);
 
 
     }

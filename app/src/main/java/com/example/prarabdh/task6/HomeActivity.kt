@@ -17,16 +17,15 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
 
-class HomeActivity : AppCompatActivity()
-{
-     // Initialised database and authentication variables and moved all UI items to updateUI method to Successfully
+class HomeActivity : AppCompatActivity() {
+    // Initialised database and authentication variables and moved all UI items to updateUI method to Successfully
 //    fill them with logged in users data
     // Removed all uses of PlayerDataRetrieveDataRetrieve.kt class with static variables of PlayerData Class starting with usr**
     // anytime u need usrers data access UserDataRetrieve class static variables
     //IMP note*****
     // Loops for retreiving Achivements were causing OutOfMemory error and thus was unable to retrieve Achievements
     private lateinit var auth: FirebaseAuth
-    private lateinit var  bottomNav: BottomNavigationView
+    private lateinit var bottomNav: BottomNavigationView
     private var imageView: ImageView? = null
     private var userName: TextView? = null
     private var points: TextView? = null
@@ -67,14 +66,12 @@ class HomeActivity : AppCompatActivity()
 
     }
 
-    override fun onCreate(savedInstanceState: Bundle?)
-    {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home_screen)
 
         auth = FirebaseAuth.getInstance()
     }
-
 
 
     public override fun onStart() {
@@ -86,14 +83,11 @@ class HomeActivity : AppCompatActivity()
 
     private fun updateUI(currentUser: FirebaseUser?) {
 
-        if (currentUser == null)
-        {
+        if (currentUser == null) {
             //If no user is logged in open sigin activity
             startActivity(Intent(this@HomeActivity, SignInActivity::class.java))
 
-        }
-        else
-        {
+        } else {
             //if user is logged in  retrieve its data and save in static variables except Achievemets
             val uid = currentUser.uid
 
@@ -102,9 +96,9 @@ class HomeActivity : AppCompatActivity()
             setSupportActionBar(findViewById(R.id.my_toolbar))
 
             imageView = findViewById(R.id.imageView)
-            Glide.with(this@HomeActivity).load( PlayerData.udrAvtar).into(imageView!!)
+            Glide.with(this@HomeActivity).load(PlayerData.udrAvtar).into(imageView!!)
 
-            userName  = findViewById(R.id.textView6)
+            userName = findViewById(R.id.textView6)
             userName!!.text = PlayerData.udrUserName
 
             points = findViewById(R.id.textView7)

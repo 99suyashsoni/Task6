@@ -27,8 +27,7 @@ import android.widget.ProgressBar
 import java.lang.System.console
 
 
-
-class LeaderboardFragment: Fragment() {
+class LeaderboardFragment : Fragment() {
     private var textViewUname: TextView? = null
     private var textViewLeaderboard: TextView? = null
     private var textViewTotalPoints: TextView? = null
@@ -42,11 +41,10 @@ class LeaderboardFragment: Fragment() {
     private var progressBar: ProgressBar? = null
     private var progressBarPresent = false
 
-//    private var datasetPoints = ArrayList<String>()
+    //    private var datasetPoints = ArrayList<String>()
 //    private var datasetAvatar = ArrayList<String>()
     private var mDatabase: DatabaseReference? = null
-    private var currentuserposition=0;
-
+    private var currentuserposition = 0;
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -80,8 +78,8 @@ class LeaderboardFragment: Fragment() {
 
         }
 
-        currentusermodel= LeaderboardDataModel(PlayerData.udrPoints.toInt(),PlayerData.udrAvtar,PlayerData.udrUserName)
-       // val `sort` = SortPoints()
+        currentusermodel = LeaderboardDataModel(PlayerData.udrPoints.toInt(), PlayerData.udrAvtar, PlayerData.udrUserName)
+        // val `sort` = SortPoints()
 //
 //        `sort`.setSortPointsListener(object : SortPoints.SortPointsListener {
 //           override fun onObjectReady(title: String) {
@@ -98,16 +96,16 @@ class LeaderboardFragment: Fragment() {
         textViewUname!!.text = PlayerData.udrUserName
         textViewTotalPoints!!.text = PlayerData.udrPoints
         Glide.with(this@LeaderboardFragment).load(PlayerData.udrAvtar).into(imageViewAvatar!!)
-        textViewLeaderboard!!.text="Leadorboard"
+        textViewLeaderboard!!.text = "Leaderboard"
 
 
 
 
         mDatabase = FirebaseDatabase.getInstance().getReference("Users");
 
-       // val sortRef = mDatabase!!.child(PlayerData.udrUserId)
-              //  .orderByChild("Total Points")
-     //   mDatabase!!.orderByChild("Total Points");
+        // val sortRef = mDatabase!!.child(PlayerData.udrUserId)
+        //  .orderByChild("Total Points")
+        //   mDatabase!!.orderByChild("Total Points");
         mDatabase!!.addListenerForSingleValueEvent(object : ValueEventListener {
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -118,7 +116,7 @@ class LeaderboardFragment: Fragment() {
                     var points = dsp.child("Total Points").value!!.toString().toInt()
                     var avatar = dsp.child("Avtar Img").value!!.toString()
 
-                  var  model =  LeaderboardDataModel(points,avatar,uname)
+                    var model = LeaderboardDataModel(points, avatar, uname)
 
                     datasetLeaderboard.add(model)
 //                    datasetAvatar.add(avatar)
@@ -147,9 +145,9 @@ class LeaderboardFragment: Fragment() {
                 }
 
 
-                currentuserposition=  datasetLeaderboard.indexOf(currentusermodel!!)+1
-                textViewPosition!!.text= currentuserposition.toString()
-               mleaderboardAdapter.notifyDataSetChanged()
+                currentuserposition = datasetLeaderboard.indexOf(currentusermodel!!) + 1
+                textViewPosition!!.text = currentuserposition.toString()
+                mleaderboardAdapter.notifyDataSetChanged()
 //                for (pass in 0 until (datasetPoints.size - 1)) {
 //                    // A single pass of bubble sort
 //                    for (currentPosition in 0 until (datasetPoints.size - pass - 1)) {
@@ -164,12 +162,7 @@ class LeaderboardFragment: Fragment() {
         })
 
 
-
-
-
-
-
-       // mleaderboardAdapter.notifyDataSetChanged()
+        // mleaderboardAdapter.notifyDataSetChanged()
 //
 //            val  n = datasetPoints.size
 //
@@ -184,18 +177,17 @@ class LeaderboardFragment: Fragment() {
 //                arr[j+1] = temp;
 //            }
 
- //       bubbleSort()
+        //       bubbleSort()
 
-   //     mleaderboardAdapter.notifyDataSetChanged()
+        //     mleaderboardAdapter.notifyDataSetChanged()
 
 
         mleaderboardAdapter.notifyDataSetChanged()
 
 
-progressBar!!.setVisibility(View.GONE)
+        progressBar!!.setVisibility(View.GONE)
         return view
     }
-
 
 
 }

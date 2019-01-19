@@ -44,28 +44,28 @@ public class SignUpActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private SignUpAdapter mAdapter;
     private ProgressBar progressBar;
-    private boolean progressBarPresent=false;
+    private boolean progressBarPresent = false;
 
- //    private ImageButton imageButton1;
+    //    private ImageButton imageButton1;
 //    private ImageButton imageButton2;
 //    private ImageButton imageButton3;
 //    private ImageButton imageButton4;
     private ImageView imageViewAvatar;
-//    private  String email="w";
+    //    private  String email="w";
 //    private  String password="e";
-    private String imageChosen="1";
-    private String uid="hh";
-//    private String url1="https://vignette.wikia.nocookie.net/angry-birds-epic-fanon/images/f/fd/212px-AB_Epic_Avatar_Image_1.png/revision/latest?cb=20150110074525";
+    private String imageChosen = "1";
+    private String uid = "hh";
+    //    private String url1="https://vignette.wikia.nocookie.net/angry-birds-epic-fanon/images/f/fd/212px-AB_Epic_Avatar_Image_1.png/revision/latest?cb=20150110074525";
 //    private String url2="https://vignette.wikia.nocookie.net/angry-birds-epic-fanon/images/4/45/177px-AB_Epic_Avatar_Image_3.png/revision/latest?cb=20150314093014";
 //    private String url3="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVCdo0Ck-v38cziOSMRVVhpXb2AUsF_EBSXPTYv3W2Zyv8mfJi";
 //    private String url4="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQSVB6DvVjeTQxtDHtBAVQ6_wG4qA7_JPcC3sxJz25f3tWNo6r";
-    private String imageChosenUrl=Integer.toString(R.string.avatar_url_1);
+    private String imageChosenUrl = Integer.toString(R.string.avatar_url_1);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-         ArrayList<String> datasetAvatar= new ArrayList<>();
+        ArrayList<String> datasetAvatar = new ArrayList<>();
         datasetAvatar.add(Integer.toString(R.string.avatar_url_1));
         datasetAvatar.add(Integer.toString(R.string.avatar_url_2));
         datasetAvatar.add(Integer.toString(R.string.avatar_url_3));
@@ -74,25 +74,24 @@ public class SignUpActivity extends AppCompatActivity {
         datasetAvatar.add(Integer.toString(R.string.avatar_url_2));
         datasetAvatar.add(Integer.toString(R.string.avatar_url_3));
         datasetAvatar.add(Integer.toString(R.string.avatar_url_4));
-
 
 
         //finding all views
-        buttonRegister=findViewById(R.id.buttonRegister);
-        buttonSignInInstead=findViewById(R.id.buttonSignInInstead);
-        editTextEmail=findViewById(R.id.editTextEmail);
-        editTextPassword =findViewById(R.id.editTextPassword);
-        editTextUserName=findViewById(R.id.editTextUserName);
-        recyclerView=findViewById(R.id.recyclerView);
-        mAdapter=new SignUpAdapter(getApplicationContext(),datasetAvatar);
+        buttonRegister = findViewById(R.id.buttonRegister);
+        buttonSignInInstead = findViewById(R.id.buttonSignInInstead);
+        editTextEmail = findViewById(R.id.editTextEmail);
+        editTextPassword = findViewById(R.id.editTextPassword);
+        editTextUserName = findViewById(R.id.editTextUserName);
+        recyclerView = findViewById(R.id.recyclerView);
+        mAdapter = new SignUpAdapter(getApplicationContext(), datasetAvatar);
         recyclerView.setAdapter(mAdapter);
-      //  mAdapter.notifyDataSetChanged();
+        //  mAdapter.notifyDataSetChanged();
 //        imageButton1=findViewById(R.id.imageButton1);
 //        imageButton2=findViewById(R.id.imageButton2);
 //        imageButton3=findViewById(R.id.imageButton3);
 //        imageButton4=findViewById(R.id.imageButton4);
-        imageViewAvatar=findViewById(R.id.imageViewAvatar);
-       Glide.with(this).load(Integer.toString(R.string.avatar_url_1)).into(imageViewAvatar);
+        imageViewAvatar = findViewById(R.id.imageViewAvatar);
+        Glide.with(this).load(Integer.toString(R.string.avatar_url_1)).into(imageViewAvatar);
 //        Glide.with(this).load(url1).into(imageButton1);
 //        Glide.with(this).load(url2).into(imageButton2);
 //        Glide.with(this).load(url3).into(imageButton3);
@@ -100,34 +99,34 @@ public class SignUpActivity extends AppCompatActivity {
 
         mDatabase = FirebaseDatabase.getInstance().getReference("Users");
         mAuth = FirebaseAuth.getInstance();
-   recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+        recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
 
-       @Override
-       public boolean onInterceptTouchEvent(@NonNull RecyclerView recyclerView, @NonNull MotionEvent motionEvent) {
-           View child = recyclerView.findChildViewUnder(motionEvent.getX(),motionEvent.getY());
+            @Override
+            public boolean onInterceptTouchEvent(@NonNull RecyclerView recyclerView, @NonNull MotionEvent motionEvent) {
+                View child = recyclerView.findChildViewUnder(motionEvent.getX(), motionEvent.getY());
 
-         //  editTextUserName.setText(Integer.toString(recyclerView.getChildAdapterPosition(child))+1);
-         //  Toast.makeText(SignUpActivity.this,"pos"+recyclerView.getChildAdapterPosition(child),Toast.LENGTH_LONG).show();
- //Glide.with(SignUpActivity.this).load(url2).into(imageViewAvatar);
-    updateImage(recyclerView.getChildAdapterPosition(child));
-           return false;
-       }
+                //  editTextUserName.setText(Integer.toString(recyclerView.getChildAdapterPosition(child))+1);
+                //  Toast.makeText(SignUpActivity.this,"pos"+recyclerView.getChildAdapterPosition(child),Toast.LENGTH_LONG).show();
+                //Glide.with(SignUpActivity.this).load(url2).into(imageViewAvatar);
+                updateImage(recyclerView.getChildAdapterPosition(child));
+                return false;
+            }
 
-       @Override
-       public void onTouchEvent(@NonNull RecyclerView recyclerView, @NonNull MotionEvent motionEvent) {
+            @Override
+            public void onTouchEvent(@NonNull RecyclerView recyclerView, @NonNull MotionEvent motionEvent) {
 
 //           View child = recyclerView.findChildViewUnder(motionEvent.getX(),motionEvent.getY());
 //
 //editTextUserName.setText(recyclerView.getChildAdapterPosition(child));
 //           Toast.makeText(SignUpActivity.this,"pos"+recyclerView.getChildAdapterPosition(child),Toast.LENGTH_LONG).show();
 
-       }
+            }
 
-       @Override
-       public void onRequestDisallowInterceptTouchEvent(boolean b) {
+            @Override
+            public void onRequestDisallowInterceptTouchEvent(boolean b) {
 
-       }
-   });
+            }
+        });
 
         //setting onClick Listeners
 //        imageButton1.setOnClickListener(new View.OnClickListener() {
@@ -165,7 +164,6 @@ public class SignUpActivity extends AppCompatActivity {
 //        });
 
 
-
         buttonSignInInstead.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -176,20 +174,19 @@ public class SignUpActivity extends AppCompatActivity {
         buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // progressDialog=ProgressDialog.show(SignUpActivity.this,)
-               loadProgressBar();
+                // progressDialog=ProgressDialog.show(SignUpActivity.this,)
+                loadProgressBar();
 
                 mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
-                    public void onDataChange(DataSnapshot dataSnapshot)
-                    {
+                    public void onDataChange(DataSnapshot dataSnapshot) {
                         int i = 0;
-                        for(DataSnapshot dsp:dataSnapshot.getChildren()){
-                            String uname=dsp.child("Username").getValue().toString();
+                        for (DataSnapshot dsp : dataSnapshot.getChildren()) {
+                            String uname = dsp.child("Username").getValue().toString();
                             // UserR userR = dsp.getValue(UserR.class);
-                            if(editTextUserName.getText().toString().equals(uname)){
+                            if (editTextUserName.getText().toString().equals(uname)) {
 
-                                Toast.makeText(SignUpActivity.this,"Username already taken",Toast.LENGTH_LONG).show();
+                                Toast.makeText(SignUpActivity.this, "Username already taken", Toast.LENGTH_LONG).show();
 
                                 editTextUserName.setText("");
 
@@ -200,8 +197,7 @@ public class SignUpActivity extends AppCompatActivity {
                             }
 
                         }
-                        if(i==0)
-                        {
+                        if (i == 0) {
                             createAccount(editTextEmail.getText().toString(), editTextPassword.getText().toString());
                         }
 
@@ -210,7 +206,7 @@ public class SignUpActivity extends AppCompatActivity {
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
                         System.out.println("The read failed: " + databaseError.getCode());
-                       removeProgressBar();
+                        removeProgressBar();
                     }
                 });
 
@@ -220,23 +216,21 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void removeProgressBar() {
-        if(progressBarPresent)
-        {
+        if (progressBarPresent) {
             progressBar.setVisibility(View.GONE);
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-            progressBarPresent=false;
+            progressBarPresent = false;
         }
     }
 
     private void loadProgressBar() {
-        if(!progressBarPresent)
-        {
+        if (!progressBarPresent) {
             progressBar = findViewById(R.id.progressBar);
             progressBar.setVisibility(View.VISIBLE);
             progressBar.setIndeterminate(true);
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-            progressBarPresent=true;
+                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+            progressBarPresent = true;
         }
     }
 
@@ -244,42 +238,42 @@ public class SignUpActivity extends AppCompatActivity {
 
         switch (childAdapterPosition) {
             case 0:
-                imageChosenUrl=Integer.toString(R.string.avatar_url_1);
+                imageChosenUrl = Integer.toString(R.string.avatar_url_1);
                 Glide.with(SignUpActivity.this).load(Integer.toString(R.string.avatar_url_1)).into(imageViewAvatar);
                 break;
 
             case 1:
-                imageChosenUrl=Integer.toString(R.string.avatar_url_2);
+                imageChosenUrl = Integer.toString(R.string.avatar_url_2);
                 Glide.with(SignUpActivity.this).load(Integer.toString(R.string.avatar_url_2)).into(imageViewAvatar);
                 break;
             case 2:
-                imageChosenUrl=Integer.toString(R.string.avatar_url_3);
+                imageChosenUrl = Integer.toString(R.string.avatar_url_3);
                 Glide.with(SignUpActivity.this).load(Integer.toString(R.string.avatar_url_3)).into(imageViewAvatar);
                 break;
             case 3:
-                imageChosenUrl=Integer.toString(R.string.avatar_url_4);
+                imageChosenUrl = Integer.toString(R.string.avatar_url_4);
                 Glide.with(SignUpActivity.this).load(Integer.toString(R.string.avatar_url_4)).into(imageViewAvatar);
                 break;
             case 4:
-                imageChosenUrl=Integer.toString(R.string.avatar_url_1);
+                imageChosenUrl = Integer.toString(R.string.avatar_url_1);
                 Glide.with(SignUpActivity.this).load(Integer.toString(R.string.avatar_url_1)).into(imageViewAvatar);
                 break;
             case 5:
-                imageChosenUrl=Integer.toString(R.string.avatar_url_2);
+                imageChosenUrl = Integer.toString(R.string.avatar_url_2);
                 Glide.with(SignUpActivity.this).load(Integer.toString(R.string.avatar_url_2)).into(imageViewAvatar);
                 break;
             case 6:
-                imageChosenUrl=Integer.toString(R.string.avatar_url_3);
+                imageChosenUrl = Integer.toString(R.string.avatar_url_3);
                 Glide.with(SignUpActivity.this).load(Integer.toString(R.string.avatar_url_3)).into(imageViewAvatar);
                 break;
             case 7:
-                imageChosenUrl=Integer.toString(R.string.avatar_url_4);
+                imageChosenUrl = Integer.toString(R.string.avatar_url_4);
                 Glide.with(SignUpActivity.this).load(Integer.toString(R.string.avatar_url_4)).into(imageViewAvatar);
                 break;
-        default:
+            default:
 
-            imageChosenUrl=Integer.toString(R.string.avatar_url_1);
-            Glide.with(SignUpActivity.this).load(Integer.toString(R.string.avatar_url_1)).into(imageViewAvatar);
+                imageChosenUrl = Integer.toString(R.string.avatar_url_1);
+                Glide.with(SignUpActivity.this).load(Integer.toString(R.string.avatar_url_1)).into(imageViewAvatar);
         }
     }
 
@@ -291,7 +285,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
 
-//Method to create a new account
+    //Method to create a new account
     private void createAccount(String email, String password) {
         Log.d(TAG, "createAccount:" + email);
         if (!validateForm()) {
@@ -323,8 +317,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
 
-
-//method to check non null entries
+    //method to check non null entries
     private boolean validateForm() {
         boolean valid = true;
 
@@ -373,14 +366,12 @@ public class SignUpActivity extends AppCompatActivity {
 //            }
 
 
-            uid=user.getUid();
+            uid = user.getUid();
 
-            writeNewUser(editTextEmail.getText().toString(),imageChosenUrl,editTextUserName.getText().toString());
+            writeNewUser(editTextEmail.getText().toString(), imageChosenUrl, editTextUserName.getText().toString());
             removeProgressBar();
             finish();
-        }
-        else
-        {
+        } else {
             editTextPassword.setText("");
             editTextUserName.setText("");
             editTextEmail.setText("");
@@ -389,7 +380,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     //method to  save data of new user in database
-    private void writeNewUser(String email,String imageChosenUrl,String userName) {
+    private void writeNewUser(String email, String imageChosenUrl, String userName) {
         mDatabase.child(uid).child("Email-id").setValue(email);
         mDatabase.child(uid).child("Total Points").setValue("0");
         mDatabase.child(uid).child("Avtar Img").setValue(imageChosenUrl);
