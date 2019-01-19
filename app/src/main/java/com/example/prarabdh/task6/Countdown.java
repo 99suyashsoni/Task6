@@ -15,6 +15,7 @@ import android.support.constraint.motion.MotionLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +44,6 @@ public class Countdown extends Fragment
     String CATEGORY;
     CountDownTimer c1,c2,c3;
 
-    
     @SuppressLint("ValidFragment")
     public Countdown(String CATEGORY)
     {
@@ -88,6 +88,7 @@ public class Countdown extends Fragment
 
     public void startCountdown()
     {
+        Log.d("Countdown Check","Countdown Start");
         final Animation animation=AnimationUtils.loadAnimation(getContext(),R.anim.animation_countdown_new );
         textView3.startAnimation(animation);
         final MediaPlayer mediaPlayer;
@@ -142,8 +143,6 @@ public class Countdown extends Fragment
                                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                                 fragmentTransaction.replace(R.id.homeFragment, fragmentMainQuiz);
                                 fragmentTransaction.commit();
-                                //supportFragmentManager.beginTransaction().replace(R.id.homeFragment, FragmentMainQuiz()).commit()
-
                             }
                         };
                         c3.start();
@@ -161,29 +160,6 @@ public class Countdown extends Fragment
     public void onStart() 
     {
         new dataDownload().execute();
-
-        /*final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("Categories").child(CATEGORY).child("Q&A");
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot)
-            {
-                Iterable<DataSnapshot> contactChildren = dataSnapshot.getChildren();
-                for (DataSnapshot contact : contactChildren) {
-                    QuestionModel questionModel = new QuestionModel(contact.child("Ques").getValue().toString(), contact.child("Option1").getValue().toString(), contact.child("Option2").getValue().toString(), contact.child("Option3").getValue().toString(), contact.child("Option4").getValue().toString(), contact.child("Answer").getValue().toString());
-                    arrayList.add(questionModel);
-                }
-
-                startCountdown();
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });*/
-
         super.onStart();
     }
 
@@ -225,10 +201,15 @@ public class Countdown extends Fragment
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot)
                 {
                     Iterable<DataSnapshot> contactChildren = dataSnapshot.getChildren();
-                    for (DataSnapshot contact : contactChildren) {
+                    for (DataSnapshot contact : contactChildren)
+                    {
+                        Log.d("Countdown Check","Question Model");
                         QuestionModel questionModel = new QuestionModel(contact.child("Ques").getValue().toString(), contact.child("Option1").getValue().toString(), contact.child("Option2").getValue().toString(), contact.child("Option3").getValue().toString(), contact.child("Option4").getValue().toString(), contact.child("Answer").getValue().toString());
                         arrayList.add(questionModel);
                     }
+                    Log.d("Countdown Check","Countdown Start Call "+arrayList.size());
+                    progressDialog.dismiss();
+                    startCountdown();
                 }
 
                 @Override
@@ -242,8 +223,6 @@ public class Countdown extends Fragment
         @Override
         protected void onPostExecute(Void aVoid)
         {
-            progressDialog.dismiss();
-            startCountdown();
             super.onPostExecute(aVoid);
         }
     }

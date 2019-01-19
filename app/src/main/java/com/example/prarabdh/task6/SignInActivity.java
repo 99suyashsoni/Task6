@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -29,6 +31,8 @@ public class SignInActivity extends AppCompatActivity {
     private EditText editTextPassword;
     private EditText editTextEmail;
     private boolean newUserClicked=false;
+    private ProgressBar progressBar;
+    private boolean progressBarPresent=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +52,7 @@ public class SignInActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 signIn(editTextEmail.getText().toString(),editTextPassword.getText().toString());
+                loadProgressBar();
 
             }
         });
@@ -101,14 +106,17 @@ public class SignInActivity extends AppCompatActivity {
     private void updateUI(FirebaseUser user) {
         if (user != null)
         {
+            removeProgressBar();
             finish();
         }
         else
         {
+            removeProgressBar();
             editTextPassword.setText("");
             editTextEmail.setText("");
         }
     }
+
 
     private void signIn(String email, String password) {
 
@@ -139,11 +147,33 @@ public class SignInActivity extends AppCompatActivity {
 
 
                         if (!task.isSuccessful()) {
+                            removeProgressBar();
+
                         }
 
                     }
                 });
 
+    }
+
+    private void removeProgressBar() {
+        if(progressBarPresent)
+        {
+            progressBar.setVisibility(View.GONE);
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+            progressBarPresent=false;
+        }
+    }
+
+    private void loadProgressBar() {
+        if (!progressBarPresent) {
+            progressBar = findViewById(R.id.progressBar);
+            progressBar.setVisibility(View.VISIBLE);
+            progressBar.setIndeterminate(true);
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+            progressBarPresent = true;
+        }
     }
 
 }
