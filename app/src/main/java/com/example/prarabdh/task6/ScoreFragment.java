@@ -71,7 +71,7 @@ public class ScoreFragment extends Fragment {
 
         Glide.with(Objects.requireNonNull(getContext()))
                 .asBitmap()
-                .load(PlayerData.udrAvtar)
+                .load(PlayerData.udrAvatar)
                 .into(avtar);
         final AchievementsAdapter adapter = new AchievementsAdapter(getContext(), ncategories, nImages);
         // score.setText(FinalScore);
@@ -83,17 +83,21 @@ public class ScoreFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Iterable<DataSnapshot> allCategory = dataSnapshot.getChildren();
+                int j=0;
                 for (DataSnapshot Category : allCategory) {
-                    unlock = Integer.parseInt(Objects.requireNonNull(Category.child("Unlock points").getValue()).toString());
+
+                    unlock = PlayerData.pointstoUnlock[j];
                     int val = FinalScore - unlock;
-                    int val2 = unlock - Integer.parseInt(PlayerData.udrPoints);
-                    String x = Category.child("Images").getValue().toString();
+                    int val2 = unlock - PlayerData.udrPoints;
+                    //String x = Category.child("Images").getValue().toString();
                     String y = Category.getKey().toString();
                     if ((val >= 0)) {
-                        nImages.add(x);
+                        //nImages.add(x);
                         ncategories.add(y);
                         adapter.notifyDataSetChanged();
                     }
+
+                    j++;
 
                 }
             }
@@ -104,7 +108,7 @@ public class ScoreFragment extends Fragment {
             }
         });
         score.setText(Integer.toString(FinalScore));
-        firebaseDatabase.getReference("Users").child(PlayerData.udrUserId).child("Total Points").setValue(Integer.toString(FinalScore));
+        firebaseDatabase.getReference("Users").child(PlayerData.udrUserId).child("Points").setValue(Integer.toString(FinalScore));
         replay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

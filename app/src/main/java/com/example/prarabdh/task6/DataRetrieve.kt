@@ -9,24 +9,30 @@ internal class  DataRetrieve {
 
     val database = FirebaseDatabase.getInstance()
     
-    fun playerDataRetrieve(uId: String)
+    fun playerDataRetrieve(userId: String)
     {
 
-        val ref1 = database.getReference("Users").child(uId)
+        val ref1 = database.getReference("Users").child(userId)
         ref1.addValueEventListener(object : ValueEventListener {
 
             override fun onDataChange(
                     dataSnapshot: DataSnapshot) {
 
-                PlayerData.udrUserId = uId
-                PlayerData.udrPoints = dataSnapshot.child("Total Points").value as String
-                PlayerData.udrEmail= dataSnapshot.child("Email-id").value as String
+                PlayerData.udrUserId = userId
+                PlayerData.udrAchievementsUnlocked = dataSnapshot.child("AchievementsUnlocked").value as String
+                PlayerData.udrAvatar= dataSnapshot.child("Avatar").value as String
+                PlayerData.udrCategoriesUnlocked= dataSnapshot.child("CategoriesUnlocked").value as String
+                PlayerData.udrEmail= dataSnapshot.child("Email").value as String
+                PlayerData.udrLoss= dataSnapshot.child("Loss").value as String
+                PlayerData.udrPoints = dataSnapshot.child("Points").value.toString().toInt()
                 PlayerData.udrUserName= dataSnapshot.child("Username").value as String
-                PlayerData.udrAvtar= dataSnapshot.child("Avtar Img").value as String
-                PlayerData.udrWins= dataSnapshot.child("Wins").value as String
-                PlayerData.udrLosses= dataSnapshot.child("Losses").value as String
+                PlayerData.udrWin= dataSnapshot.child("Win").value as String
 
- 
+                var iterable =dataSnapshot.child("Questions").children
+                for(i in iterable ){
+
+                    PlayerData.udrQuestionsAttempted.put(i.key.toString(),i.value.toString())
+                }
             }
 
 

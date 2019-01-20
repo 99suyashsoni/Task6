@@ -52,7 +52,7 @@ class HomeActivity : AppCompatActivity()
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_random -> {
-                selectedFragment = RandomFragment()
+                selectedFragment = Countdown("Sports")
                 supportFragmentManager.beginTransaction().replace(R.id.homeFragment, selectedFragment).addToBackStack(null).commit()
                 return@OnNavigationItemSelectedListener true
             }
@@ -102,13 +102,13 @@ class HomeActivity : AppCompatActivity()
             setSupportActionBar(findViewById(R.id.my_toolbar))
 
             imageView = findViewById(R.id.imageView)
-            Glide.with(this@HomeActivity).load( PlayerData.udrAvtar).into(imageView!!)
+            Glide.with(this@HomeActivity).load( PlayerData.udrAvatar).into(imageView!!)
 
             userName  = findViewById(R.id.textView6)
             userName!!.text = PlayerData.udrUserName
 
             points = findViewById(R.id.textView7)
-            points!!.text = PlayerData.udrPoints
+            points!!.text = PlayerData.udrPoints.toString()
 
             bottomNav = findViewById(R.id.navigation)
             bottomNav.setOnNavigationItemSelectedListener(navListener)

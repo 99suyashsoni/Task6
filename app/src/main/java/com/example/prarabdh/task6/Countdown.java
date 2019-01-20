@@ -226,7 +226,7 @@ public class Countdown extends Fragment
                 {
                     Iterable<DataSnapshot> contactChildren = dataSnapshot.getChildren();
                     for (DataSnapshot contact : contactChildren) {
-                        QuestionModel questionModel = new QuestionModel(contact.child("Ques").getValue().toString(), contact.child("Option1").getValue().toString(), contact.child("Option2").getValue().toString(), contact.child("Option3").getValue().toString(), contact.child("Option4").getValue().toString(), contact.child("Answer").getValue().toString());
+                        QuestionModel questionModel = new QuestionModel(contact.child("Question").getValue().toString(), contact.child("Option1").getValue().toString(), contact.child("Option2").getValue().toString(), contact.child("Option3").getValue().toString(), contact.child("Option4").getValue().toString(), contact.child("Answer").getValue().toString());
                         arrayList.add(questionModel);
                     }
                 }

@@ -39,16 +39,16 @@ class ProfileFragment: Fragment(){
         txtUname!!.text= PlayerData.udrUserName
 
         txtWin = view.findViewById(R.id.txtwin)
-        txtWin!!.text= PlayerData.udrWins
+        txtWin!!.text= PlayerData.udrWin
 
         txtLoose = view.findViewById(R.id.txtloose)
-        txtLoose!!.text= PlayerData.udrLosses
+        txtLoose!!.text= PlayerData.udrLoss
 
         txtEmail = view.findViewById(R.id.txtemail)
         txtEmail!!.text= PlayerData.udrEmail
 
         imageView = view.findViewById(R.id.imageViewAvatar)
-        Glide.with(this@ProfileFragment).load( PlayerData.udrAvtar).into(imageView!!)
+        Glide.with(this@ProfileFragment).load( PlayerData.udrAvatar).into(imageView!!)
 
         return view
     }

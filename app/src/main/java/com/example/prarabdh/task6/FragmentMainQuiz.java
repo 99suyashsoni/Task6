@@ -97,7 +97,7 @@ public class FragmentMainQuiz extends Fragment
     {
         super.onStart();
 
-        points = Integer.parseInt(PlayerData.udrPoints);
+        points = PlayerData.udrPoints;
 
         //Assigning songs to the various mediaPlayer objects so that they can be played as and when required
         mediaPlayerBackground=MediaPlayer.create(getContext(),R.raw.main_quiz_background);

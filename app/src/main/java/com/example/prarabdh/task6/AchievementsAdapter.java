@@ -35,10 +35,10 @@ public class AchievementsAdapter extends RecyclerView.Adapter<AchievementsAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
          Log.d("binded","called");
-        Glide.with(context)
+        /*Glide.with(context)
              .asBitmap()
              .load(images.get(i))
-             .into(viewHolder.imageView);
+             .into(viewHolder.imageView);*/
          viewHolder.textView.setText(categories.get(i));
 
     }

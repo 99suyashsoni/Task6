@@ -21,9 +21,6 @@ import java.util.ArrayList;
 public class SignUpAdapter extends RecyclerView.Adapter<SignUpAdapter.MyViewHolder> {
 
     ArrayList<String> datasetAvatar;
-    //    private ArrayList datasetUname;
-//    private ArrayList datasetPoints;
-//    private ArrayList datasetAvatar;
     private Context context ;
 
     // Provide a reference to the views for each data item
