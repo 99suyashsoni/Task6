@@ -83,19 +83,11 @@ class LeaderboardFragment : Fragment() {
             currentusermodel = LeaderboardDataModel(PlayerData.udrPoints.toInt(), PlayerData.udrAvatar, PlayerData.udrUserName)
         }
         textViewUname!!.text = PlayerData.udrUserName
-<<<<<<< HEAD
-        textViewTotalPoints!!.text = PlayerData.udrPoints.toString()
-        Glide.with(this@LeaderboardFragment).load(PlayerData.udrAvatar).into(imageViewAvatar!!)
-        textViewLeaderboard!!.text = "Leadorboard"
-=======
         textViewTotalPoints!!.text = PlayerData.udrPoints
         Glide.with(this@LeaderboardFragment).load(PlayerData.udrAvtar).into(imageViewAvatar!!)
         textViewLeaderboard!!.text="Leaderboard"
 
 
-
-
->>>>>>> 0e1ba704d2e6df1330bf4914a3864e21be17c886
         mDatabase = FirebaseDatabase.getInstance().getReference("Users");
         mDatabase!!.addListenerForSingleValueEvent(object : ValueEventListener {
 
