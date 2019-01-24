@@ -1,6 +1,6 @@
 package com.example.prarabdh.task6
 
-import android.support.v4.app.FragmentActivity
+import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,8 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 
 
-class MyAdapter(private val images: IntArray, private val names: Array<String>, private val pointsToUnlock: IntArray, private val playerPoints: Int, private val activity: FragmentActivity): RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
-
+class MyAdapter(private val images: IntArray, private val names: Array<String>, private val pointsToUnlock: IntArray, private val playerPoints: Int, private val listener1:ListenerObject): RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
 
     inner class MyViewHolder(val view:View) : RecyclerView.ViewHolder(view){
 
@@ -42,7 +41,7 @@ class MyAdapter(private val images: IntArray, private val names: Array<String>, 
                 //DataRetrieve().gameDescData(names[position])
                 GameDescData.background = images[position]
                 GameDescData.heading = names[position]
-                activity.supportFragmentManager.beginTransaction().replace(R.id.homeFragment, GameDesc()).addToBackStack(null).commit()
+                listener1.listener!!.onDataRecieved()
             }
             else
             {

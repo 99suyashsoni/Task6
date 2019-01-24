@@ -1,8 +1,8 @@
 package com.example.prarabdh.task6
 
+import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
@@ -16,20 +16,14 @@ import com.google.firebase.database.ValueEventListener
 
 class HomeFragment : Fragment() {
 
+    private var check1: Boolean = false
+    private var check2: Boolean = false
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
     private var recyclerView: RecyclerView? = null
     private val images = intArrayOf(R.drawable.blue1_wall, R.drawable.blue2_wall, R.drawable.blue_wall, R.drawable.green_wall,
             R.drawable.pink_wall, R.drawable.purple1_wall, R.drawable.purple2_wall, R.drawable.purple_wall, R.drawable.red_wall,
             R.drawable.yellow_wall)
-  // private var playerPoints: Int? = null
-    private val database = FirebaseDatabase.getInstance()
-    private var tmp: String = ""
-    private val ref1 = database.getReference("Categories")
-
-   private val names = arrayOf("")
-
-
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -38,64 +32,84 @@ class HomeFragment : Fragment() {
 //        val bottomNav: BottomNavigationView = HomeActivity().findViewById(R.id.navigation)
 //        bottomNav.selectedItemId = navigation_home
 
-        database.getReference("UnlockPoints").addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(dsp: DatabaseError) {
+        val listenerObject3 = ListenerObject()
 
+        listenerObject3.setCustomObjectListener(object : ListenerObject.Listener{
+
+            override fun onDataRecieved() {
+                Log.d("Activity", "Activity2 $activity!!")
+                activity!!.supportFragmentManager.beginTransaction().replace(R.id.homeFragment, GameDesc()).addToBackStack(null).commit()
             }
 
-            override fun onDataChange(dsp: DataSnapshot) {
-                var x = dsp.value.toString()
-                var j=0
-                for (i in 0..x.length-1) {
+        })
 
-                    if (x[i].toChar()==32.toChar()){
 
-                        PlayerData.pointstoUnlock[j]=tmp.toInt()
-                        j++
-                        tmp=""
-                    }else{
+        val listenerObject1 = ListenerObject()
 
-                        tmp=tmp+x[i]
+        listenerObject1.setCustomObjectListener(object : ListenerObject.Listener {
 
+            override fun onDataRecieved() {
+
+                check1 = true
+                if(check1 && check2)
+                {
+                    viewManager = LinearLayoutManager(activity)
+                    viewAdapter = MyAdapter(images, GameDescData.names, PlayerData.pointsToUnlock, PlayerData.udrPoints, listenerObject3)
+                    recyclerView = view!!.findViewById<RecyclerView>(R.id.recyclerView).apply {
+
+                        layoutManager = viewManager
+                        adapter = viewAdapter
                     }
+                    check1 = false
                 }
-                ref1.addValueEventListener(object : ValueEventListener {
 
-                    override fun onDataChange(dsp: DataSnapshot) {
-                        var j=0
-                        for(d in dsp.children){
+            }
+        })
 
-                            names[j]=d.key.toString()
-                            var t = names[j]
-                            j++
-                        }
-                        /*viewManager = LinearLayoutManager(activity)
-                        Log.d("TEST FINAL",PlayerData.pointstoUnlock.size.toString()+" "+PlayerData.udrPoints+" "+images.size+" "+names.size)
-                        viewAdapter = MyAdapter(images, names, PlayerData.pointstoUnlock, 100, activity!!)
-                        recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView).apply {
+        val listenerObject2 = ListenerObject()
 
-                            layoutManager = viewManager
-                            adapter = viewAdapter
-                        }*/
+        listenerObject2.setCustomObjectListener(object : ListenerObject.Listener {
+
+            override fun onDataRecieved() {
+
+                check2 = true
+                if(check1 && check2)
+                {
+                    Log.d("Activity Check","Activity $activity")
+                    viewManager = LinearLayoutManager(activity)
+                    Log.d("Data Check","${GameDescData.names[0]} , ${PlayerData.udrPoints} , ${PlayerData.pointsToUnlock[6]} , $context ")
+                    viewAdapter = MyAdapter(images, GameDescData.names, PlayerData.pointsToUnlock, PlayerData.udrPoints, listenerObject3)
+                    recyclerView = view!!.findViewById<RecyclerView>(R.id.recyclerView).apply {
+
+                        layoutManager = viewManager
+                        adapter = viewAdapter
                     }
-                    override fun onCancelled(dsp: DatabaseError) {
-                    }
+                    check1 = false
+                }
 
-                })
             }
         })
 
 
-        //if(PlayerData.udrPoints!=""){ playerPoints = PlayerData.udrPoints.toInt()}
-       //var  playerPoints = PlayerData.udrPoints.toInt()
 
-        /*viewManager = LinearLayoutManager(activity)
-        viewAdapter = MyAdapter(images, names, PlayerData.pointstoUnlock, PlayerData.udrPoints, activity!!)
-        recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView).apply {
+        DataRetrieve().getCategoryNames(listenerObject1)
+        DataRetrieve().pointsUnlockData(listenerObject2)
 
-            layoutManager = viewManager
-            adapter = viewAdapter
-        }*/
         return view
     }
+
+
+//    fun adapter(){
+//
+//        if(check1 && check2){
+//
+//            viewManager = LinearLayoutManager(activity)
+//            viewAdapter = MyAdapter(images, names, PlayerData.pointsToUnlock, PlayerData.udrPoints, activity!!)
+//            recyclerView = view!!.findViewById<RecyclerView>(R.id.recyclerView).apply {
+//
+//                layoutManager = viewManager
+//                adapter = viewAdapter
+//            }
+//        }
+//    }
 }

@@ -1,5 +1,6 @@
 package com.example.prarabdh.task6
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
@@ -17,20 +18,18 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
 
-class HomeActivity : AppCompatActivity()
-{
-     // Initialised database and authentication variables and moved all UI items to updateUI method to Successfully
+class HomeActivity : AppCompatActivity() {
+    // Initialised database and authentication variables and moved all UI items to updateUI method to Successfully
 //    fill them with logged in users data
     // Removed all uses of PlayerDataRetrieveDataRetrieve.kt class with static variables of PlayerData Class starting with usr**
     // anytime u need usrers data access UserDataRetrieve class static variables
     //IMP note*****
     // Loops for retreiving Achivements were causing OutOfMemory error and thus was unable to retrieve Achievements
     private lateinit var auth: FirebaseAuth
-    private lateinit var  bottomNav: BottomNavigationView
+    private lateinit var bottomNav: BottomNavigationView
     private var imageView: ImageView? = null
     private var userName: TextView? = null
     private var points: TextView? = null
-
 
     private val navListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
 
@@ -67,14 +66,13 @@ class HomeActivity : AppCompatActivity()
 
     }
 
-    override fun onCreate(savedInstanceState: Bundle?)
-    {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home_screen)
 
+        PlayerData.context11 = applicationContext
         auth = FirebaseAuth.getInstance()
     }
-
 
 
     public override fun onStart() {
@@ -86,40 +84,48 @@ class HomeActivity : AppCompatActivity()
 
     private fun updateUI(currentUser: FirebaseUser?) {
 
-        if (currentUser == null)
-        {
+        if (currentUser == null) {
             //If no user is logged in open sigin activity
             startActivity(Intent(this@HomeActivity, SignInActivity::class.java))
 
-        }
-        else
-        {
+        } else {
             //if user is logged in  retrieve its data and save in static variables except Achievemets
             val uid = currentUser.uid
 
-            DataRetrieve().playerDataRetrieve(uid)
+            val listenerObject = ListenerObject()
 
-            setSupportActionBar(findViewById(R.id.my_toolbar))
+            listenerObject.setCustomObjectListener(object : ListenerObject.Listener {
 
-            imageView = findViewById(R.id.imageView)
-            Glide.with(this@HomeActivity).load( PlayerData.udrAvatar).into(imageView!!)
+                override fun onDataRecieved() {
+                    // Code to handle object ready
+                    setSupportActionBar(findViewById(R.id.my_toolbar))
 
-            userName  = findViewById(R.id.textView6)
-            userName!!.text = PlayerData.udrUserName
+                    imageView = findViewById(R.id.imageView)
+                    Glide.with(this@HomeActivity).load(PlayerData.udrAvatar).into(imageView!!)
 
-            points = findViewById(R.id.textView7)
-            points!!.text = PlayerData.udrPoints.toString()
+                    userName = findViewById(R.id.textView6)
+                    userName!!.text = PlayerData.udrUserName
 
-            bottomNav = findViewById(R.id.navigation)
-            bottomNav.setOnNavigationItemSelectedListener(navListener)
+                    points = findViewById(R.id.textView7)
+                    points!!.text = PlayerData.udrPoints.toString()
 
-            supportFragmentManager.beginTransaction().replace(R.id.homeFragment, HomeFragment()).commit()
-            bottomNav.selectedItemId = navigation_home
+                    bottomNav = findViewById(R.id.navigation)
+                    bottomNav.setOnNavigationItemSelectedListener(navListener)
+
+                    supportFragmentManager.beginTransaction().replace(R.id.homeFragment, HomeFragment()).commit()
+                    bottomNav.selectedItemId = navigation_home
+                }
+            })
+
+            DataRetrieve().playerDataRetrieve(uid, listenerObject)
 
         }
 
 
     }
 
+
 }
+
+
 

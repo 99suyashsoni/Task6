@@ -1,5 +1,6 @@
 package com.example.prarabdh.task6
 
+import android.util.Log
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -9,7 +10,7 @@ internal class  DataRetrieve {
 
     val database = FirebaseDatabase.getInstance()
     
-    fun playerDataRetrieve(userId: String)
+    fun playerDataRetrieve(userId: String, l1: ListenerObject)
     {
 
         val ref1 = database.getReference("Users").child(userId)
@@ -28,11 +29,13 @@ internal class  DataRetrieve {
                 PlayerData.udrUserName= dataSnapshot.child("Username").value as String
                 PlayerData.udrWin= dataSnapshot.child("Win").value as String
 
-                var iterable =dataSnapshot.child("Questions").children
+                val iterable =dataSnapshot.child("Questions").children
                 for(i in iterable ){
 
-                    PlayerData.udrQuestionsAttempted.put(i.key.toString(),i.value.toString())
+                    PlayerData.udrQuestionsAttempted[i.key.toString()] = i.value.toString()
                 }
+
+                l1.listener!!.onDataRecieved()
             }
 
 
@@ -43,7 +46,7 @@ internal class  DataRetrieve {
 
     }
 
-    fun gameDescData(gameName: String){
+    fun gameDescData(gameName: String, l2: ListenerObject){
 
         val ref2 = database.getReference("Categories").child(gameName)
         ref2.addValueEventListener(object : ValueEventListener{
@@ -51,11 +54,57 @@ internal class  DataRetrieve {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
 
                 GameDescData.description = dataSnapshot.child("Description").value as String
+
+                l2.listener!!.onDataRecieved()
             }
 
             override fun onCancelled(p0: DatabaseError) {
 
             }
         })
+
+
+    }
+
+    fun pointsUnlockData(l3: ListenerObject){
+
+        database.getReference("UnlockPoints").addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(dsp: DatabaseError) {
+
+            }
+
+            override fun onDataChange(dsp: DataSnapshot) {
+
+                val x = dsp.value.toString()
+                PlayerData.pointsToUnlock = x.split(' ').map { it.toInt() }.toIntArray()
+
+                l3.listener!!.onDataRecieved()
+
+            }
+        })
+
+
+    }
+
+    fun getCategoryNames(l4: ListenerObject){
+
+        database.getReference("Categories").addValueEventListener(object : ValueEventListener {
+
+            override fun onDataChange(dsp: DataSnapshot) {
+
+                for ((j, d) in dsp.children.withIndex()) {
+
+                    GameDescData.names[j] = d.key.toString()
+
+                }
+
+                l4.listener!!.onDataRecieved()
+            }
+
+            override fun onCancelled(dsp: DatabaseError) {
+            }
+        })
+
+
     }
 }

@@ -28,6 +28,7 @@ import java.lang.System.console
 
 
 class LeaderboardFragment : Fragment() {
+
     private var textViewUname: TextView? = null
     private var textViewLeaderboard: TextView? = null
     private var textViewTotalPoints: TextView? = null
@@ -44,7 +45,7 @@ class LeaderboardFragment : Fragment() {
     //    private var datasetPoints = ArrayList<String>()
 //    private var datasetAvatar = ArrayList<String>()
     private var mDatabase: DatabaseReference? = null
-    private var currentuserposition = 0;
+    private var currentuserposition = 0
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -52,8 +53,8 @@ class LeaderboardFragment : Fragment() {
 //        val bottomNav: BottomNavigationView = HomeActivity().findViewById(R.id.navigation)
 //        bottomNav.selectedItemId = R.id.navigation_leaderboard
         progressBar = view.findViewById(R.id.progressBar)
-        progressBar!!.setVisibility(View.VISIBLE)
-        progressBar!!.setIndeterminate(true)
+        progressBar!!.visibility = View.VISIBLE
+        progressBar!!.isIndeterminate = true
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
 //                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
         textViewUname = view.findViewById(R.id.textViewUname)
@@ -83,12 +84,10 @@ class LeaderboardFragment : Fragment() {
             currentusermodel = LeaderboardDataModel(PlayerData.udrPoints.toInt(), PlayerData.udrAvatar, PlayerData.udrUserName)
         }
         textViewUname!!.text = PlayerData.udrUserName
-        textViewTotalPoints!!.text = PlayerData.udrPoints
-        Glide.with(this@LeaderboardFragment).load(PlayerData.udrAvtar).into(imageViewAvatar!!)
-        textViewLeaderboard!!.text="Leaderboard"
-
-
-        mDatabase = FirebaseDatabase.getInstance().getReference("Users");
+        textViewTotalPoints!!.text = PlayerData.udrPoints.toString()
+        Glide.with(this@LeaderboardFragment).load(PlayerData.udrAvatar).into(imageViewAvatar!!)
+        textViewLeaderboard!!.text = "Leadorboard"
+        mDatabase = FirebaseDatabase.getInstance().getReference("Users")
         mDatabase!!.addListenerForSingleValueEvent(object : ValueEventListener {
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -119,12 +118,12 @@ class LeaderboardFragment : Fragment() {
 
             override fun onCancelled(databaseError: DatabaseError) {
                 println("The read failed: " + databaseError.code)
-                progressBar!!.setVisibility(View.GONE)
+                progressBar!!.visibility = View.GONE
             }
         })
 
         Log.d("LeaderboardFragment", "C1")
-        progressBar!!.setVisibility(View.GONE)
+        progressBar!!.visibility = View.GONE
         return view
     }
 

@@ -10,7 +10,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -86,7 +85,7 @@ public class ScoreFragment extends Fragment {
                 int j=0;
                 for (DataSnapshot Category : allCategory) {
 
-                    unlock = PlayerData.pointstoUnlock[j];
+                    unlock = PlayerData.pointsToUnlock[j];
                     int val = FinalScore - unlock;
                     int val2 = unlock - PlayerData.udrPoints;
                     //String x = Category.child("Images").getValue().toString();
