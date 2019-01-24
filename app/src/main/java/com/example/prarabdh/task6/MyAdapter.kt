@@ -38,10 +38,20 @@ class MyAdapter(private val images: IntArray, private val names: Array<String>, 
             if (playerPoints >= pointsToUnlock[position])
             {
                 Log.i("Button", "This quiz is unlocked")
-                //DataRetrieve().gameDescData(names[position])
-                GameDescData.background = images[position]
-                GameDescData.heading = names[position]
-                listener1.listener!!.onDataRecieved()
+                val listenerObject = ListenerObject()
+
+                listenerObject.setCustomObjectListener(object : ListenerObject.Listener{
+
+                    override fun onDataRecieved() {
+
+                        GameDescData.background = images[position]
+                        GameDescData.heading = names[position]
+                        listener1.listener!!.onDataRecieved()
+                    }
+
+                })
+                DataRetrieve().gameDescData(names[position], listenerObject)
+
             }
             else
             {
