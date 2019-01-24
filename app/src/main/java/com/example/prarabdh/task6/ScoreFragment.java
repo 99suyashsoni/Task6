@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 @SuppressLint("ValidFragment")
-public class ScoreFragment extends Fragment {
+public class    ScoreFragment extends Fragment {
     public ArrayList<String> nImages = new ArrayList<>();
     public ArrayList<String> ncategories = new ArrayList<>();
     TextView head, middle, score;
