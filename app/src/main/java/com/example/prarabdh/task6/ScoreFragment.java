@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,6 +51,7 @@ public class    ScoreFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_score, container, false);
+
     }
 
     @Override
@@ -72,10 +74,13 @@ public class    ScoreFragment extends Fragment {
                 .asBitmap()
                 .load(PlayerData.udrAvatar)
                 .into(avtar);
+        ncategories.add("NO results to show as of now");
+        nImages.add(PlayerData.udrAvatar);
         final AchievementsAdapter adapter = new AchievementsAdapter(getContext(), ncategories, nImages);
         // score.setText(FinalScore);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = firebaseDatabase.getReference("Categories");
         databaseReference.addValueEventListener(new ValueEventListener() {
@@ -85,19 +90,27 @@ public class    ScoreFragment extends Fragment {
                 int j=0;
                 for (DataSnapshot Category : allCategory) {
 
+                    Log.d("Score", "Datasnapshot Called "+allCategory.toString());
+
                     unlock = PlayerData.pointsToUnlock[j];
                     int val = FinalScore - unlock;
                     int val2 = unlock - PlayerData.udrPoints;
                     //String x = Category.child("Images").getValue().toString();
-                    String y = Category.getKey().toString();
-                    if ((val >= 0)) {
+                    String y = Category.getKey();
+                    if (val >= 0 && val2>=0 ) {
+                        Log.d("Score", "If condition called Called");
                         //nImages.add(x);
                         ncategories.add(y);
                         adapter.notifyDataSetChanged();
                     }
-
                     j++;
+                }
 
+                if(ncategories.size()==0)
+                {
+                    ncategories.add("No new achivements unlocked");
+                    nImages.add(PlayerData.udrAvatar);
+                    adapter.notifyDataSetChanged();
                 }
             }
 
@@ -111,6 +124,7 @@ public class    ScoreFragment extends Fragment {
         replay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("Score", "On Click Listener Called");
                 Countdown fragmentMainQuiz = new Countdown(CATEGORY);
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

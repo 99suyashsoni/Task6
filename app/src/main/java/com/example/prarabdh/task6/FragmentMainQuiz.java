@@ -1,6 +1,7 @@
 package com.example.prarabdh.task6;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -60,8 +61,8 @@ public class FragmentMainQuiz extends Fragment {
         int rand;
         double r = Math.random() * 1000;
         rand = (int) (r % (NUMBER_OF_QUESTIONS_TOTAL - i));
-        questionModel = arrayList.get(i);
-        arrayList.remove(i);
+        questionModel = arrayList.get(rand);
+        arrayList.remove(rand);
         Log.d("Debug Random", "Random" + rand + " added at " + (i - 1));
         askedQuestionIndices[i - 1] = rand;
         return rand;
@@ -180,9 +181,16 @@ public class FragmentMainQuiz extends Fragment {
                     }
                     if (status <= 0 ) {    //resets the progress bar
                         status = 100;
-                        if (i < NUMBER_OF_QUESTIONS_PER_ROUND && i != 0) {
-                            i++;
-                            newQuestion();
+                        if (i < NUMBER_OF_QUESTIONS_PER_ROUND && i != 0)
+                        {
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    i++;
+                                    newQuestion();
+
+                                }
+                            });
                             Progress();
                         } else {
                             endQuestions();
