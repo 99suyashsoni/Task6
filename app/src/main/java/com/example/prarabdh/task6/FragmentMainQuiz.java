@@ -90,7 +90,7 @@ public class FragmentMainQuiz extends Fragment {
     public void onStart() {
         super.onStart();
 
-        points = Integer.parseInt(PlayerData.udrPoints);
+        points = PlayerData.udrPoints;
 
         //Assigning songs to the various mediaPlayer objects so that they can be played as and when required
         mediaPlayerBackground = MediaPlayer.create(getContext(), R.raw.main_quiz_background);
@@ -174,10 +174,11 @@ public class FragmentMainQuiz extends Fragment {
                             // Sleep for 300 milliseconds.
                             Thread.sleep(300);
                         } catch (InterruptedException e) {
+                            Log.d("Check Status","Interrupted");
                             return;
                         }
                     }
-                    if (status <= 0 && (!Thread.currentThread().isInterrupted())) {    //resets the progress bar
+                    if (status <= 0 ) {    //resets the progress bar
                         status = 100;
                         if (i < NUMBER_OF_QUESTIONS_PER_ROUND && i != 0) {
                             i++;

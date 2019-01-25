@@ -1,5 +1,6 @@
 package com.example.prarabdh.task6
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
@@ -30,7 +31,6 @@ class HomeActivity : AppCompatActivity() {
     private var userName: TextView? = null
     private var points: TextView? = null
 
-
     private val navListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
 
         var selectedFragment: Fragment
@@ -51,7 +51,7 @@ class HomeActivity : AppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_random -> {
-                selectedFragment = RandomFragment()
+                selectedFragment = Countdown("Sports")
                 supportFragmentManager.beginTransaction().replace(R.id.homeFragment, selectedFragment).addToBackStack(null).commit()
                 return@OnNavigationItemSelectedListener true
             }
@@ -70,6 +70,7 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home_screen)
 
+        PlayerData.context11 = applicationContext
         auth = FirebaseAuth.getInstance()
     }
 
@@ -91,29 +92,41 @@ class HomeActivity : AppCompatActivity() {
             //if user is logged in  retrieve its data and save in static variables except Achievemets
             val uid = currentUser.uid
 
-            DataRetrieve().playerDataRetrieve(uid)
+            val listenerObject = ListenerObject()
 
-            setSupportActionBar(findViewById(R.id.my_toolbar))
+            listenerObject.setCustomObjectListener(object : ListenerObject.Listener {
 
-            imageView = findViewById(R.id.imageView)
-            Glide.with(this@HomeActivity).load(PlayerData.udrAvtar).into(imageView!!)
+                override fun onDataRecieved() {
+                    // Code to handle object ready
+                    setSupportActionBar(findViewById(R.id.my_toolbar))
 
-            userName = findViewById(R.id.textView6)
-            userName!!.text = PlayerData.udrUserName
 
-            points = findViewById(R.id.textView7)
-            points!!.text = PlayerData.udrPoints
+                    imageView = findViewById(R.id.imageView)
+                    Glide.with(this@HomeActivity).load(PlayerData.udrAvatar).into(imageView!!)
 
-            bottomNav = findViewById(R.id.navigation)
-            bottomNav.setOnNavigationItemSelectedListener(navListener)
+                    userName = findViewById(R.id.textView6)
+                    userName!!.text = PlayerData.udrUserName
 
-            supportFragmentManager.beginTransaction().replace(R.id.homeFragment, HomeFragment()).commit()
-            bottomNav.selectedItemId = navigation_home
+                    points = findViewById(R.id.textView7)
+                    points!!.text = PlayerData.udrPoints.toString()
+
+                    bottomNav = findViewById(R.id.navigation)
+                    bottomNav.setOnNavigationItemSelectedListener(navListener)
+
+                    supportFragmentManager.beginTransaction().replace(R.id.homeFragment, HomeFragment()).commit()
+                    bottomNav.selectedItemId = navigation_home
+                }
+            })
+
+            DataRetrieve().playerDataRetrieve(uid, listenerObject)
 
         }
 
 
     }
 
+
 }
+
+
 

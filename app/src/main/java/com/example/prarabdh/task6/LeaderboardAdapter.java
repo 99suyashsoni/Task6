@@ -44,81 +44,15 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
         }
     }
 
-    // Provide a suitable constructor (depends on the kind of dataset)
-    public LeaderboardAdapter(Context context, ArrayList datasetLeaderboard) {
 
-//        for (int i = 0; i < (datasetPoints.size() - 1 ); i++) {
-//            for (int j = 0; j < datasetPoints.size() - i - 1; j++) {
-//                if (Integer.parseInt(datasetPoints.get(j).toString()) < Integer.parseInt(datasetPoints.get(j+1).toString()))
-//                {
-//                    String temp = datasetPoints.get(j).toString();
-//                    datasetPoints.set(j,datasetPoints.get(j+1));
-//                    datasetPoints.set(j+1,temp);
-//
-//                    temp = datasetAvatar.get(j).toString();
-//                    datasetAvatar.set(j,datasetAvatar.get(j+1));
-//                    datasetAvatar.set(j+1,temp);
-//
-//                    temp = datasetUname.get(j).toString();
-//                    datasetUname.set(j,datasetUname.get(j+1));
-//                    datasetUname.set(j+1,temp);
-//                }
-//            }
-//        }
+    public LeaderboardAdapter(Context context ,ArrayList datasetLeaderboard) {
 
+        this.datasetLeaderboard=datasetLeaderboard;
+        this.context =context;
 
-        this.datasetLeaderboard = datasetLeaderboard;
-
-//        this.datasetAvatar=datasetAvatar;
-//        this.datasetPoints=datasetPoints;
-//        this.datasetUname=datasetUname;
-        this.context = context;
-
-        // sort();
-
-//                for (pass in 0 until (datasetPoints.size - 1)) {
-//                    // A single pass of bubble sort
-//                    for (currentPosition in 0 until (datasetPoints.size - pass - 1)) {
-//                        // This is a single step
-//
-//                        if (datasetPoints.get(currentPosition) > datasetPoints.get(currentPosition + 1)) {
-//                            var tmp = datasetPoints.get(currentPosition)
-//                            datasetPoints.set(currentPosition, datasetPoints.get(currentPosition + 1))
-//                            datasetPoints.set(currentPosition + 1, tmp)
-//                           // mleaderboardAdapter.notifyDataSetChanged()
-////                    var tmp1 = datasetUname[currentPosition]
-////                    datasetUname[currentPosition] = datasetUname[currentPosition + 1]
-////                    datasetUname[currentPosition + 1] = tmp1
-////
-////                    var tmp2 = datasetAvatar[currentPosition]
-////                    datasetAvatar[currentPosition] = datasetAvatar[currentPosition + 1]
-////                    datasetAvatar[currentPosition + 1] = tmp2
-//                        }
-//                    }
-//                }
     }
 
-    private void sort() {
 
-//        for (int i = 0; i < (datasetPoints.size() - 1 ); i++) {
-//            for (int j = 0; j < datasetPoints.size() - i - 1; j++) {
-//                if (Integer.parseInt(datasetPoints.get(j).toString()) < Integer.parseInt(datasetPoints.get(j+1).toString()))
-//                {
-//                    String temp = datasetPoints.get(j).toString();
-//                    datasetPoints.set(j,datasetPoints.get(j+1));
-//                    datasetPoints.set(j+1,temp);
-//
-//                    temp = datasetAvatar.get(j).toString();
-//                    datasetAvatar.set(j,datasetAvatar.get(j+1));
-//                    datasetAvatar.set(j+1,temp);
-//
-//                    temp = datasetUname.get(j).toString();
-//                    datasetUname.set(j,datasetUname.get(j+1));
-//                    datasetUname.set(j+1,temp);
-//                }
-//            }
-//        }
-    }
 
     // Create new views (invoked by the layout manager)
     @Override
@@ -149,8 +83,7 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
 
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
-    @Override
+        @Override
     public int getItemCount() {
         return datasetLeaderboard.size();
     }
