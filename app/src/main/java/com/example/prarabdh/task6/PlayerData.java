@@ -3,6 +3,7 @@ package com.example.prarabdh.task6;
 import android.content.Context;
 import android.util.ArrayMap;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,4 +21,8 @@ public class PlayerData {
     public static String udrWin = "";
     public static  int[] pointsToUnlock = {0,0,0,0,0,0,0,0,0,0,0,0,0,0};
     public static Context context11 = null;
+    // for leaderboard
+    public static ArrayList<LeaderboardDataModel> datasetLeaderboard = new ArrayList<LeaderboardDataModel>();
+    public static LeaderboardDataModel currentusermodel;
+
 }
