@@ -1,4 +1,6 @@
-package com.example.prarabdh.task6;
+package com.example.prarabdh.task6.dataModels;
+
+import com.example.prarabdh.task6.R;
 
 public class GameDescData {
 

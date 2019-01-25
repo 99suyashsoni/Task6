@@ -1,4 +1,4 @@
-package com.example.prarabdh.task6
+package com.example.prarabdh.task6.fragmentClasses
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -7,6 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import com.example.prarabdh.task6.R
+import com.example.prarabdh.task6.dataModels.GameDescData
+import com.example.prarabdh.task6.fragmentClasses.Countdown
 
 class GameDesc : Fragment() {
 

@@ -1,4 +1,4 @@
-package com.example.prarabdh.task6
+package com.example.prarabdh.task6.fragmentClasses
 
 import android.content.Context
 import android.os.Bundle
@@ -9,6 +9,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.prarabdh.task6.ListenerObject
+import com.example.prarabdh.task6.R
+import com.example.prarabdh.task6.adapters.MyAdapter
+import com.example.prarabdh.task6.dataModels.GameDescData
+import com.example.prarabdh.task6.dataModels.PlayerData
+import com.example.prarabdh.task6.fragmentClasses.GameDesc
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase

@@ -23,6 +23,9 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
+import com.example.prarabdh.task6.FragmentMainQuiz;
+import com.example.prarabdh.task6.R;
+import com.example.prarabdh.task6.dataModels.QuestionModel;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

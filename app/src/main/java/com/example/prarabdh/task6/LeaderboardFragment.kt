@@ -1,4 +1,4 @@
-package com.example.prarabdh.task6
+package com.example.prarabdh.task6.fragmentClasses
 
 import android.media.Image
 import android.os.Bundle
@@ -24,7 +24,10 @@ import android.R.attr.name
 import android.support.v7.widget.RecyclerView.GONE
 import android.view.WindowManager
 import android.widget.ProgressBar
+import com.example.prarabdh.task6.ListenerObject
 import com.example.prarabdh.task6.PlayerData.currentusermodel
+import com.example.prarabdh.task6.adapters.LeaderboardAdapter
+import com.example.prarabdh.task6.dataModels.PlayerData
 import java.lang.System.console
 
 

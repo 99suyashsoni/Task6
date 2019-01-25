@@ -1,4 +1,4 @@
-package com.example.prarabdh.task6;
+package com.example.prarabdh.task6.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.prarabdh.task6.R;
 
 import java.util.ArrayList;
 

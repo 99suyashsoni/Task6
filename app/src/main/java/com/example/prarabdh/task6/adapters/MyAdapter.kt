@@ -1,4 +1,4 @@
-package com.example.prarabdh.task6
+package com.example.prarabdh.task6.adapters
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
@@ -7,9 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import com.example.prarabdh.task6.GameDescData
+import com.example.prarabdh.task6.ListenerObject
+import com.example.prarabdh.task6.R
 
 
-class MyAdapter(private val images: IntArray, private val names: Array<String>, private val pointsToUnlock: IntArray, private val playerPoints: Int, private val listener1:ListenerObject): RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
+class MyAdapter(private val images: IntArray, private val names: Array<String>, private val pointsToUnlock: IntArray, private val playerPoints: Int, private val listener1: ListenerObject): RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
 
     inner class MyViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 

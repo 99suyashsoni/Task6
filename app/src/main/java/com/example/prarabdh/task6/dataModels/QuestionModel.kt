@@ -1,4 +1,4 @@
-package com.example.prarabdh.task6
+package com.example.prarabdh.task6.dataModels
 
 //This is the model for questions, that stores the question, its answers, and the options in a single object, making the code concise and easier to write
 

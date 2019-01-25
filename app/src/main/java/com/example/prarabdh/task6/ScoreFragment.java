@@ -1,4 +1,4 @@
-package com.example.prarabdh.task6;
+package com.example.prarabdh.task6.fragmentClasses;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -20,6 +20,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.prarabdh.task6.R;
+import com.example.prarabdh.task6.adapters.AchievementsAdapter;
+import com.example.prarabdh.task6.dataModels.PlayerData;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
