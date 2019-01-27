@@ -1,17 +1,20 @@
 package com.example.prarabdh.task6
 
 import android.util.Log
+import android.view.View
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
-internal class  DataRetrieve {
+internal class DataRetrieve {
 
     val database = FirebaseDatabase.getInstance()
+
     
     fun playerDataRetrieve(userId: String, l1: ListenerObject)
     {
+
 
         val ref1 = database.getReference("Users").child(userId)
         ref1.addValueEventListener(object : ValueEventListener {
@@ -36,6 +39,7 @@ internal class  DataRetrieve {
                 }
 
                 l1.listener!!.onDataRecieved()
+
             }
 
 
@@ -49,7 +53,7 @@ internal class  DataRetrieve {
     fun gameDescData(gameName: String, l2: ListenerObject){
 
         val ref2 = database.getReference("Categories").child(gameName)
-        ref2.addValueEventListener(object : ValueEventListener{
+        ref2.addValueEventListener(object : ValueEventListener {
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
 
@@ -105,6 +109,41 @@ internal class  DataRetrieve {
             }
         })
 
+
+    }
+
+    // for leaderboard
+    fun getLeadorboardData(l5: ListenerObject,l6: ListenerObject){
+
+        database.getReference("Users").addListenerForSingleValueEvent(object : ValueEventListener {
+
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+//                    var model: LeaderboardDataModel
+                Log.d("LeaderboardFragment", "Size: ${dataSnapshot.children.count()}")
+
+                for (dsp in dataSnapshot.children) {
+                    var uname = dsp.child("Username").value!!.toString()
+                    var points = dsp.child("Points").value!!.toString().toInt()
+                    var avatar = dsp.child("Avatar").value!!.toString()
+
+                    var model = LeaderboardDataModel(points, avatar, uname)
+
+                    Log.d("LeaderboardFragment", "C2")
+
+                    PlayerData.datasetLeaderboard.add(model)
+                    PlayerData.datasetLeaderboard.sortByDescending { it.Points }
+                }
+
+
+l5.listener!!.onDataRecieved()
+            }
+
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                println("The read failed: " + databaseError.code)
+                l6.listener!!.onDataRecieved()
+            }
+        })
 
     }
 }

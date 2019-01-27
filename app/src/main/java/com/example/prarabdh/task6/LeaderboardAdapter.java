@@ -20,9 +20,6 @@ import java.util.ArrayList;
 public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.MyViewHolder> {
 
     ArrayList<LeaderboardDataModel> datasetLeaderboard;
-//    private ArrayList datasetUname;
-//    private ArrayList datasetPoints;
-//    private ArrayList datasetAvatar;
     private Context context ;
 
     // Provide a reference to the views for each data item
@@ -34,6 +31,7 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
         public TextView textViewUname;
         public TextView textViewPosition;
         public ImageView imageViewAvatar;
+
         public MyViewHolder(View v) {
             super(v);
             textViewTotalPoints = v.findViewById(R.id.textViewTotalPoints);
@@ -42,6 +40,7 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
             imageViewAvatar = v.findViewById(R.id.imageViewAvatar);
         }
     }
+
 
     public LeaderboardAdapter(Context context ,ArrayList datasetLeaderboard) {
 
@@ -55,12 +54,12 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
     // Create new views (invoked by the layout manager)
     @Override
     public LeaderboardAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent,
-                                                     int viewType) {
+                                                              int viewType) {
         // create a new view
-        View v =  LayoutInflater.from(parent.getContext())
+        View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.leaderboard_position, parent, false);
 
-       // ...
+        // ...
         MyViewHolder vh = new MyViewHolder(v);
         return vh;
     }
@@ -70,20 +69,38 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
     public void onBindViewHolder(MyViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        LeaderboardDataModel model=datasetLeaderboard.get(position);
-        holder.textViewPosition.setText(Integer.toString(position+1));
-//        holder.textViewPosition.setText("kbhc");
-       holder.textViewUname.setText(model.getUname());
-       holder.textViewTotalPoints.setText(Integer.toString(model.getPoints()));
-       // holder.textViewUname.setText("kx");
-      Glide.with(context).load(model.getAvatar()).into(holder.imageViewAvatar);
+        if(datasetLeaderboard.size()<=20) {
+            LeaderboardDataModel model = datasetLeaderboard.get(position);
+            holder.textViewPosition.setText(Integer.toString(position + 1));
+            holder.textViewUname.setText(model.getUname());
+            holder.textViewTotalPoints.setText(Integer.toString(model.getPoints()));
+            Glide.with(context).load(model.getAvatar()).into(holder.imageViewAvatar);
+        }
+        else{
+            if(position<=20){
 
+
+                LeaderboardDataModel model = datasetLeaderboard.get(position);
+                holder.textViewPosition.setText(Integer.toString(position + 1));
+                holder.textViewUname.setText(model.getUname());
+                holder.textViewTotalPoints.setText(Integer.toString(model.getPoints()));
+                Glide.with(context).load(model.getAvatar()).into(holder.imageViewAvatar);
+            }
+
+
+        }
 
     }
 
         @Override
     public int getItemCount() {
-        return datasetLeaderboard.size();
+
+        if(datasetLeaderboard.size()<=20)
+        {
+
+            return datasetLeaderboard.size();
+        }
+        return 20;
     }
 
 

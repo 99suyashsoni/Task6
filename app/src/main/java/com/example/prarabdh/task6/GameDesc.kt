@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 
-class GameDesc: Fragment(){
+class GameDesc : Fragment() {
 
     private var singlePlayer: Button? = null
     private var multiPLayer: Button? = null
@@ -16,7 +16,7 @@ class GameDesc: Fragment(){
     private var gameDescription: TextView? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.game_desc,container,false)
+        val view = inflater.inflate(R.layout.game_desc, container, false)
 
         singlePlayer = view.findViewById(R.id.button2)
         multiPLayer = view.findViewById(R.id.button3)

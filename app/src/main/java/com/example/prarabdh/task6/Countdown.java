@@ -15,6 +15,7 @@ import android.support.constraint.motion.MotionLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,24 +33,21 @@ import java.util.ArrayList;
 
 
 @SuppressLint("ValidFragment")
-public class Countdown extends Fragment
-{
+public class Countdown extends Fragment {
 
     ConstraintLayout motionLayout;
     TextView textView1;
     TextView textView2;
     TextView textView3;
-    ArrayList<QuestionModel> arrayList=new ArrayList<>();
+    ArrayList<QuestionModel> arrayList = new ArrayList<>();
     String CATEGORY;
-    CountDownTimer c1,c2,c3;
+    CountDownTimer c1, c2, c3;
 
-    
     @SuppressLint("ValidFragment")
-    public Countdown(String CATEGORY)
-    {
-        this.CATEGORY=CATEGORY;
+    public Countdown(String CATEGORY) {
+        this.CATEGORY = CATEGORY;
     }
-    
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,39 +62,35 @@ public class Countdown extends Fragment
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
-    {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        motionLayout=view.findViewById(R.id.motionContainer);
-        textView1=view.findViewById(R.id.TextViewCountdown1);
-        textView2=view.findViewById(R.id.TextViewCountdown2);
-        textView3=view.findViewById(R.id.TextViewCountdown3);
+        motionLayout = view.findViewById(R.id.motionContainer);
+        textView1 = view.findViewById(R.id.TextViewCountdown1);
+        textView2 = view.findViewById(R.id.TextViewCountdown2);
+        textView3 = view.findViewById(R.id.TextViewCountdown3);
     }
 
     @Override
-    public void onAttach(Context context) 
-    {
+    public void onAttach(Context context) {
         super.onAttach(context);
 
     }
 
     @Override
-    public void onPause()
-    {
+    public void onPause() {
         super.onPause();
     }
 
-    public void startCountdown()
-    {
-        final Animation animation=AnimationUtils.loadAnimation(getContext(),R.anim.animation_countdown_new );
+    public void startCountdown() {
+        Log.d("Countdown Check", "Countdown Start");
+        final Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.animation_countdown_new);
         textView3.startAnimation(animation);
         final MediaPlayer mediaPlayer;
-        mediaPlayer=MediaPlayer.create(getContext(),R.raw.countdown );
+        mediaPlayer = MediaPlayer.create(getContext(), R.raw.countdown);
         mediaPlayer.seekTo(3000);
         mediaPlayer.start();
         //CountDownTimer c1=null;
-        c1=new CountDownTimer(1000, 100)
-        {
+        c1 = new CountDownTimer(1000, 100) {
 
             @Override
             public void onTick(long millisUntilFinished) {
@@ -104,13 +98,11 @@ public class Countdown extends Fragment
             }
 
             @Override
-            public void onFinish()
-            {
-                textView3.setTextColor(getResources().getColor(R.color.DefaultBackground ));
+            public void onFinish() {
+                textView3.setTextColor(getResources().getColor(R.color.DefaultBackground));
                 textView2.startAnimation(animation);
                 //CountDownTimer c2=null;
-                c2=new CountDownTimer(1000,100 )
-                {
+                c2 = new CountDownTimer(1000, 100) {
 
                     @Override
                     public void onTick(long millisUntilFinished) {
@@ -118,13 +110,11 @@ public class Countdown extends Fragment
                     }
 
                     @Override
-                    public void onFinish()
-                    {
+                    public void onFinish() {
                         textView2.setTextColor(getResources().getColor(R.color.DefaultBackground));
                         textView1.startAnimation(animation);
                         //CountDownTimer c3=null;
-                        c3=new CountDownTimer(1000,100 )
-                        {
+                        c3 = new CountDownTimer(1000, 100) {
 
                             @Override
                             public void onTick(long millisUntilFinished) {
@@ -132,18 +122,15 @@ public class Countdown extends Fragment
                             }
 
                             @Override
-                            public void onFinish()
-                            {
+                            public void onFinish() {
 
                                 mediaPlayer.stop();
                                 textView1.setTextColor(getResources().getColor(R.color.DefaultBackground));
-                                FragmentMainQuiz fragmentMainQuiz=new FragmentMainQuiz(arrayList,CATEGORY);
-                                FragmentManager fragmentManager=getFragmentManager();
+                                FragmentMainQuiz fragmentMainQuiz = new FragmentMainQuiz(arrayList, CATEGORY);
+                                FragmentManager fragmentManager = getFragmentManager();
                                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                                 fragmentTransaction.replace(R.id.homeFragment, fragmentMainQuiz);
                                 fragmentTransaction.commit();
-                                //supportFragmentManager.beginTransaction().replace(R.id.homeFragment, FragmentMainQuiz()).commit()
-
                             }
                         };
                         c3.start();
@@ -158,77 +145,51 @@ public class Countdown extends Fragment
     }
 
     @Override
-    public void onStart() 
-    {
+    public void onStart() {
         new dataDownload().execute();
-
-        /*final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("Categories").child(CATEGORY).child("Q&A");
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot)
-            {
-                Iterable<DataSnapshot> contactChildren = dataSnapshot.getChildren();
-                for (DataSnapshot contact : contactChildren) {
-                    QuestionModel questionModel = new QuestionModel(contact.child("Ques").getValue().toString(), contact.child("Option1").getValue().toString(), contact.child("Option2").getValue().toString(), contact.child("Option3").getValue().toString(), contact.child("Option4").getValue().toString(), contact.child("Answer").getValue().toString());
-                    arrayList.add(questionModel);
-                }
-
-                startCountdown();
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });*/
-
         super.onStart();
     }
 
     @Override
-    public void onDestroy()
-    {
+    public void onDestroy() {
         super.onDestroy();
     }
 
     @Override
-    public void onDetach()
-    {
+    public void onDetach() {
         c1.cancel();
         c2.cancel();
         c3.cancel();
         super.onDetach();
     }
 
-    private class dataDownload extends AsyncTask<Void,Void,Void>
-    {
+    private class dataDownload extends AsyncTask<Void, Void, Void> {
         ProgressDialog progressDialog;
 
         @Override
-        protected void onPreExecute()
-        {
-            progressDialog=new ProgressDialog(getContext());
+        protected void onPreExecute() {
+            progressDialog = new ProgressDialog(getContext());
             progressDialog.setMessage("Please Wait while we download your questions");
             progressDialog.show();
             super.onPreExecute();
         }
 
         @Override
-        protected Void doInBackground(Void... voids)
-        {
+        protected Void doInBackground(Void... voids) {
             final FirebaseDatabase database = FirebaseDatabase.getInstance();
             DatabaseReference myRef = database.getReference("Categories").child(CATEGORY).child("Q&A");
             myRef.addValueEventListener(new ValueEventListener() {
                 @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot)
-                {
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     Iterable<DataSnapshot> contactChildren = dataSnapshot.getChildren();
                     for (DataSnapshot contact : contactChildren) {
+                        Log.d("Countdown Check", "Question Model");
                         QuestionModel questionModel = new QuestionModel(contact.child("Question").getValue().toString(), contact.child("Option1").getValue().toString(), contact.child("Option2").getValue().toString(), contact.child("Option3").getValue().toString(), contact.child("Option4").getValue().toString(), contact.child("Answer").getValue().toString());
                         arrayList.add(questionModel);
                     }
+                    Log.d("Countdown Check", "Countdown Start Call " + arrayList.size());
+                    progressDialog.dismiss();
+                    startCountdown();
                 }
 
                 @Override
@@ -240,10 +201,7 @@ public class Countdown extends Fragment
         }
 
         @Override
-        protected void onPostExecute(Void aVoid)
-        {
-            progressDialog.dismiss();
-            startCountdown();
+        protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
         }
     }

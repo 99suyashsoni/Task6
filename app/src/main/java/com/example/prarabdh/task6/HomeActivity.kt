@@ -46,6 +46,8 @@ class HomeActivity : AppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_leaderboard -> {
+                //bug in leaderboard
+              PlayerData.datasetLeaderboard.clear()
                 selectedFragment = LeaderboardFragment()
                 supportFragmentManager.beginTransaction().replace(R.id.homeFragment, selectedFragment).addToBackStack(null).commit()
                 return@OnNavigationItemSelectedListener true
@@ -99,6 +101,9 @@ class HomeActivity : AppCompatActivity() {
                 override fun onDataRecieved() {
                     // Code to handle object ready
                     setSupportActionBar(findViewById(R.id.my_toolbar))
+                   //for leaderboard
+                    PlayerData.currentusermodel = LeaderboardDataModel(PlayerData.udrPoints, PlayerData.udrAvatar, PlayerData.udrUserName)
+
 
                     imageView = findViewById(R.id.imageView)
                     Glide.with(this@HomeActivity).load(PlayerData.udrAvatar).into(imageView!!)
