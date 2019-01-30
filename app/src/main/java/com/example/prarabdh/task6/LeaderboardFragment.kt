@@ -1,3 +1,4 @@
+
 package com.example.prarabdh.task6
 
 import android.media.Image
@@ -16,7 +17,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import com.bumptech.glide.Glide
-import com.example.prarabdh.task6.R.attr.data
+
 import com.example.prarabdh.task6.R.id.navigation_leaderboard
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.home_fragment.view.*
@@ -24,9 +25,7 @@ import android.R.attr.name
 import android.support.v7.widget.RecyclerView.GONE
 import android.view.WindowManager
 import android.widget.ProgressBar
-import com.example.prarabdh.task6.DataRetrieve
-import com.example.prarabdh.task6.ListenerObject
-import com.example.prarabdh.task6.dataModels.PlayerData.currentusermodel
+
 import com.example.prarabdh.task6.adapters.LeaderboardAdapter
 import com.example.prarabdh.task6.dataModels.PlayerData
 import java.lang.System.console
@@ -41,7 +40,7 @@ class LeaderboardFragment : Fragment() {
     private var imageViewAvatar: ImageView? = null
     private lateinit var recyclerView: RecyclerView
     private lateinit var mleaderboardAdapter: RecyclerView.Adapter<*>
-    private lateinit var mlayoutManager: LayoutManager
+    private lateinit var mlayoutManager: RecyclerView.LayoutManager
     private var progressBar: ProgressBar? = null
 
 
@@ -64,8 +63,6 @@ class LeaderboardFragment : Fragment() {
 
             override fun onDataRecieved() {
 
-
-
                 textViewUname!!.text = PlayerData.udrUserName
                 textViewTotalPoints!!.text = PlayerData.udrPoints.toString()
                 Glide.with(this@LeaderboardFragment).load(PlayerData.udrAvatar).into(imageViewAvatar!!)
@@ -79,8 +76,6 @@ class LeaderboardFragment : Fragment() {
                     setHasFixedSize(true)
                     layoutManager = mlayoutManager
                     adapter = mleaderboardAdapter
-
-
                 }
                 mleaderboardAdapter.notifyDataSetChanged()
                 progressBar!!.visibility = View.GONE
@@ -107,3 +102,4 @@ class LeaderboardFragment : Fragment() {
     }
 
 }
+

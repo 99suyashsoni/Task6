@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import com.example.prarabdh.task6.DataRetrieve
 import com.example.prarabdh.task6.dataModels.GameDescData
 import com.example.prarabdh.task6.ListenerObject
 import com.example.prarabdh.task6.R
@@ -41,10 +42,20 @@ class MyAdapter(private val images: IntArray, private val names: Array<String>, 
 
             if (playerPoints >= pointsToUnlock[position]) {
                 Log.i("Button", "This quiz is unlocked")
-                //DataRetrieve().gameDescData(names[position])
-                GameDescData.background = images[position]
-                GameDescData.heading = names[position]
-                listener1.listener!!.onDataRecieved()
+                val listenerObject = ListenerObject()
+
+                listenerObject.setCustomObjectListener(object : ListenerObject.Listener{
+
+                    override fun onDataRecieved() {
+
+                        GameDescData.background = images[position]
+                        GameDescData.heading = names[position]
+                        listener1.listener!!.onDataRecieved()
+                    }
+
+                })
+                DataRetrieve().gameDescData(names[position], listenerObject)
+
             }
             else
             {
