@@ -18,6 +18,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.prarabdh.task6.adapters.SignUpAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -45,6 +46,7 @@ public class SignUpActivity extends AppCompatActivity {
     private SignUpAdapter mAdapter;
     private ProgressBar progressBar;
     private boolean progressBarPresent = false;
+
     private ImageView imageViewAvatar;
     private String imageChosen = "1";
     private String uid = "hh";
@@ -59,6 +61,7 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
         ArrayList<String> datasetAvatar = new ArrayList<>();
+
         datasetAvatar.add(url_1);
         datasetAvatar.add(url_2);
         datasetAvatar.add(url_3);
@@ -67,6 +70,7 @@ public class SignUpActivity extends AppCompatActivity {
         datasetAvatar.add(url_2);
         datasetAvatar.add(url_3);
         datasetAvatar.add(url_4);
+
         //finding all views
         buttonRegister = findViewById(R.id.buttonRegister);
         buttonSignInInstead = findViewById(R.id.buttonSignInInstead);
@@ -76,6 +80,7 @@ public class SignUpActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         mAdapter = new SignUpAdapter(getApplicationContext(), datasetAvatar);
         recyclerView.setAdapter(mAdapter);
+
         imageViewAvatar = findViewById(R.id.imageViewAvatar);
         //Glide.with(this).load(Integer.toString(R.string.avatar_url_1)).into(imageViewAvatar);
         Glide.with(this).load(url_1).into(imageViewAvatar);
@@ -83,6 +88,7 @@ public class SignUpActivity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference("Users");
         mAuth = FirebaseAuth.getInstance();
         recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+
 
             @Override
             public boolean onInterceptTouchEvent(@NonNull RecyclerView recyclerView, @NonNull MotionEvent motionEvent) {
@@ -102,7 +108,6 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
-
         buttonSignInInstead.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -113,7 +118,9 @@ public class SignUpActivity extends AppCompatActivity {
         buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 loadProgressBar();
+
                 mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -175,6 +182,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         switch (childAdapterPosition) {
             case 0:
+
                 imageChosenUrl = url_1;
                 Glide.with(SignUpActivity.this).load(url_1).into(imageViewAvatar);
                 break;
@@ -212,6 +220,7 @@ public class SignUpActivity extends AppCompatActivity {
                 imageChosenUrl = url_1;
                 Glide.with(SignUpActivity.this).load(url_1).into(imageViewAvatar);
                 }
+
     }
 
     @Override
@@ -288,7 +297,9 @@ public class SignUpActivity extends AppCompatActivity {
     //method to update ui
     private void updateUI(FirebaseUser user) {
         if (user != null) {
+
             uid = user.getUid();
+
             writeNewUser(editTextEmail.getText().toString(), imageChosenUrl, editTextUserName.getText().toString());
             removeProgressBar();
             finish();
@@ -302,6 +313,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     //method to  save data of new user in database
     private void writeNewUser(String email, String imageChosenUrl, String userName) {
+
         mDatabase.child(uid).child("AchievementsUnlocked").setValue("000000000000000000000");//21 0's
         mDatabase.child(uid).child("Avatar").setValue(imageChosenUrl);
         mDatabase.child(uid).child("CategoriesUnlocked").setValue("111000000000"); //3 1's 9 0's

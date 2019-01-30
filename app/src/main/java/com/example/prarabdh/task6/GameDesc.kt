@@ -1,4 +1,4 @@
-package com.example.prarabdh.task6
+package com.example.prarabdh.task6.fragmentClasses
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -7,8 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import com.example.prarabdh.task6.Countdown
+import com.example.prarabdh.task6.R
+import com.example.prarabdh.task6.dataModels.GameDescData
 
-class GameDesc: Fragment(){
+
+class GameDesc : Fragment() {
 
     private var singlePlayer: Button? = null
     private var multiPLayer: Button? = null
@@ -16,7 +20,7 @@ class GameDesc: Fragment(){
     private var gameDescription: TextView? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.game_desc,container,false)
+        val view = inflater.inflate(R.layout.game_desc, container, false)
 
         singlePlayer = view.findViewById(R.id.button2)
         multiPLayer = view.findViewById(R.id.button3)

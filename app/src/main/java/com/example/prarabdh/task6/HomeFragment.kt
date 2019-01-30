@@ -1,4 +1,4 @@
-package com.example.prarabdh.task6
+package com.example.prarabdh.task6.fragmentClasses
 
 import android.content.Context
 import android.os.Bundle
@@ -9,6 +9,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.prarabdh.task6.DataRetrieve
+import com.example.prarabdh.task6.ListenerObject
+import com.example.prarabdh.task6.R
+import com.example.prarabdh.task6.adapters.MyAdapter
+import com.example.prarabdh.task6.dataModels.GameDescData
+import com.example.prarabdh.task6.dataModels.PlayerData
+import com.example.prarabdh.task6.fragmentClasses.GameDesc
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -24,7 +31,6 @@ class HomeFragment : Fragment() {
     private val images = intArrayOf(R.drawable.blue1_wall, R.drawable.blue2_wall, R.drawable.blue_wall, R.drawable.green_wall,
             R.drawable.pink_wall, R.drawable.purple1_wall, R.drawable.purple2_wall, R.drawable.purple_wall, R.drawable.red_wall,
             R.drawable.yellow_wall)
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -89,8 +95,6 @@ class HomeFragment : Fragment() {
 
             }
         })
-
-
 
         DataRetrieve().getCategoryNames(listenerObject1)
         DataRetrieve().pointsUnlockData(listenerObject2)

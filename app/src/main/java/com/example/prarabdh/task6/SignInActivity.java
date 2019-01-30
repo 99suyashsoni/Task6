@@ -30,9 +30,9 @@ public class SignInActivity extends AppCompatActivity {
     private Button buttonSignIn;
     private EditText editTextPassword;
     private EditText editTextEmail;
-    private boolean newUserClicked=false;
+    private boolean newUserClicked = false;
     private ProgressBar progressBar;
-    private boolean progressBarPresent=false;
+    private boolean progressBarPresent = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +52,7 @@ public class SignInActivity extends AppCompatActivity {
             public void onClick(View v) {
                 loadProgressBar();
 
+
                 signIn(editTextEmail.getText().toString(),editTextPassword.getText().toString());
 
             }
@@ -60,8 +61,8 @@ public class SignInActivity extends AppCompatActivity {
         buttonNewUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                newUserClicked=true;
-                startActivity(new Intent(SignInActivity.this,SignUpActivity.class));
+                newUserClicked = true;
+                startActivity(new Intent(SignInActivity.this, SignUpActivity.class));
             }
         });
 
@@ -71,8 +72,7 @@ public class SignInActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        if(newUserClicked)
-        {
+        if (newUserClicked) {
             finish();
         }
     }
@@ -81,13 +81,11 @@ public class SignInActivity extends AppCompatActivity {
     private boolean validateForm() {
 
         boolean valid = true;
-        if (TextUtils.isEmpty( editTextEmail.getText().toString())) {
+        if (TextUtils.isEmpty(editTextEmail.getText().toString())) {
             editTextEmail.setError("Required.");
 
             valid = false;
-        }
-        else
-        {
+        } else {
             editTextEmail.setError(null);
         }
 
@@ -96,23 +94,19 @@ public class SignInActivity extends AppCompatActivity {
             editTextPassword.setError("Required.");
 
             valid = false;
-        }
-        else
-        {
+        } else {
             editTextPassword.setError(null);
         }
 
         return valid;
     }
-// method to update ui
+
+    // method to update ui
     private void updateUI(FirebaseUser user) {
-        if (user != null)
-        {
+        if (user != null) {
             removeProgressBar();
             finish();
-        }
-        else
-        {
+        } else {
             removeProgressBar();
             editTextPassword.setText("");
             editTextEmail.setText("");
@@ -160,11 +154,10 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void removeProgressBar() {
-        if(progressBarPresent)
-        {
+        if (progressBarPresent) {
             progressBar.setVisibility(View.GONE);
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-            progressBarPresent=false;
+            progressBarPresent = false;
         }
     }
 

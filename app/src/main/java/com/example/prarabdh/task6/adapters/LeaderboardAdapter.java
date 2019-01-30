@@ -1,4 +1,4 @@
-package com.example.prarabdh.task6;
+package com.example.prarabdh.task6.adapters;
 
 import android.content.Context;
 import android.support.v4.app.FragmentActivity;
@@ -13,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.prarabdh.task6.dataModels.LeaderboardDataModel;
+import com.example.prarabdh.task6.R;
 
 import java.util.ArrayList;
 
@@ -31,6 +33,7 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
         public TextView textViewUname;
         public TextView textViewPosition;
         public ImageView imageViewAvatar;
+
         public MyViewHolder(View v) {
             super(v);
             textViewTotalPoints = v.findViewById(R.id.textViewTotalPoints);
@@ -39,6 +42,7 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
             imageViewAvatar = v.findViewById(R.id.imageViewAvatar);
         }
     }
+
 
     public LeaderboardAdapter(Context context ,ArrayList datasetLeaderboard) {
 
@@ -52,12 +56,12 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
     // Create new views (invoked by the layout manager)
     @Override
     public LeaderboardAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent,
-                                                     int viewType) {
+                                                              int viewType) {
         // create a new view
-        View v =  LayoutInflater.from(parent.getContext())
+        View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.leaderboard_position, parent, false);
 
-       // ...
+        // ...
         MyViewHolder vh = new MyViewHolder(v);
         return vh;
     }

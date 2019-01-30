@@ -1,4 +1,4 @@
-package com.example.prarabdh.task6;
+package com.example.prarabdh.task6.adapters;
 
 import android.content.Context;
 import android.support.v4.app.FragmentActivity;
@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.prarabdh.task6.R;
 
 import java.util.ArrayList;
 
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 public class SignUpAdapter extends RecyclerView.Adapter<SignUpAdapter.MyViewHolder> {
 
     ArrayList<String> datasetAvatar;
+
     private Context context ;
 
     // Provide a reference to the views for each data item
@@ -30,6 +32,7 @@ public class SignUpAdapter extends RecyclerView.Adapter<SignUpAdapter.MyViewHold
         // each data item is just a string in this case
 
         public ImageButton imageButton;
+
         public MyViewHolder(View v) {
             super(v);
 
@@ -38,23 +41,22 @@ public class SignUpAdapter extends RecyclerView.Adapter<SignUpAdapter.MyViewHold
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public SignUpAdapter(Context context ,ArrayList datasetAvatar) {
+    public SignUpAdapter(Context context, ArrayList datasetAvatar) {
 
 
-        this.datasetAvatar=datasetAvatar;
-        this.context =context;
+        this.datasetAvatar = datasetAvatar;
+        this.context = context;
 
 
     }
 
 
-
     // Create new views (invoked by the layout manager)
     @Override
     public SignUpAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent,
-                                                              int viewType) {
+                                                         int viewType) {
         // create a new view
-        View v =  LayoutInflater.from(parent.getContext())
+        View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.signup_avatar, parent, false);
 
         // ...

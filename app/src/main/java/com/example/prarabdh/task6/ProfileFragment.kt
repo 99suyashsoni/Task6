@@ -1,4 +1,4 @@
-package com.example.prarabdh.task6
+package com.example.prarabdh.task6.fragmentClasses
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,9 +10,12 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import com.example.prarabdh.task6.R
+import com.example.prarabdh.task6.SignInActivity
+import com.example.prarabdh.task6.dataModels.PlayerData
 import com.google.firebase.auth.FirebaseAuth
 
-class ProfileFragment: Fragment(){
+class ProfileFragment : Fragment() {
 
     private lateinit var auth: FirebaseAuth
     private var btnSignOut: Button? = null
@@ -24,7 +27,7 @@ class ProfileFragment: Fragment(){
     private var imageView: ImageView? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.profile_fragment,container,false)
+        val view = inflater.inflate(R.layout.profile_fragment, container, false)
 //        val bottomNav: BottomNavigationView = HomeActivity().findViewById(R.id.navigation)
 //        bottomNav.selectedItemId = navigation_profile
 
@@ -36,7 +39,7 @@ class ProfileFragment: Fragment(){
         }
 
         txtUname = view.findViewById(R.id.txtuname)
-        txtUname!!.text= PlayerData.udrUserName
+        txtUname!!.text = PlayerData.udrUserName
 
         txtWin = view.findViewById(R.id.txtwin)
         txtWin!!.text= PlayerData.udrWin
@@ -45,10 +48,12 @@ class ProfileFragment: Fragment(){
         txtLoose!!.text= PlayerData.udrLoss
 
         txtEmail = view.findViewById(R.id.txtemail)
-        txtEmail!!.text= PlayerData.udrEmail
+        txtEmail!!.text = PlayerData.udrEmail
 
         imageView = view.findViewById(R.id.imageViewAvatar)
+
         Glide.with(this@ProfileFragment).load( PlayerData.udrAvatar).into(imageView!!)
+
 
         return view
     }
