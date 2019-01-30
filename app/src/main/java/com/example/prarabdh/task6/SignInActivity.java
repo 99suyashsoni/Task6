@@ -50,9 +50,9 @@ public class SignInActivity extends AppCompatActivity {
         buttonSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                loadProgressBar();
 
                 signIn(editTextEmail.getText().toString(),editTextPassword.getText().toString());
-                loadProgressBar();
 
             }
         });
@@ -83,6 +83,7 @@ public class SignInActivity extends AppCompatActivity {
         boolean valid = true;
         if (TextUtils.isEmpty( editTextEmail.getText().toString())) {
             editTextEmail.setError("Required.");
+
             valid = false;
         }
         else
@@ -93,6 +94,7 @@ public class SignInActivity extends AppCompatActivity {
 
         if (TextUtils.isEmpty(editTextEmail.getText().toString())) {
             editTextPassword.setError("Required.");
+
             valid = false;
         }
         else
@@ -123,6 +125,7 @@ public class SignInActivity extends AppCompatActivity {
 
         Log.d(TAG, "signIn:" + email);
         if (!validateForm()) {
+            removeProgressBar();
             return;
         }
 
