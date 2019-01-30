@@ -3,7 +3,7 @@ package com.example.prarabdh.task6.dataModels;
 import android.content.Context;
 import android.util.ArrayMap;
 
-import com.example.prarabdh.task6.LeaderboardDataModel;
+import com.example.prarabdh.task6.dataModels.LeaderboardDataModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;

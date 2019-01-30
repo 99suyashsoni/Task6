@@ -1,4 +1,4 @@
-package com.example.prarabdh.task6.fragmentClasses;
+package com.example.prarabdh.task6;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -79,6 +79,7 @@ public class    ScoreFragment extends Fragment {
                 .into(avtar);
         ncategories.add("NO results to show as of now");
         nImages.add(PlayerData.udrAvatar);
+
         final AchievementsAdapter adapter = new AchievementsAdapter(getContext(), ncategories, nImages);
         // score.setText(FinalScore);
         recyclerView.setAdapter(adapter);

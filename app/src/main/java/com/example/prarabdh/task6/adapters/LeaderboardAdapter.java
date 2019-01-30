@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.prarabdh.task6.LeaderboardDataModel;
+import com.example.prarabdh.task6.dataModels.LeaderboardDataModel;
 import com.example.prarabdh.task6.R;
 
 import java.util.ArrayList;

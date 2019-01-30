@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.prarabdh.task6.DataRetrieve
 import com.example.prarabdh.task6.ListenerObject
 import com.example.prarabdh.task6.R
 import com.example.prarabdh.task6.adapters.MyAdapter
@@ -94,8 +95,6 @@ class HomeFragment : Fragment() {
 
             }
         })
-
-
 
         DataRetrieve().getCategoryNames(listenerObject1)
         DataRetrieve().pointsUnlockData(listenerObject2)

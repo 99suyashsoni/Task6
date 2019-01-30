@@ -21,7 +21,7 @@ public class AchievementsAdapter extends RecyclerView.Adapter<AchievementsAdapte
     private ArrayList<String> categories;
     private ArrayList<String> images;
 
-    AchievementsAdapter(Context ncontext, ArrayList<String> ncategories, ArrayList<String> nimages) {
+    public AchievementsAdapter(Context ncontext, ArrayList<String> ncategories, ArrayList<String> nimages) {
         context = ncontext;
         categories = ncategories;
         images = nimages;

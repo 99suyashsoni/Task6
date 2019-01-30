@@ -7,9 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import com.example.prarabdh.task6.Countdown
 import com.example.prarabdh.task6.R
 import com.example.prarabdh.task6.dataModels.GameDescData
-import com.example.prarabdh.task6.fragmentClasses.Countdown
+
 
 class GameDesc : Fragment() {
 
