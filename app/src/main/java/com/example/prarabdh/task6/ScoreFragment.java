@@ -82,8 +82,7 @@ public class    ScoreFragment extends Fragment {
 
         final AchievementsAdapter adapter = new AchievementsAdapter(getContext(), ncategories, nImages);
         // score.setText(FinalScore);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+
 
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = firebaseDatabase.getReference("Categories");
@@ -116,6 +115,9 @@ public class    ScoreFragment extends Fragment {
                     nImages.add(PlayerData.udrAvatar);
                     adapter.notifyDataSetChanged();
                 }
+
+                recyclerView.setAdapter(adapter);
+                recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
             }
 
             @Override

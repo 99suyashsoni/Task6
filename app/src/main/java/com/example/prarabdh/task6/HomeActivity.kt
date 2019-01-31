@@ -15,6 +15,7 @@ import com.example.prarabdh.task6.dataModels.PlayerData
 import com.example.prarabdh.task6.fragmentClasses.DevelopersFragment
 import com.example.prarabdh.task6.fragmentClasses.HomeFragment
 import com.example.prarabdh.task6.fragmentClasses.ProfileFragment
+import com.example.prarabdh.task6.fragmentClasses.RandomFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
@@ -51,14 +52,13 @@ class HomeActivity : AppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_leaderboard -> {
-                //bug in leaderboard
               PlayerData.datasetLeaderboard.clear()
                 selectedFragment = LeaderboardFragment()
                 supportFragmentManager.beginTransaction().replace(R.id.homeFragment, selectedFragment).addToBackStack(null).commit()
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_random -> {
-                selectedFragment = Countdown("Sports")
+                selectedFragment = RandomFragment()
                 supportFragmentManager.beginTransaction().replace(R.id.homeFragment, selectedFragment).addToBackStack(null).commit()
                 return@OnNavigationItemSelectedListener true
             }
