@@ -33,7 +33,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 @SuppressLint("ValidFragment")
-public class    ScoreFragment extends Fragment {
+public class ScoreFragment extends Fragment {
     public ArrayList<String> nImages = new ArrayList<>();
     public ArrayList<String> ncategories = new ArrayList<>();
     TextView head, middle, score;
@@ -77,11 +77,6 @@ public class    ScoreFragment extends Fragment {
                 .asBitmap()
                 .load(PlayerData.udrAvatar)
                 .into(avtar);
-        ncategories.add("NO results to show as of now");
-        nImages.add(PlayerData.udrAvatar);
-
-        final AchievementsAdapter adapter = new AchievementsAdapter(getContext(), ncategories, nImages);
-        // score.setText(FinalScore);
 
 
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
@@ -89,35 +84,36 @@ public class    ScoreFragment extends Fragment {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                final AchievementsAdapter adapter = new AchievementsAdapter(getContext(), ncategories, nImages);
+                recyclerView.setAdapter(adapter);
+                recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
                 Iterable<DataSnapshot> allCategory = dataSnapshot.getChildren();
-                int j=0;
+                int j = 0;
                 for (DataSnapshot Category : allCategory) {
 
-                    Log.d("Score", "Datasnapshot Called "+allCategory.toString());
+                    Log.d("Score", "Datasnapshot Called " + allCategory.toString());
 
                     unlock = PlayerData.pointsToUnlock[j];
                     int val = FinalScore - unlock;
                     int val2 = unlock - PlayerData.udrPoints;
                     //String x = Category.child("Images").getValue().toString();
                     String y = Category.getKey();
-                    if (val >= 0 && val2>=0 ) {
-                        Log.d("Score", "If condition called Called");
-                        //nImages.add(x);
+                    if (val >= 0) {
+                        Log.d("Score", "If condition called Called with " + y);
+                        nImages.add(PlayerData.udrAvatar);
                         ncategories.add(y);
                         adapter.notifyDataSetChanged();
                     }
                     j++;
                 }
 
-                if(ncategories.size()==0)
-                {
+                if (ncategories.size() == 0) {
+                    Log.d("Score", "If condition called Called");
                     ncategories.add("No new achivements unlocked");
                     nImages.add(PlayerData.udrAvatar);
                     adapter.notifyDataSetChanged();
                 }
 
-                recyclerView.setAdapter(adapter);
-                recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
             }
 
             @Override
