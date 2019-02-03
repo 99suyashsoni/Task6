@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -41,6 +42,7 @@ public class ScoreFragment extends Fragment {
     RecyclerView recyclerView;
     private ImageView avtar;
     String CATEGORY = "";
+
     int FinalScore, unlock;
 
     @SuppressLint("ValidFragment")
@@ -48,7 +50,6 @@ public class ScoreFragment extends Fragment {
         FinalScore = x;
         CATEGORY = y;
     }
-
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -72,47 +73,54 @@ public class ScoreFragment extends Fragment {
     public void onStart() {
 
         super.onStart();
-
         Glide.with(Objects.requireNonNull(getContext()))
                 .asBitmap()
                 .load(PlayerData.udrAvatar)
                 .into(avtar);
-
+        ncategories.add("Hello");
+        //recyclerView = getView().findViewById(R.id.achieveRecycler);
+        nImages.add(PlayerData.udrAvatar);
+        Log.d("Score",ncategories.toString());
 
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = firebaseDatabase.getReference("Categories");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                final AchievementsAdapter adapter = new AchievementsAdapter(getContext(), ncategories, nImages);
+                AchievementsAdapter adapter = new AchievementsAdapter(getContext(), ncategories, nImages);
                 recyclerView.setAdapter(adapter);
+                Log.d("Score",getContext().toString());  //Adapter is not null, confirmed through log
                 recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+
                 Iterable<DataSnapshot> allCategory = dataSnapshot.getChildren();
                 int j = 0;
                 for (DataSnapshot Category : allCategory) {
 
-                    Log.d("Score", "Datasnapshot Called " + allCategory.toString());
+                    Log.d("Score", "Datasnapshot Called " + allCategory.toString());  //Getting logged perfectly
 
                     unlock = PlayerData.pointsToUnlock[j];
                     int val = FinalScore - unlock;
                     int val2 = unlock - PlayerData.udrPoints;
                     //String x = Category.child("Images").getValue().toString();
-                    String y = Category.getKey();
+                    String y = Category.getKey();  // String y is also correct
                     if (val >= 0) {
-                        Log.d("Score", "If condition called Called with " + y);
+                        Log.d("Score", "If condition called Called with " + y);   //Entering the if condition, logic is correct
                         nImages.add(PlayerData.udrAvatar);
                         ncategories.add(y);
+                        Log.d("Score" , "Adapter Count "+ adapter.getItemCount());
+                        recyclerView.setAdapter(adapter);
                         adapter.notifyDataSetChanged();
+                        Log.d("Score" , "Adapter Count "+ adapter.getItemCount());
                     }
                     j++;
                 }
 
-                if (ncategories.size() == 0) {
+               /* if (ncategories.size() == 0) {
                     Log.d("Score", "If condition called Called");
                     ncategories.add("No new achivements unlocked");
                     nImages.add(PlayerData.udrAvatar);
                     adapter.notifyDataSetChanged();
-                }
+                }*/
 
             }
 
@@ -122,7 +130,6 @@ public class ScoreFragment extends Fragment {
             }
         });
         score.setText(Integer.toString(FinalScore));
-        firebaseDatabase.getReference("Users").child(PlayerData.udrUserId).child("Points").setValue(Integer.toString(FinalScore));
         replay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

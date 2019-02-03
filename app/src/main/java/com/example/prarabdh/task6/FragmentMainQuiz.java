@@ -58,17 +58,43 @@ public class FragmentMainQuiz extends Fragment {
     int currentRandom = 0;                     //Stores the index of the currently generated random Question
     int points = 1000;       //Points variable stores the points of current quiz, wrong variable stores number of incorrect answers, and correct variable stores number of correct answers
     private boolean val = true;
+    int consecutiveCorrect;
 
     //Function to generate a random number
     public int Random() {
+        if(checkForAllQuestionsCompleted(PlayerData.udrQuestionsAttempted.get(CATEGORY)))
+        {
+            String x = PlayerData.udrQuestionsAttempted.get(CATEGORY).replace('1','0');
+            PlayerData.udrQuestionsAttempted.put(CATEGORY , x);
+        }
         int rand;
         double r = Math.random() * 1000;
-        rand = (int) (r % (NUMBER_OF_QUESTIONS_TOTAL - i));
-        questionModel = arrayList.get(rand);
-        arrayList.remove(rand);
-        Log.d("Debug Random", "Random" + rand + " added at " + (i - 1));
-        askedQuestionIndices[i - 1] = rand;
-        return rand;
+        rand = (int) (r % (NUMBER_OF_QUESTIONS_TOTAL));
+        if(PlayerData.udrQuestionsAttempted.get(CATEGORY).charAt(rand) == '0')  //Checks if the user has already attempted the question or not
+        {
+            questionModel = arrayList.get(rand);
+            //Modifying the String to reflect that the current question is attempted by the user
+            PlayerData.udrQuestionsAttempted.put(CATEGORY , PlayerData.udrQuestionsAttempted.get(CATEGORY).substring(0,rand) + "1" + PlayerData.udrQuestionsAttempted.get(CATEGORY).substring(rand+1));
+            return rand;
+        }
+        return Random();
+    }
+
+    /**
+     * This function checks if the user has attempted all questions of the category
+     If all questions are attempted, the String containing list of attempted questions will be reset to all 0's
+     */
+    private boolean checkForAllQuestionsCompleted(String s)
+    {
+        for (int i=0;i<s.length();i++)
+        {
+            if(s.charAt(i)=='0')
+            {
+                return false;
+            }
+
+        }
+        return true;
     }
 
     //This functions resets all properties of textViews to prepare it for the next question
@@ -196,7 +222,7 @@ public class FragmentMainQuiz extends Fragment {
                             });
                             Progress();
                         } else {
-                            endQuestions();
+                            updatePlayerData();
                             //resetButtons();
                         }
 
@@ -267,6 +293,7 @@ public class FragmentMainQuiz extends Fragment {
             {
                 //Setting background colour to green if the answer is correct
                 textView.setBackgroundColor(0xFF00FF00);
+                consecutiveCorrect++;
                 mediaPlayerCorrect.seekTo(2000);
                 mediaPlayerCorrect.start();
                 points++;
@@ -275,6 +302,7 @@ public class FragmentMainQuiz extends Fragment {
                 textView.setBackgroundColor(0xFFFF0000);
                 mediaPlayerWrong.seekTo(1000);
                 mediaPlayerWrong.start();
+                consecutiveCorrect = 0;
                 //Setting green background colour to the textView with the right answer
                 if (option_1.getText().toString().equals(correct)) {
                     option_1.setBackgroundColor(0xFF00FF00);
@@ -308,7 +336,7 @@ public class FragmentMainQuiz extends Fragment {
                         newQuestion();
 
                     } else {
-                        endQuestions();
+                        updatePlayerData();
                         //Toast.makeText(getContext(),"Game Over\nScore"+points ,Toast.LENGTH_LONG ).show();
                     }
                 }
@@ -329,6 +357,9 @@ public class FragmentMainQuiz extends Fragment {
         mediaPlayerWrong.release();
     }
 
+    /**
+     * This function is called when 5 question for this round are over
+     * */
     public void endQuestions() {
         t.interrupt();
         ScoreFragment fragmentMainQuiz = new ScoreFragment(points, CATEGORY);
@@ -336,5 +367,30 @@ public class FragmentMainQuiz extends Fragment {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.homeFragment, fragmentMainQuiz);
         fragmentTransaction.commit();
+    }
+
+    /**
+     * This function updates the data stored on Firebase after every game is completed
+     * Some information that needs to be updated include total points, attempted questions, wins and losses
+     * */
+
+    public void updatePlayerData()
+    {
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        firebaseDatabase.getReference("Users").child(PlayerData.udrUserId).child("Points").setValue(Integer.toString(points));
+        firebaseDatabase.getReference("Users").child(PlayerData.udrUserId).child("Questions").child(CATEGORY).setValue(PlayerData.udrQuestionsAttempted.get(CATEGORY));
+        if(consecutiveCorrect >= 3)
+        {
+            PlayerData.udrWin = Integer.toString(Integer.valueOf(PlayerData.udrWin) + 1);
+            consecutiveCorrect = 0;
+        }
+        else
+        {
+            PlayerData.udrLoss = Integer.toString(Integer.valueOf(PlayerData.udrLoss) + 1);
+            consecutiveCorrect = 0;
+        }
+        firebaseDatabase.getReference("Users").child(PlayerData.udrUserId).child("Win").setValue(PlayerData.udrWin);
+        firebaseDatabase.getReference("Users").child(PlayerData.udrUserId).child("Loss").setValue(PlayerData.udrLoss);
+        endQuestions();
     }
 }
