@@ -1,6 +1,5 @@
 package com.example.prarabdh.task6
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
@@ -12,16 +11,11 @@ import com.bumptech.glide.Glide
 import com.example.prarabdh.task6.R.id.navigation_home
 import com.example.prarabdh.task6.dataModels.LeaderboardDataModel
 import com.example.prarabdh.task6.dataModels.PlayerData
-import com.example.prarabdh.task6.fragmentClasses.DevelopersFragment
 import com.example.prarabdh.task6.fragmentClasses.HomeFragment
 import com.example.prarabdh.task6.fragmentClasses.ProfileFragment
 import com.example.prarabdh.task6.fragmentClasses.RandomFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 
 
 class HomeActivity : AppCompatActivity() {
