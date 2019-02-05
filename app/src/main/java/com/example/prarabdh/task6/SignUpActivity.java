@@ -92,14 +92,14 @@ public class SignUpActivity extends AppCompatActivity {
 
             @Override
             public boolean onInterceptTouchEvent(@NonNull RecyclerView recyclerView, @NonNull MotionEvent motionEvent) {
-
-                return true;
+                View child = recyclerView.findChildViewUnder(motionEvent.getX(), motionEvent.getY());
+                updateImage(recyclerView.getChildAdapterPosition(child));
+                return false;
             }
 
             @Override
             public void onTouchEvent(@NonNull RecyclerView recyclerView, @NonNull MotionEvent motionEvent) {
-                View child = recyclerView.findChildViewUnder(motionEvent.getX(), motionEvent.getY());
-                updateImage(recyclerView.getChildAdapterPosition(child));
+
             }
 
             @Override
