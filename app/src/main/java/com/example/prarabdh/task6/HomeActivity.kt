@@ -1,10 +1,12 @@
 package com.example.prarabdh.task6
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
@@ -97,14 +99,20 @@ class HomeActivity : AppCompatActivity() {
 
             listenerObject.setCustomObjectListener(object : ListenerObject.Listener {
 
+                override fun onPartialDataChange() {
+
+                    points = findViewById(R.id.textView7)
+                    points!!.text = PlayerData.udrPoints.toString()
+                }
+
                 override fun onDataRecieved() {
                     // Code to handle object ready
                     setSupportActionBar(findViewById(R.id.my_toolbar))
                    //for leaderboard
                     PlayerData.currentusermodel = LeaderboardDataModel(PlayerData.udrPoints, PlayerData.udrAvatar, PlayerData.udrUserName)
 
-
                     imageView = findViewById(R.id.imageView)
+                    Log.d("HomeActivity", this@HomeActivity.toString())
                     Glide.with(this@HomeActivity).load(PlayerData.udrAvatar).into(imageView!!)
 
                     userName = findViewById(R.id.textView6)
@@ -121,14 +129,25 @@ class HomeActivity : AppCompatActivity() {
                 }
             })
 
-            DataRetrieve().playerDataRetrieve(uid, listenerObject)
+            val listenerObject2 = ListenerObject()
+            listenerObject2.setCustomObjectListener(object : ListenerObject.Listener{
+
+                override fun onPartialDataChange() {
+                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                }
+
+                override fun onDataRecieved() {
+
+                    DataRetrieve().playerDataRetrieve(uid, listenerObject)
+                }
+            })
+
+            DataRetrieve().achievementData(listenerObject2)
 
         }
 
 
     }
-
-
 }
 
 

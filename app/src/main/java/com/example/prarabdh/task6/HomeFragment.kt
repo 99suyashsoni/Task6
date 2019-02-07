@@ -1,6 +1,5 @@
 package com.example.prarabdh.task6.fragmentClasses
 
-import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -13,13 +12,8 @@ import com.example.prarabdh.task6.DataRetrieve
 import com.example.prarabdh.task6.ListenerObject
 import com.example.prarabdh.task6.R
 import com.example.prarabdh.task6.adapters.MyAdapter
-import com.example.prarabdh.task6.dataModels.GameDescData
+import com.example.prarabdh.task6.dataModels.QuizData
 import com.example.prarabdh.task6.dataModels.PlayerData
-import com.example.prarabdh.task6.fragmentClasses.GameDesc
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 
 class HomeFragment : Fragment() {
 
@@ -41,6 +35,9 @@ class HomeFragment : Fragment() {
         val listenerObject3 = ListenerObject()
 
         listenerObject3.setCustomObjectListener(object : ListenerObject.Listener{
+            override fun onPartialDataChange() {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
 
             override fun onDataRecieved() {
                 Log.d("Activity", "Activity2 $activity!!")
@@ -53,6 +50,9 @@ class HomeFragment : Fragment() {
         val listenerObject1 = ListenerObject()
 
         listenerObject1.setCustomObjectListener(object : ListenerObject.Listener {
+            override fun onPartialDataChange() {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
 
             override fun onDataRecieved() {
 
@@ -60,7 +60,7 @@ class HomeFragment : Fragment() {
                 if(check1 && check2)
                 {
                     viewManager = LinearLayoutManager(activity)
-                    viewAdapter = MyAdapter(images, GameDescData.names, PlayerData.pointsToUnlock, PlayerData.udrPoints, listenerObject3)
+                    viewAdapter = MyAdapter(images, QuizData.names, PlayerData.pointsToUnlock, PlayerData.udrPoints, listenerObject3)
                     recyclerView = view!!.findViewById<RecyclerView>(R.id.recyclerView).apply {
 
                         layoutManager = viewManager
@@ -75,6 +75,9 @@ class HomeFragment : Fragment() {
         val listenerObject2 = ListenerObject()
 
         listenerObject2.setCustomObjectListener(object : ListenerObject.Listener {
+            override fun onPartialDataChange() {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
 
             override fun onDataRecieved() {
 
@@ -83,8 +86,8 @@ class HomeFragment : Fragment() {
                 {
                     Log.d("Activity Check","Activity $activity")
                     viewManager = LinearLayoutManager(activity)
-                    Log.d("Data Check","${GameDescData.names[0]} , ${PlayerData.udrPoints} , ${PlayerData.pointsToUnlock[6]} , $context ")
-                    viewAdapter = MyAdapter(images, GameDescData.names, PlayerData.pointsToUnlock, PlayerData.udrPoints, listenerObject3)
+                    Log.d("Data Check","${QuizData.names[0]} , ${PlayerData.udrPoints} , ${PlayerData.pointsToUnlock[6]} , $context ")
+                    viewAdapter = MyAdapter(images, QuizData.names, PlayerData.pointsToUnlock, PlayerData.udrPoints, listenerObject3)
                     recyclerView = view!!.findViewById<RecyclerView>(R.id.recyclerView).apply {
 
                         layoutManager = viewManager

@@ -9,7 +9,7 @@ import android.widget.Button
 import android.widget.TextView
 import com.example.prarabdh.task6.Countdown
 import com.example.prarabdh.task6.R
-import com.example.prarabdh.task6.dataModels.GameDescData
+import com.example.prarabdh.task6.dataModels.QuizData
 
 
 class GameDesc : Fragment() {
@@ -27,9 +27,9 @@ class GameDesc : Fragment() {
         gameName = view.findViewById(R.id.textView8)
         gameDescription = view.findViewById(R.id.textView9)
 
-        gameName!!.text = GameDescData.heading
-        gameDescription!!.text = GameDescData.description
-        view.setBackgroundResource(GameDescData.background)
+        gameName!!.text = QuizData.heading
+        gameDescription!!.text = QuizData.description
+        view.setBackgroundResource(QuizData.background)
 
         singlePlayer!!.setOnClickListener {
             //gameName!!.setText("Sports")

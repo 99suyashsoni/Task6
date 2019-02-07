@@ -51,17 +51,16 @@ class ProfileFragment : Fragment() {
         txtEmail!!.text = PlayerData.udrEmail
 
         imageView = view.findViewById(R.id.imageViewAvatar)
-
         Glide.with(this@ProfileFragment).load( PlayerData.udrAvatar).into(imageView!!)
-
 
         return view
     }
 
-
     private fun signOut() {
+
         auth.signOut()
         startActivity(Intent(activity, SignInActivity::class.java))
+
     }
 
 }
