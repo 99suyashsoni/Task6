@@ -1,4 +1,4 @@
-package com.example.prarabdh.task6.fragmentClasses
+package com.example.prarabdh.task6
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,8 +10,6 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
-import com.example.prarabdh.task6.R
-import com.example.prarabdh.task6.SignInActivity
 import com.example.prarabdh.task6.dataModels.PlayerData
 import com.google.firebase.auth.FirebaseAuth
 

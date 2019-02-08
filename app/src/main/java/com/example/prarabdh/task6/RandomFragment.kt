@@ -1,4 +1,4 @@
-package com.example.prarabdh.task6.fragmentClasses
+package com.example.prarabdh.task6
 
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView

@@ -1,4 +1,4 @@
-package com.example.prarabdh.task6.fragmentClasses
+package com.example.prarabdh.task6
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -8,12 +8,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.prarabdh.task6.DataRetrieve
-import com.example.prarabdh.task6.ListenerObject
-import com.example.prarabdh.task6.R
 import com.example.prarabdh.task6.adapters.MyAdapter
 import com.example.prarabdh.task6.dataModels.QuizData
 import com.example.prarabdh.task6.dataModels.PlayerData
+import com.example.prarabdh.task6.fragmentClasses.GameDesc
 
 class HomeFragment : Fragment() {
 
