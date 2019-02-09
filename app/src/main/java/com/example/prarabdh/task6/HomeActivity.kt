@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
@@ -76,9 +77,31 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home_screen)
-
+        Log.d("Activity","Activity Started")
         PlayerData.context11 = applicationContext
         auth = FirebaseAuth.getInstance()
+    }
+
+
+    override fun onRestart() {
+        Log.d("Activity","Activity Restarted")
+        super.onRestart()
+    }
+
+    override fun onStop() {
+        Log.d("Activity","Activity Destroied")
+        super.onStop()
+    }
+
+    override fun onDestroy() {
+        Log.d("Activity","Activity Destroied")
+        super.onDestroy()
+    }
+
+
+    override fun onPause() {
+        Log.d("Activity","Activity Paused")
+        super.onPause()
     }
 
 

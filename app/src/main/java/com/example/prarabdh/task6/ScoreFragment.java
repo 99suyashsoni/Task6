@@ -35,6 +35,7 @@ import java.util.Objects;
 
 @SuppressLint("ValidFragment")
 public class ScoreFragment extends Fragment {
+
     public ArrayList<String> nImages = new ArrayList<>();
     public ArrayList<String> ncategories = new ArrayList<>();
     TextView head, middle, score;
@@ -42,8 +43,8 @@ public class ScoreFragment extends Fragment {
     RecyclerView recyclerView;
     private ImageView avtar;
     String CATEGORY = "";
-
     int FinalScore, unlock;
+    AchievementsAdapter adapter;
 
     @SuppressLint("ValidFragment")
     public ScoreFragment(int x, String y) {
@@ -55,7 +56,6 @@ public class ScoreFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_score, container, false);
-
     }
 
     @Override
@@ -77,20 +77,23 @@ public class ScoreFragment extends Fragment {
                 .asBitmap()
                 .load(PlayerData.udrAvatar)
                 .into(avtar);
-        ncategories.add("Hello");
-        //recyclerView = getView().findViewById(R.id.achieveRecycler);
+        adapter = new AchievementsAdapter(getContext(), ncategories, nImages);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+
+        /*ncategories.add("Hello");
         nImages.add(PlayerData.udrAvatar);
         Log.d("Score",ncategories.toString());
+        adapter.notifyDataSetChanged();*/
+
+        Log.d("Score",getContext().toString());  //Adapter is not null, confirmed through log
 
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = firebaseDatabase.getReference("Categories");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                AchievementsAdapter adapter = new AchievementsAdapter(getContext(), ncategories, nImages);
-                recyclerView.setAdapter(adapter);
-                Log.d("Score",getContext().toString());  //Adapter is not null, confirmed through log
-                recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+
 
                 Iterable<DataSnapshot> allCategory = dataSnapshot.getChildren();
                 int j = 0;
@@ -108,14 +111,13 @@ public class ScoreFragment extends Fragment {
                         nImages.add(PlayerData.udrAvatar);
                         ncategories.add(y);
                         Log.d("Score" , "Adapter Count "+ adapter.getItemCount());
-                        recyclerView.setAdapter(adapter);
-                        adapter.notifyDataSetChanged();
                         Log.d("Score" , "Adapter Count "+ adapter.getItemCount());
+                        adapter.notifyDataSetChanged();
                     }
                     j++;
                 }
 
-               /* if (ncategories.size() == 0) {
+                /*if (ncategories.size() == 0) {
                     Log.d("Score", "If condition called Called");
                     ncategories.add("No new achivements unlocked");
                     nImages.add(PlayerData.udrAvatar);
@@ -136,6 +138,7 @@ public class ScoreFragment extends Fragment {
                 Log.d("Score", "On Click Listener Called");
                 Countdown fragmentMainQuiz = new Countdown(CATEGORY);
                 FragmentManager fragmentManager = getFragmentManager();
+                assert fragmentManager != null;
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.homeFragment, fragmentMainQuiz);
                 fragmentTransaction.commit();
@@ -143,7 +146,6 @@ public class ScoreFragment extends Fragment {
         });
 
     }
-
 
     @Override
     public void onAttach(final Context context) {

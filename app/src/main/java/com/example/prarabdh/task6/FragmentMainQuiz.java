@@ -276,8 +276,10 @@ public class FragmentMainQuiz extends Fragment {
         @Override
         public void onClick(View v) {
             String correct = questionModel.getAnswer(); //Stores the correct answer for the current question
-            val = false;                                              //Introduced a new variable instead of using the expression at the right again and again to save the time required by the computer to read the arrayList
+                                           //Introduced a new variable instead of using the expression at the right again and again to save the time required by the computer to read the arrayList
             //and execute the getAnswer() function multiple number of times
+
+            val = false;
 
             //Disable other textViews so that multiple answers cannot be selected
             option_1.setClickable(false);
@@ -296,7 +298,7 @@ public class FragmentMainQuiz extends Fragment {
                 consecutiveCorrect++;
                 mediaPlayerCorrect.seekTo(2000);
                 mediaPlayerCorrect.start();
-                points++;
+                points += 10;
             } else    //The answer is wrong
             {
                 textView.setBackgroundColor(0xFFFF0000);
@@ -362,10 +364,10 @@ public class FragmentMainQuiz extends Fragment {
      * */
     public void endQuestions() {
         t.interrupt();
-        ScoreFragment fragmentMainQuiz = new ScoreFragment(points, CATEGORY);
+        ScoreFragment scoreFragment = new ScoreFragment(points, CATEGORY);
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.homeFragment, fragmentMainQuiz);
+        fragmentTransaction.replace(R.id.homeFragment, scoreFragment);
         fragmentTransaction.commit();
     }
 
