@@ -26,5 +26,5 @@ public class PlayerData {
     // for leaderboard
     public static ArrayList<LeaderboardDataModel> datasetLeaderboard = new ArrayList<LeaderboardDataModel>();
     public static LeaderboardDataModel currentusermodel;
-
+    public static int l1called=0;
 }

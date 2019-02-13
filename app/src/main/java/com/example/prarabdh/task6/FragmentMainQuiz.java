@@ -56,7 +56,6 @@ public class FragmentMainQuiz extends Fragment {
     int i = 0;                                   //Stores the number of questions asked in this particular round
     ArrayList<QuestionModel> arrayList;  //Array to store all questions available in that category in the form of QuestionModel objects
     int currentRandom = 0;                     //Stores the index of the currently generated random Question
-    int points = 1000;       //Points variable stores the points of current quiz, wrong variable stores number of incorrect answers, and correct variable stores number of correct answers
     private boolean val = true;
     int consecutiveCorrect;
 
@@ -120,7 +119,6 @@ public class FragmentMainQuiz extends Fragment {
     public void onStart() {
         super.onStart();
 
-        points = PlayerData.udrPoints;
 
         //Assigning songs to the various mediaPlayer objects so that they can be played as and when required
         mediaPlayerBackground = MediaPlayer.create(getContext(), R.raw.main_quiz_background);
@@ -298,7 +296,7 @@ public class FragmentMainQuiz extends Fragment {
                 consecutiveCorrect++;
                 mediaPlayerCorrect.seekTo(2000);
                 mediaPlayerCorrect.start();
-                points += 10;
+                PlayerData.udrPoints += 10;
             } else    //The answer is wrong
             {
                 textView.setBackgroundColor(0xFFFF0000);
@@ -364,7 +362,8 @@ public class FragmentMainQuiz extends Fragment {
      * */
     public void endQuestions() {
         t.interrupt();
-        ScoreFragment scoreFragment = new ScoreFragment(points, CATEGORY);
+        ScoreFragment scoreFragment = new ScoreFragment(PlayerData.udrPoints, CATEGORY);
+
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.homeFragment, scoreFragment);
@@ -379,7 +378,7 @@ public class FragmentMainQuiz extends Fragment {
     public void updatePlayerData()
     {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        firebaseDatabase.getReference("Users").child(PlayerData.udrUserId).child("Points").setValue(Integer.toString(points));
+        firebaseDatabase.getReference("Users").child(PlayerData.udrUserId).child("Points").setValue(Integer.toString(PlayerData.udrPoints));
         firebaseDatabase.getReference("Users").child(PlayerData.udrUserId).child("Questions").child(CATEGORY).setValue(PlayerData.udrQuestionsAttempted.get(CATEGORY));
         if(consecutiveCorrect >= 3)
         {

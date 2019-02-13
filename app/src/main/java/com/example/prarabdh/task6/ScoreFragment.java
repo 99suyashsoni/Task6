@@ -24,6 +24,7 @@ import com.bumptech.glide.Glide;
 import com.example.prarabdh.task6.R;
 import com.example.prarabdh.task6.adapters.AchievementsAdapter;
 import com.example.prarabdh.task6.dataModels.PlayerData;
+import com.example.prarabdh.task6.dataModels.QuizData;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -40,11 +41,11 @@ public class ScoreFragment extends Fragment {
     public ArrayList<String> ncategories = new ArrayList<>();
     TextView head, middle, score;
     Button replay;
+    AchievementsAdapter adapter;
     RecyclerView recyclerView;
     private ImageView avtar;
     String CATEGORY = "";
     int FinalScore, unlock;
-    AchievementsAdapter adapter;
 
     @SuppressLint("ValidFragment")
     public ScoreFragment(int x, String y) {
@@ -67,55 +68,92 @@ public class ScoreFragment extends Fragment {
         replay = view.findViewById(R.id.button2);
         recyclerView = view.findViewById(R.id.achieveRecycler);
         avtar = view.findViewById(R.id.imageView4);
+        Glide.with(Objects.requireNonNull(getContext()))
+                .asBitmap()
+                .load(PlayerData.udrAvatar)
+                .into(avtar);
+
+        /*ncategories.add("Hello");
+        //recyclerView = getView().findViewById(R.id.achieveRecycler);
+        nImages.add(PlayerData.udrAvatar);
+        Log.d("Score",ncategories.toString());*/
+
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        Log.d("ScoreFragment","Layset");
+        Log.d("ScoreFragment","Before "+getContext().toString()+Integer.toString(ncategories.size())+Integer.toString(nImages.size()));
+
+        adapter = new AchievementsAdapter(getContext(), ncategories, nImages);
+        Log.d("ScoreFragment","After "+getContext().toString()+Integer.toString(ncategories.size())+Integer.toString(nImages.size()));
+        Log.d("ScoreFragment","dap cre");
+        recyclerView.setAdapter(adapter);
+        Log.d("ScoreFragment","adap set");
         super.onViewCreated(view, savedInstanceState);
+        Log.d("ScoreFragment","view ret");
     }
 
     public void onStart() {
 
         super.onStart();
-        Glide.with(Objects.requireNonNull(getContext()))
-                .asBitmap()
-                .load(PlayerData.udrAvatar)
-                .into(avtar);
-        adapter = new AchievementsAdapter(getContext(), ncategories, nImages);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
-        /*ncategories.add("Hello");
-        nImages.add(PlayerData.udrAvatar);
-        Log.d("Score",ncategories.toString());
-        adapter.notifyDataSetChanged();*/
-
-        Log.d("Score",getContext().toString());  //Adapter is not null, confirmed through log
-
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference databaseReference = firebaseDatabase.getReference("Categories");
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+        String previousUnlocked = PlayerData.udrAchievementsUnlocked;
+        checkAchivementsUnlocked();
+        for(int i = 0; i<PlayerData.udrAchievementsUnlocked.length();i++)
+        {
+            if(previousUnlocked.charAt(i) == '0' && PlayerData.udrAchievementsUnlocked.charAt(i) == '1')
+            {
+                ncategories.add(QuizData.udrAchievements.get(i).getValue());
+                nImages.add(PlayerData.udrAvatar);
+            }
+        }
+        adapter.notifyDataSetChanged();
 
 
-                Iterable<DataSnapshot> allCategory = dataSnapshot.getChildren();
-                int j = 0;
-                for (DataSnapshot Category : allCategory) {
 
-                    Log.d("Score", "Datasnapshot Called " + allCategory.toString());  //Getting logged perfectly
+//        Glide.with(Objects.requireNonNull(getContext()))
+//                .asBitmap()
+//                .load(PlayerData.udrAvatar)
+//                .into(avtar);
+//        ncategories.add("Hello");
+//        //recyclerView = getView().findViewById(R.id.achieveRecycler);
+//        nImages.add(PlayerData.udrAvatar);
+//        Log.d("Score",ncategories.toString());
+////        AchievementsAdapter adapter = new AchievementsAdapter(getContext(), ncategories, nImages);
+////        recyclerView.setAdapter(adapter);
 
-                    unlock = PlayerData.pointsToUnlock[j];
-                    int val = FinalScore - unlock;
-                    int val2 = unlock - PlayerData.udrPoints;
-                    //String x = Category.child("Images").getValue().toString();
-                    String y = Category.getKey();  // String y is also correct
-                    if (val >= 0) {
-                        Log.d("Score", "If condition called Called with " + y);   //Entering the if condition, logic is correct
-                        nImages.add(PlayerData.udrAvatar);
-                        ncategories.add(y);
-                        Log.d("Score" , "Adapter Count "+ adapter.getItemCount());
-                        Log.d("Score" , "Adapter Count "+ adapter.getItemCount());
-                        adapter.notifyDataSetChanged();
-                    }
-                    j++;
-                }
+//        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+//        DatabaseReference databaseReference = firebaseDatabase.getReference("Categories");
+//        databaseReference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                //AchievementsAdapter adapter = new AchievementsAdapter(getContext(), ncategories, nImages);
+//               // recyclerView.setAdapter(adapter);
+//               // Log.d("Score",getContext().toString());  //Adapter is not null, confirmed through log
+//                //recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+//
+//                Iterable<DataSnapshot> allCategory = dataSnapshot.getChildren();
+//                int j = 0;
+//                for (DataSnapshot Category : allCategory) {
+//
+//                    Log.d("Score", "Datasnapshot Called " + allCategory.toString());  //Getting logged perfectly
+//
+//                    unlock = PlayerData.pointsToUnlock[j];
+//                    int val = FinalScore - unlock;
+//                    int val2 = unlock - PlayerData.udrPoints;
+//                    //String x = Category.child("Images").getValue().toString();
+//                    String y = Category.getKey();  // String y is also correct
+//                    if (val >= 0) {
+//                        Log.d("Score", "If condition called Called with " + y);   //Entering the if condition, logic is correct
+//                        nImages.add(PlayerData.udrAvatar);
+//                        ncategories.add(y);
+//                        Log.d("Score" , "Adapter Count "+ adapter.getItemCount());
+//                  //      recyclerView.setAdapter(adapter);
+//                        adapter.notifyDataSetChanged();
+//                        Log.d("Score" , "Adapter Count "+ adapter.getItemCount());
+//                    }
+//
+//                    j++;
+//
+//                }
 
                 /*if (ncategories.size() == 0) {
                     Log.d("Score", "If condition called Called");
@@ -124,28 +162,78 @@ public class ScoreFragment extends Fragment {
                     adapter.notifyDataSetChanged();
                 }*/
 
-            }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//                Toast.makeText(getContext(), "Database Error", Toast.LENGTH_LONG).show();
+//            }
+//        });
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(getContext(), "Database Error", Toast.LENGTH_LONG).show();
-            }
-        });
         score.setText(Integer.toString(FinalScore));
-        replay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("Score", "On Click Listener Called");
-                Countdown fragmentMainQuiz = new Countdown(CATEGORY);
-                FragmentManager fragmentManager = getFragmentManager();
-                assert fragmentManager != null;
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.homeFragment, fragmentMainQuiz);
-                fragmentTransaction.commit();
-            }
+        replay.setOnClickListener(v -> {
+            Log.d("Score", "On Click Listener Called");
+            Countdown fragmentMainQuiz = new Countdown(CATEGORY);
+            FragmentManager fragmentManager = getFragmentManager();
+            assert fragmentManager != null;
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.homeFragment, fragmentMainQuiz);
+            fragmentTransaction.commit();
         });
 
     }
+
+
+    public void checkAchivementsUnlocked()
+    {
+        String p;
+        int j;
+        for(int i = 0;i<QuizData.udrAchievements.size();i++) {
+            String x = QuizData.udrAchievements.get(i).getValue();
+            switch (x.substring(0, 3))
+            {
+
+                case "Win" :
+                    p = x.substring(4,8).trim();
+                    Log.d("ScoreFragment",p);
+                    j = Integer.parseInt(p);
+                    if(PlayerData.udrAchievementsUnlocked.charAt(i) == '0' && Integer.parseInt(PlayerData.udrWin) >= j)
+                    {
+                        Log.d("ScoreFragment","If Entered");
+                        PlayerData.udrAchievementsUnlocked = PlayerData.udrAchievementsUnlocked.substring(0,i) + "1" + PlayerData.udrAchievementsUnlocked.substring(i+1);
+                        Log.d("ScoreFragment",PlayerData.udrAchievementsUnlocked);
+                    }
+                    break;
+
+                case "Loo" :
+                    p = x.substring(6,10).trim();
+                    Log.d("ScoreFragment",p);
+                    j = Integer.parseInt(p);
+                    if(PlayerData.udrAchievementsUnlocked.charAt(i) == '0' && Integer.parseInt(PlayerData.udrLoss) >= j)
+                    {
+                        Log.d("ScoreFragment","If Entered");
+                        PlayerData.udrAchievementsUnlocked = PlayerData.udrAchievementsUnlocked.substring(0,i) + "1" + PlayerData.udrAchievementsUnlocked.substring(i+1);
+                        Log.d("ScoreFragment",PlayerData.udrAchievementsUnlocked);
+                    }
+                    break;
+
+                case "Unl" :
+                    p = x.substring(7,9).trim();
+                    Log.d("ScoreFragment",p);
+                    j = Integer.parseInt(p);
+                    @SuppressLint({"NewApi", "LocalSuppress"}) long t = PlayerData.udrCategoriesUnlocked.chars().filter(c -> c == '1').count();
+                    if(PlayerData.udrAchievementsUnlocked.charAt(i) == '0' && (int)t >= j)
+                    {
+                        Log.d("ScoreFragment","If Entered");
+                        PlayerData.udrAchievementsUnlocked = PlayerData.udrAchievementsUnlocked.substring(0,i) + "1" + PlayerData.udrAchievementsUnlocked.substring(i+1);
+                        Log.d("ScoreFragment",PlayerData.udrAchievementsUnlocked);
+                    }
+                    break;
+            }
+        }
+
+    }
+
 
     @Override
     public void onAttach(final Context context) {

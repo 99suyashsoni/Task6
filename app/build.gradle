@@ -22,10 +22,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
 }
 googleServices { disableVersionCheck = true }
 dependencies {
-    def nav_version = "1.0.0-alpha09"
+    def nav_version = "1.0.0-alpha11"
     implementation "android.arch.navigation:navigation-fragment:$nav_version"
     implementation "android.arch.navigation:navigation-ui:$nav_version"
     implementation fileTree(include: ['*.jar'], dir: 'libs')
@@ -44,5 +48,6 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:16.1.0'
     implementation 'com.google.firebase:firebase-database:16.0.6'
     implementation 'com.github.bumptech.glide:glide:4.8.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
 }

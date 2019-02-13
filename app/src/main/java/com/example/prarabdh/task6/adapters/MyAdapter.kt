@@ -1,6 +1,5 @@
 package com.example.prarabdh.task6.adapters
 
-import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import com.example.prarabdh.task6.DataRetrieve
-import com.example.prarabdh.task6.dataModels.GameDescData
+import com.example.prarabdh.task6.dataModels.QuizData
 import com.example.prarabdh.task6.ListenerObject
 import com.example.prarabdh.task6.R
 
@@ -45,11 +44,14 @@ class MyAdapter(private val images: IntArray, private val names: Array<String>, 
                 val listenerObject = ListenerObject()
 
                 listenerObject.setCustomObjectListener(object : ListenerObject.Listener{
+                    override fun onPartialDataChange() {
+                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                    }
 
                     override fun onDataRecieved() {
 
-                        GameDescData.background = images[position]
-                        GameDescData.heading = names[position]
+                        QuizData.background = images[position]
+                        QuizData.heading = names[position]
                         listener1.listener!!.onDataRecieved()
                     }
 

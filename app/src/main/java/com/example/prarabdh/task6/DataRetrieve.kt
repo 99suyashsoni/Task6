@@ -1,8 +1,8 @@
 package com.example.prarabdh.task6
 
 import android.util.Log
-import android.view.View
-import com.example.prarabdh.task6.dataModels.GameDescData
+import com.example.prarabdh.task6.dataModels.AchivementDataModel
+import com.example.prarabdh.task6.dataModels.QuizData
 import com.example.prarabdh.task6.dataModels.LeaderboardDataModel
 import com.example.prarabdh.task6.dataModels.PlayerData
 import com.google.firebase.database.DataSnapshot
@@ -14,7 +14,32 @@ internal class DataRetrieve {
 
     val database = FirebaseDatabase.getInstance()
 
-    
+    fun achievementData(l7: ListenerObject){
+
+        database.getReference("Achievements").addValueEventListener(object : ValueEventListener{
+
+            override fun onDataChange(p0: DataSnapshot) {
+
+                val iterable2 = p0.children
+
+                for (i in iterable2){
+                    var key = AchivementDataModel(i.key.toString() , i.value.toString())
+                    QuizData.udrAchievements.add(key)
+                }
+
+                QuizData.udrAchievements.sortBy { it.Value }
+
+                l7.listener!!.onDataRecieved()
+
+            }
+
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+        })
+    }
+
+
     fun playerDataRetrieve(userId: String, l1: ListenerObject)
     {
 
@@ -27,13 +52,13 @@ internal class DataRetrieve {
 
                 PlayerData.udrUserId = userId
                 PlayerData.udrAchievementsUnlocked = dataSnapshot.child("AchievementsUnlocked").value as String
-                PlayerData.udrAvatar= dataSnapshot.child("Avatar").value as String
+                PlayerData.udrAvatar = dataSnapshot.child("Avatar").value as String
                 PlayerData.udrCategoriesUnlocked= dataSnapshot.child("CategoriesUnlocked").value as String
-                PlayerData.udrEmail= dataSnapshot.child("Email").value as String
-                PlayerData.udrLoss= dataSnapshot.child("Loss").value as String
+                PlayerData.udrEmail = dataSnapshot.child("Email").value as String
+                PlayerData.udrLoss = dataSnapshot.child("Loss").value as String
                 PlayerData.udrPoints = dataSnapshot.child("Points").value.toString().toInt()
-                PlayerData.udrUserName= dataSnapshot.child("Username").value as String
-                PlayerData.udrWin= dataSnapshot.child("Win").value as String
+                PlayerData.udrUserName = dataSnapshot.child("Username").value as String
+                PlayerData.udrWin = dataSnapshot.child("Win").value as String
 
                 val iterable =dataSnapshot.child("Questions").children
                 for(i in iterable ){
@@ -41,8 +66,14 @@ internal class DataRetrieve {
                     PlayerData.udrQuestionsAttempted[i.key.toString()] = i.value.toString()
                 }
 
-                l1.listener!!.onDataRecieved()
-
+              if(PlayerData.l1called==0) {
+                  l1.listener!!.onDataRecieved()
+                  Log.d("ScoreFragment","l1 calleed, player disbaled")
+                  PlayerData.l1called=1
+              }
+              else {
+                  l1.listener!!.onPartialDataChange()
+              }
             }
 
 
@@ -60,7 +91,7 @@ internal class DataRetrieve {
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
 
-                GameDescData.description = dataSnapshot.child("Description").value as String
+                QuizData.description = dataSnapshot.child("Description").value as String
 
                 l2.listener!!.onDataRecieved()
             }
@@ -101,7 +132,7 @@ internal class DataRetrieve {
 
                 for ((j, d) in dsp.children.withIndex()) {
 
-                    GameDescData.names[j] = d.key.toString()
+                    QuizData.names[j] = d.key.toString()
 
                 }
 
@@ -116,6 +147,7 @@ internal class DataRetrieve {
     }
 
     // for leaderboard
+
     fun getLeadorboardData(l5: ListenerObject,l6: ListenerObject){
 
         database.getReference("Users").addListenerForSingleValueEvent(object : ValueEventListener {
@@ -138,7 +170,7 @@ internal class DataRetrieve {
                 }
 
 
-l5.listener!!.onDataRecieved()
+                    l5.listener!!.onDataRecieved()
             }
 
 
