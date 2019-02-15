@@ -73,29 +73,17 @@ public class ScoreFragment extends Fragment {
                 .load(PlayerData.udrAvatar)
                 .into(avtar);
 
-        /*ncategories.add("Hello");
-        //recyclerView = getView().findViewById(R.id.achieveRecycler);
-        nImages.add(PlayerData.udrAvatar);
-        Log.d("Score",ncategories.toString());*/
-
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        Log.d("ScoreFragment","Layset");
-        Log.d("ScoreFragment","Before "+getContext().toString()+Integer.toString(ncategories.size())+Integer.toString(nImages.size()));
-
         adapter = new AchievementsAdapter(getContext(), ncategories, nImages);
-        Log.d("ScoreFragment","After "+getContext().toString()+Integer.toString(ncategories.size())+Integer.toString(nImages.size()));
-        Log.d("ScoreFragment","dap cre");
         recyclerView.setAdapter(adapter);
-        Log.d("ScoreFragment","adap set");
         super.onViewCreated(view, savedInstanceState);
-        Log.d("ScoreFragment","view ret");
     }
 
     public void onStart() {
 
         super.onStart();
 
-        String previousUnlocked = PlayerData.udrAchievementsUnlocked;
+        String previousUnlocked = PlayerData.udrAchievementsUnlocked; //Stroes the String that contains information of achivements unlocked till now
         checkAchivementsUnlocked();
         for(int i = 0; i<PlayerData.udrAchievementsUnlocked.length();i++)
         {
@@ -107,72 +95,9 @@ public class ScoreFragment extends Fragment {
         }
         adapter.notifyDataSetChanged();
 
-
-
-//        Glide.with(Objects.requireNonNull(getContext()))
-//                .asBitmap()
-//                .load(PlayerData.udrAvatar)
-//                .into(avtar);
-//        ncategories.add("Hello");
-//        //recyclerView = getView().findViewById(R.id.achieveRecycler);
-//        nImages.add(PlayerData.udrAvatar);
-//        Log.d("Score",ncategories.toString());
-////        AchievementsAdapter adapter = new AchievementsAdapter(getContext(), ncategories, nImages);
-////        recyclerView.setAdapter(adapter);
-
-//        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-//        DatabaseReference databaseReference = firebaseDatabase.getReference("Categories");
-//        databaseReference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                //AchievementsAdapter adapter = new AchievementsAdapter(getContext(), ncategories, nImages);
-//               // recyclerView.setAdapter(adapter);
-//               // Log.d("Score",getContext().toString());  //Adapter is not null, confirmed through log
-//                //recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
-//
-//                Iterable<DataSnapshot> allCategory = dataSnapshot.getChildren();
-//                int j = 0;
-//                for (DataSnapshot Category : allCategory) {
-//
-//                    Log.d("Score", "Datasnapshot Called " + allCategory.toString());  //Getting logged perfectly
-//
-//                    unlock = PlayerData.pointsToUnlock[j];
-//                    int val = FinalScore - unlock;
-//                    int val2 = unlock - PlayerData.udrPoints;
-//                    //String x = Category.child("Images").getValue().toString();
-//                    String y = Category.getKey();  // String y is also correct
-//                    if (val >= 0) {
-//                        Log.d("Score", "If condition called Called with " + y);   //Entering the if condition, logic is correct
-//                        nImages.add(PlayerData.udrAvatar);
-//                        ncategories.add(y);
-//                        Log.d("Score" , "Adapter Count "+ adapter.getItemCount());
-//                  //      recyclerView.setAdapter(adapter);
-//                        adapter.notifyDataSetChanged();
-//                        Log.d("Score" , "Adapter Count "+ adapter.getItemCount());
-//                    }
-//
-//                    j++;
-//
-//                }
-
-                /*if (ncategories.size() == 0) {
-                    Log.d("Score", "If condition called Called");
-                    ncategories.add("No new achivements unlocked");
-                    nImages.add(PlayerData.udrAvatar);
-                    adapter.notifyDataSetChanged();
-                }*/
-
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//                Toast.makeText(getContext(), "Database Error", Toast.LENGTH_LONG).show();
-//            }
-//        });
-
         score.setText(Integer.toString(FinalScore));
+
         replay.setOnClickListener(v -> {
-            Log.d("Score", "On Click Listener Called");
             Countdown fragmentMainQuiz = new Countdown(CATEGORY);
             FragmentManager fragmentManager = getFragmentManager();
             assert fragmentManager != null;
@@ -183,6 +108,14 @@ public class ScoreFragment extends Fragment {
 
     }
 
+
+    /**
+     * This function is used to check if the user has unlocked some new achivement or not
+     * The function first classify the categories based on the first 3 letters
+     * Then based on the first three letters, the number is then extracted from its position, and compared to the user's present stats
+     * In cases where the number has lower number of digits, blank spaces are left in the achivements, which are trimmed before converting the String to Integer
+     * If a new achivement is unlocked, the player stats are updated through the PlayerData.udrAchivements variable
+     */
 
     public void checkAchivementsUnlocked()
     {
@@ -235,8 +168,4 @@ public class ScoreFragment extends Fragment {
     }
 
 
-    @Override
-    public void onAttach(final Context context) {
-        super.onAttach(context);
-    }
 }

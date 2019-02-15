@@ -27,9 +27,6 @@ class HomeFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val view = inflater.inflate(R.layout.home_fragment, container, false)
-//        val bottomNav: BottomNavigationView = HomeActivity().findViewById(R.id.navigation)
-//        bottomNav.selectedItemId = navigation_home
-
         val listenerObject3 = ListenerObject()
 
         listenerObject3.setCustomObjectListener(object : ListenerObject.Listener{
@@ -44,6 +41,13 @@ class HomeFragment : Fragment() {
 
         })
 
+
+        /**
+         * Listener1 Object is called after all categories are retrived from firebase
+         * Once all categories are retrived, we display the tiles corosponding to all the categories
+         * But before displaying the tiles, we also make sure that the points to Unlock data is completely fetched
+         * This helps in preventing cases where the player wants to unlock a new category but the information about the points required to unlock it is still not fetched
+         */
 
         val listenerObject1 = ListenerObject()
 
@@ -69,6 +73,10 @@ class HomeFragment : Fragment() {
 
             }
         })
+
+        /**
+         * Listener Object 2 is called ehen data retrival about the points to unlock each category has been fetched completely
+         */
 
         val listenerObject2 = ListenerObject()
 
@@ -102,19 +110,4 @@ class HomeFragment : Fragment() {
 
         return view
     }
-
-
-//    fun adapter(){
-//
-//        if(check1 && check2){
-//
-//            viewManager = LinearLayoutManager(activity)
-//            viewAdapter = MyAdapter(images, names, PlayerData.pointsToUnlock, PlayerData.udrPoints, activity!!)
-//            recyclerView = view!!.findViewById<RecyclerView>(R.id.recyclerView).apply {
-//
-//                layoutManager = viewManager
-//                adapter = viewAdapter
-//            }
-//        }
-//    }
 }
