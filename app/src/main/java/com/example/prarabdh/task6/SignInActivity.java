@@ -1,6 +1,8 @@
 package com.example.prarabdh.task6;
 
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -33,6 +35,7 @@ public class SignInActivity extends AppCompatActivity {
     private boolean newUserClicked = false;
     private ProgressBar progressBar;
     private boolean progressBarPresent = false;
+    private boolean onBackPressedTwice=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -172,5 +175,25 @@ public class SignInActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+
+        if(onBackPressedTwice){
+            finishAffinity();
+            super.onBackPressed();
+
+        }else{
+            onBackPressedTwice=true;
+            Toast.makeText(this,"Press again to exit",Toast.LENGTH_LONG).show();
+        }
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                onBackPressedTwice=false;
+            }
+        },2000);
+
+    }
 }
 
