@@ -21,8 +21,9 @@ public class PlayerData {
     public static Map<String, String> udrQuestionsAttempted = new HashMap<String, String>();
     public static String udrUserName = "";
     public static String udrWin = "";
-    public static  int[] pointsToUnlock = {0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+    public static  int[] pointsToUnlock;
     public static Context context11 = null;
+    public static Integer categoryPoints = 0;
     // for leaderboard
     public static ArrayList<LeaderboardDataModel> datasetLeaderboard = new ArrayList<LeaderboardDataModel>();
     public static LeaderboardDataModel currentusermodel;

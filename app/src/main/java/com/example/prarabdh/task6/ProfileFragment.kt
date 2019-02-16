@@ -3,6 +3,8 @@ package com.example.prarabdh.task6
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +12,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import com.example.prarabdh.task6.adapters.ProfileAdapter
 import com.example.prarabdh.task6.dataModels.PlayerData
 import com.google.firebase.auth.FirebaseAuth
 
@@ -20,9 +23,11 @@ class ProfileFragment : Fragment() {
     private var txtUname: TextView? = null
     private var txtWin: TextView? = null
     private var txtLoose: TextView? = null
-    private var txtTotal: TextView? = null
     private var txtEmail: TextView? = null
     private var imageView: ImageView? = null
+    private var recyclerView: RecyclerView? = null
+    private lateinit var viewAdapter: RecyclerView.Adapter<*>
+    private lateinit var viewManager: RecyclerView.LayoutManager
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.profile_fragment, container, false)
@@ -50,6 +55,14 @@ class ProfileFragment : Fragment() {
 
         imageView = view.findViewById(R.id.imageViewAvatar)
         Glide.with(this@ProfileFragment).load( PlayerData.udrAvatar).into(imageView!!)
+
+        viewManager = LinearLayoutManager(activity)
+        viewAdapter = ProfileAdapter()
+        recyclerView = view!!.findViewById<RecyclerView>(R.id.recyclerView).apply {
+
+            layoutManager = viewManager
+            adapter = viewAdapter
+        }
 
         return view
     }

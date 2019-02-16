@@ -2,12 +2,14 @@ package com.example.prarabdh.task6
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.example.prarabdh.task6.adapters.MyAdapter
 import com.example.prarabdh.task6.dataModels.QuizData
 import com.example.prarabdh.task6.dataModels.PlayerData
@@ -27,10 +29,10 @@ class HomeFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val view = inflater.inflate(R.layout.home_fragment, container, false)
-//        val bottomNav: BottomNavigationView = HomeActivity().findViewById(R.id.navigation)
-//        bottomNav.selectedItemId = navigation_home
-
         val listenerObject3 = ListenerObject()
+
+        val alertDialog = AlertDialog.Builder(context!!)
+        val toast = Toast.makeText(context,"Category is locked", Toast.LENGTH_SHORT)
 
         listenerObject3.setCustomObjectListener(object : ListenerObject.Listener{
             override fun onPartialDataChange() {
@@ -45,6 +47,13 @@ class HomeFragment : Fragment() {
         })
 
 
+        /**
+         * Listener1 Object is called after all categories are retrived from firebase
+         * Once all categories are retrived, we display the tiles corosponding to all the categories
+         * But before displaying the tiles, we also make sure that the points to Unlock data is completely fetched
+         * This helps in preventing cases where the player wants to unlock a new category but the information about the points required to unlock it is still not fetched
+         */
+
         val listenerObject1 = ListenerObject()
 
         listenerObject1.setCustomObjectListener(object : ListenerObject.Listener {
@@ -57,8 +66,28 @@ class HomeFragment : Fragment() {
                 check1 = true
                 if(check1 && check2)
                 {
+                    val unlockedCategories = PlayerData.udrCategoriesUnlocked.toCharArray()
+                    var noOfUnlocked = 0
+
+                    for (item in unlockedCategories){
+                        if (item == '1'){
+                            noOfUnlocked += 1
+                        }
+                    }
+
+                    Log.d("unlocked","$noOfUnlocked")
+                    val unlockPoints = PlayerData.pointsToUnlock.copyOfRange(noOfUnlocked,PlayerData.pointsToUnlock.size-1)
+                    var sumPoints = 0
+
+                    for (items in unlockPoints){
+                        sumPoints += items
+                        if (PlayerData.udrPoints >= sumPoints){
+                            PlayerData.categoryPoints += 1
+                        }
+                    }
+
                     viewManager = LinearLayoutManager(activity)
-                    viewAdapter = MyAdapter(images, QuizData.names, PlayerData.pointsToUnlock, PlayerData.udrPoints, listenerObject3)
+                    viewAdapter = MyAdapter(images, QuizData.names, listenerObject3, alertDialog, toast!!)
                     recyclerView = view!!.findViewById<RecyclerView>(R.id.recyclerView).apply {
 
                         layoutManager = viewManager
@@ -69,6 +98,10 @@ class HomeFragment : Fragment() {
 
             }
         })
+
+        /**
+         * Listener Object 2 is called ehen data retrival about the points to unlock each category has been fetched completely
+         */
 
         val listenerObject2 = ListenerObject()
 
@@ -82,10 +115,28 @@ class HomeFragment : Fragment() {
                 check2 = true
                 if(check1 && check2)
                 {
-                    Log.d("Activity Check","Activity $activity")
+                    val unlockedCategories = PlayerData.udrCategoriesUnlocked.toCharArray()
+                    var noOfUnlocked = 0
+
+                    for (item in unlockedCategories){
+                        if (item == '1'){
+                            noOfUnlocked += 1
+                        }
+                    }
+
+                    val unlockPoints = PlayerData.pointsToUnlock.copyOfRange(noOfUnlocked,PlayerData.pointsToUnlock.size-1)
+
+                    var sumPoints = 0
+
+                    for (items in unlockPoints){
+                        sumPoints += items
+                        if (PlayerData.udrPoints >= sumPoints){
+                            PlayerData.categoryPoints += 1
+                        }
+                    }
+
                     viewManager = LinearLayoutManager(activity)
-                    Log.d("Data Check","${QuizData.names[0]} , ${PlayerData.udrPoints} , ${PlayerData.pointsToUnlock[6]} , $context ")
-                    viewAdapter = MyAdapter(images, QuizData.names, PlayerData.pointsToUnlock, PlayerData.udrPoints, listenerObject3)
+                    viewAdapter = MyAdapter(images, QuizData.names, listenerObject3, alertDialog, toast!!)
                     recyclerView = view!!.findViewById<RecyclerView>(R.id.recyclerView).apply {
 
                         layoutManager = viewManager
@@ -102,19 +153,4 @@ class HomeFragment : Fragment() {
 
         return view
     }
-
-
-//    fun adapter(){
-//
-//        if(check1 && check2){
-//
-//            viewManager = LinearLayoutManager(activity)
-//            viewAdapter = MyAdapter(images, names, PlayerData.pointsToUnlock, PlayerData.udrPoints, activity!!)
-//            recyclerView = view!!.findViewById<RecyclerView>(R.id.recyclerView).apply {
-//
-//                layoutManager = viewManager
-//                adapter = viewAdapter
-//            }
-//        }
-//    }
 }

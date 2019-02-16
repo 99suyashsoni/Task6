@@ -40,26 +40,32 @@ public class FragmentMainQuiz extends Fragment {
     TextView option_4;
     Thread t;
 
-    int status = 100;
+    int status = 100;  //Stores the status of the Progress Bar
     private Handler handler = new Handler();
     QuestionModel questionModel;
 
-    //Will have to extract this from firebase
-    final int NUMBER_OF_QUESTIONS_TOTAL = 5;     //Stores the total number of questions that are stored in the database for the given category
+    /**Will have to extract this from firebase*/
+    int NUMBER_OF_QUESTIONS_TOTAL = 5;     //Stores the total number of questions that are stored in the database for the given category
 
     MediaPlayer mediaPlayerBackground;
     MediaPlayer mediaPlayerCorrect;
     MediaPlayer mediaPlayerWrong;
     int NUMBER_OF_QUESTIONS_PER_ROUND; //Stores the number of Questions the user will play per round of the quiz
     String CATEGORY;           //Stores the category user has selected for playing
-    int askedQuestionIndices[] = new int[NUMBER_OF_QUESTIONS_TOTAL];//Stores the indices of the questions already asked to the user in this round
     int i = 0;                                   //Stores the number of questions asked in this particular round
     ArrayList<QuestionModel> arrayList;  //Array to store all questions available in that category in the form of QuestionModel objects
     int currentRandom = 0;                     //Stores the index of the currently generated random Question
     private boolean val = true;
     int consecutiveCorrect;
 
-    //Function to generate a random number
+    /**
+     * Function to generate a random number.
+     * The function first checks if all questions available for the category are attempted by the user. If that is the case, all questions are reset.
+     * Function also checks if the user has previously attempted the question.
+     * If the question is already attempted by the user, a new random number is generated and checked again.
+     * Otherwise the variable storing the record of previously attempted questions gets updated.
+     * */
+
     public int Random() {
         if(checkForAllQuestionsCompleted(PlayerData.udrQuestionsAttempted.get(CATEGORY)))
         {
@@ -81,8 +87,9 @@ public class FragmentMainQuiz extends Fragment {
 
     /**
      * This function checks if the user has attempted all questions of the category
-     If all questions are attempted, the String containing list of attempted questions will be reset to all 0's
+     If all questions are attempted, the String containing list of attempted questions will be reset to all 0's in the Random function
      */
+
     private boolean checkForAllQuestionsCompleted(String s)
     {
         for (int i=0;i<s.length();i++)
@@ -96,7 +103,10 @@ public class FragmentMainQuiz extends Fragment {
         return true;
     }
 
-    //This functions resets all properties of textViews to prepare it for the next question
+    /**
+     * This functions resets all properties of textViews to prepare it for the next question
+     */
+
     public void resetButtons() {
         option_1.setBackgroundColor(getResources().getColor(R.color.DefaultBackground));
         option_2.setBackgroundColor(getResources().getColor(R.color.DefaultBackground));
@@ -119,18 +129,25 @@ public class FragmentMainQuiz extends Fragment {
     public void onStart() {
         super.onStart();
 
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
 
         //Assigning songs to the various mediaPlayer objects so that they can be played as and when required
         mediaPlayerBackground = MediaPlayer.create(getContext(), R.raw.main_quiz_background);
         mediaPlayerWrong = MediaPlayer.create(getContext(), R.raw.wrong_answer);
         mediaPlayerCorrect = MediaPlayer.create(getContext(), R.raw.correct_answer);
 
-        //Initializing all elements of array to avoid errors due to garbage values
-        for (int b = 0; b < NUMBER_OF_QUESTIONS_TOTAL; b++) {
-            askedQuestionIndices[b] = Integer.MAX_VALUE;
-        }
-
         NUMBER_OF_QUESTIONS_PER_ROUND = getResources().getInteger(R.integer.Number_Of_Rounds_Per_Match);
+        firebaseDatabase.getReference("Categories").child(CATEGORY).child("Total Questions").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                NUMBER_OF_QUESTIONS_TOTAL = Integer.parseInt(dataSnapshot.getValue().toString());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         //Starting the progressBar and display of the first question
         i++;
@@ -165,6 +182,7 @@ public class FragmentMainQuiz extends Fragment {
      * It also stops once the user has selected an option
      * Also, if the time of the Progress Bar is over, It starts a new question if the questions for that round are not over
      */
+
     public void Progress() {
         t = new Thread(new Runnable() {
             @Override
@@ -247,7 +265,11 @@ public class FragmentMainQuiz extends Fragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
-    //This function is called whenever a new question is to be displayed on the screen
+    /**
+     * This function is called whenever a new question is to be displayed on the screen
+     * It calls the Random function, and based on the value returned, displays the question on the screen
+     */
+
     public void newQuestion() {
         mediaPlayerBackground.start();
         currentRandom = Random();
@@ -263,6 +285,7 @@ public class FragmentMainQuiz extends Fragment {
      * Creating a class for onClickListener as the same logic is to be implemented with all the 4 option buttons
      * Didnot crate a new object as I needed a parameter regarding which option was clicked, which was not possible in an object
      */
+
     public class onClickButton implements View.OnClickListener {
 
         TextView textView;  //Stores which textView called this class
@@ -274,8 +297,10 @@ public class FragmentMainQuiz extends Fragment {
         @Override
         public void onClick(View v) {
             String correct = questionModel.getAnswer(); //Stores the correct answer for the current question
-            val = false;                                              //Introduced a new variable instead of using the expression at the right again and again to save the time required by the computer to read the arrayList
+                                           //Introduced a new variable instead of using the expression at the right again and again to save the time required by the computer to read the arrayList
             //and execute the getAnswer() function multiple number of times
+
+            val = false;
 
             //Disable other textViews so that multiple answers cannot be selected
             option_1.setClickable(false);
@@ -361,6 +386,7 @@ public class FragmentMainQuiz extends Fragment {
     public void endQuestions() {
         t.interrupt();
         ScoreFragment scoreFragment = new ScoreFragment(PlayerData.udrPoints, CATEGORY);
+
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.homeFragment, scoreFragment);

@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import com.example.prarabdh.task6.Countdown
 import com.example.prarabdh.task6.R
 import com.example.prarabdh.task6.dataModels.QuizData
@@ -37,7 +38,7 @@ class GameDesc : Fragment() {
         }
 
         multiPLayer!!.setOnClickListener {
-
+            Toast.makeText(context,"Coming Soon",Toast.LENGTH_LONG).show()
         }
 
         return view

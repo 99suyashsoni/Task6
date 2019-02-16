@@ -52,17 +52,16 @@ public class Countdown extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_countdown, container, false);
     }
+
+    /**
+     * Initializing all the required views so that they can be used when required.
+     * Saves time and memory as we don't have to fetch the views again and again
+     */
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -74,25 +73,21 @@ public class Countdown extends Fragment {
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-
-    }
-
-    @Override
     public void onPause() {
         super.onPause();
     }
 
+    /**
+     * This method is called when we have to start the countdown, that is after all questions have been downloaded from the net
+     */
+
     public void startCountdown() {
-        Log.d("Countdown Check", "Countdown Start");
         final Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.animation_countdown_new);
         textView3.startAnimation(animation);
         final MediaPlayer mediaPlayer;
         mediaPlayer = MediaPlayer.create(getContext(), R.raw.countdown);
         mediaPlayer.seekTo(3000);
         mediaPlayer.start();
-        //CountDownTimer c1=null;
         c1 = new CountDownTimer(1000, 100) {
 
             @Override
@@ -104,7 +99,6 @@ public class Countdown extends Fragment {
             public void onFinish() {
                 textView3.setTextColor(getResources().getColor(R.color.DefaultBackground));
                 textView2.startAnimation(animation);
-                //CountDownTimer c2=null;
                 c2 = new CountDownTimer(1000, 100) {
 
                     @Override
@@ -116,7 +110,6 @@ public class Countdown extends Fragment {
                     public void onFinish() {
                         textView2.setTextColor(getResources().getColor(R.color.DefaultBackground));
                         textView1.startAnimation(animation);
-                        //CountDownTimer c3=null;
                         c3 = new CountDownTimer(1000, 100) {
 
                             @Override
@@ -149,13 +142,8 @@ public class Countdown extends Fragment {
 
     @Override
     public void onStart() {
-        new dataDownload().execute();
+        dataDownload();
         super.onStart();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
     }
 
     @Override
@@ -166,46 +154,37 @@ public class Countdown extends Fragment {
         super.onDetach();
     }
 
-    private class dataDownload extends AsyncTask<Void, Void, Void> {
-        ProgressDialog progressDialog;
+    /**
+     * Function to retrive all questions of the current category before starting the countdown so
+     * that user doesnot face any problem related to questions while the main quiz is running
+     * */
 
-        @Override
-        protected void onPreExecute() {
-            progressDialog = new ProgressDialog(getContext());
-            progressDialog.setMessage("Please Wait while we download your questions");
-            progressDialog.show();
-            super.onPreExecute();
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            final FirebaseDatabase database = FirebaseDatabase.getInstance();
-            DatabaseReference myRef = database.getReference("Categories").child(CATEGORY).child("Q&A");
-            myRef.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    Iterable<DataSnapshot> contactChildren = dataSnapshot.getChildren();
-                    for (DataSnapshot contact : contactChildren) {
-                        Log.d("Countdown Check", "Question Model");
-                        QuestionModel questionModel = new QuestionModel(contact.child("Question").getValue().toString(), contact.child("Option1").getValue().toString(), contact.child("Option2").getValue().toString(), contact.child("Option3").getValue().toString(), contact.child("Option4").getValue().toString(), contact.child("Answer").getValue().toString());
-                        arrayList.add(questionModel);
-                    }
-                    Log.d("Countdown Check", "Countdown Start Call " + arrayList.size());
-                    progressDialog.dismiss();
-                    startCountdown();
+    private void dataDownload() {
+        ProgressDialog progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("Please Wait while we download your questions");
+        progressDialog.show();
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("Categories").child(CATEGORY).child("Q&A");
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Iterable<DataSnapshot> contactChildren = dataSnapshot.getChildren();
+                for (DataSnapshot contact : contactChildren) {
+                    Log.d("Countdown Check", "Question Model");
+                    QuestionModel questionModel = new QuestionModel(contact.child("Question").getValue().toString(), contact.child("Option1").getValue().toString(), contact.child("Option2").getValue().toString(), contact.child("Option3").getValue().toString(), contact.child("Option4").getValue().toString(), contact.child("Answer").getValue().toString());
+                    arrayList.add(questionModel);
                 }
+                Log.d("Countdown Check", "Countdown Start Call " + arrayList.size());
+                progressDialog.dismiss();
+                startCountdown();
+            }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                }
-            });
-            return null;
-        }
+            }
 
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-        }
+
+        });
     }
 }
