@@ -137,7 +137,7 @@ public class FragmentMainQuiz extends Fragment {
         mediaPlayerCorrect = MediaPlayer.create(getContext(), R.raw.correct_answer);
 
         NUMBER_OF_QUESTIONS_PER_ROUND = getResources().getInteger(R.integer.Number_Of_Rounds_Per_Match);
-        firebaseDatabase.getReference("Categories").child(CATEGORY).child("Total Questions").addListenerForSingleValueEvent(new ValueEventListener() {
+        firebaseDatabase.getReference("Categories").child(CATEGORY).child("TotalQuestions").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 NUMBER_OF_QUESTIONS_TOTAL = Integer.parseInt(dataSnapshot.getValue().toString());

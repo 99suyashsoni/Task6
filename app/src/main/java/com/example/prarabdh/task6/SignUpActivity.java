@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.prarabdh.task6.adapters.SignUpAdapter;
+import com.example.prarabdh.task6.dataModels.PlayerData;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -47,15 +48,19 @@ public class SignUpActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private boolean progressBarPresent = false;
 
+    private FirebaseDatabase database;
+
     private ImageView imageViewAvatar;
     private String imageChosen = "1";
     private String uid = "hh";
 
-    private String url_1="https://vignette.wikia.nocookie.net/angry-birds-epic-fanon/images/f/fd/212px-AB_Epic_Avatar_Image_1.png/revision/latest?cb=20150110074525";
-    private String url_2="https://vignette.wikia.nocookie.net/angry-birds-epic-fanon/images/4/45/177px-AB_Epic_Avatar_Image_3.png/revision/latest?cb=20150314093014";
-    private String url_3="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVCdo0Ck-v38cziOSMRVVhpXb2AUsF_EBSXPTYv3W2Zyv8mfJi";
-    private String url_4="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQSVB6DvVjeTQxtDHtBAVQ6_wG4qA7_JPcC3sxJz25f3tWNo6r";
-    private String imageChosenUrl =url_1;
+    private String url_1 = "https://vignette.wikia.nocookie.net/angry-birds-epic-fanon/images/f/fd/212px-AB_Epic_Avatar_Image_1.png/revision/latest?cb=20150110074525";
+    private String url_2 = "https://vignette.wikia.nocookie.net/angry-birds-epic-fanon/images/4/45/177px-AB_Epic_Avatar_Image_3.png/revision/latest?cb=20150314093014";
+    private String url_3 = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVCdo0Ck-v38cziOSMRVVhpXb2AUsF_EBSXPTYv3W2Zyv8mfJi";
+    private String url_4 = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQSVB6DvVjeTQxtDHtBAVQ6_wG4qA7_JPcC3sxJz25f3tWNo6r";
+    private String imageChosenUrl = url_1;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -219,7 +224,7 @@ public class SignUpActivity extends AppCompatActivity {
 
                 imageChosenUrl = url_1;
                 Glide.with(SignUpActivity.this).load(url_1).into(imageViewAvatar);
-                }
+        }
 
     }
 
@@ -300,42 +305,83 @@ public class SignUpActivity extends AppCompatActivity {
 
             uid = user.getUid();
 
-            writeNewUser(editTextEmail.getText().toString(), imageChosenUrl, editTextUserName.getText().toString());
-            removeProgressBar();
-            finish();
-        } else {
+            ListenerObject listenerObjectSignUpData = new ListenerObject();
+//
+            database.getInstance().getReference("Track").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
+                    for (DataSnapshot dsp : dataSnapshot.getChildren()) {
+
+                        PlayerData.udrSignUpData.put(dsp.getKey(), dsp.getValue().toString());
+                    }
+
+                    listenerObjectSignUpData.getListener().onDataRecieved();
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
+            /*DataRetrieve.getDataForNewUser(listenerObjectSignUpData);*/
+            listenerObjectSignUpData.setCustomObjectListener(new ListenerObject.Listener() {
+                @Override
+                public void onDataRecieved() {
+
+                    mDatabase.child(uid).child("AchievementsUnlocked").setValue("000000000000000000000");//21 0's
+                    mDatabase.child(uid).child("Avatar").setValue(imageChosenUrl);
+                    mDatabase.child(uid).child("CategoriesUnlocked").setValue("111000000000"); //3 1's 9 0's
+                    mDatabase.child(uid).child("Email").setValue(editTextEmail.getText().toString());
+                    mDatabase.child(uid).child("Loss").setValue("0");
+                    mDatabase.child(uid).child("Points").setValue("0");
+                    //to store questions attempted by user
+               /* mDatabase.child(uid).child("Questions").child("Anime").setValue("0000000000");//10 0's
+                mDatabase.child(uid).child("Questions").child("Culture").setValue("0000000000");//10 0's
+                mDatabase.child(uid).child("Questions").child("DC+Marvel").setValue("0000000000");//10 0's
+                mDatabase.child(uid).child("Questions").child("Food").setValue("0000000000");//10 0's
+                mDatabase.child(uid).child("Questions").child("Gaming").setValue("0000000000");//10 0's
+                mDatabase.child(uid).child("Questions").child("Movies").setValue("0000000000");//10 0's
+                mDatabase.child(uid).child("Questions").child("Politics").setValue("0000000000");//10 0's
+                mDatabase.child(uid).child("Questions").child("Riddles").setValue("0000000000");//10 0's
+                mDatabase.child(uid).child("Questions").child("Sports").setValue("0000000000");//10 0's
+                mDatabase.child(uid).child("Questions").child("TVSeries").setValue("0000000000");//10 0's
+                mDatabase.child(uid).child("Questions").child("Travel").setValue("0000000000");//10 0's
+                mDatabase.child(uid).child("Questions").child("War").setValue("0000000000");//10 0's*/
+                    //
+
+                    mDatabase.child(uid).child("Questions").setValue(PlayerData.udrSignUpData);
+                    mDatabase.child(uid).child("Username").setValue(editTextUserName.getText().toString());
+                    mDatabase.child(uid).child("Win").setValue("0");
+
+                    removeProgressBar();
+                    finish();
+                }
+
+                @Override
+                public void onPartialDataChange() {
+
+                }
+            });
+
+
+        }
+        /*writeNewUser(editTextEmail.getText().toString(), imageChosenUrl, editTextUserName.getText().toString());*/
+
+         else{
             editTextPassword.setText("");
             editTextUserName.setText("");
             editTextEmail.setText("");
             removeProgressBar();
         }
     }
+}
 
     //method to  save data of new user in database
-    private void writeNewUser(String email, String imageChosenUrl, String userName) {
+    /*private void writeNewUser(String email, String imageChosenUrl, String userName) {
 
-        mDatabase.child(uid).child("AchievementsUnlocked").setValue("000000000000000000000");//21 0's
-        mDatabase.child(uid).child("Avatar").setValue(imageChosenUrl);
-        mDatabase.child(uid).child("CategoriesUnlocked").setValue("111000000000"); //3 1's 9 0's
-        mDatabase.child(uid).child("Email").setValue(email);
-        mDatabase.child(uid).child("Loss").setValue("0");
-        mDatabase.child(uid).child("Points").setValue("0");
-        //to store questions attempted by user
-        mDatabase.child(uid).child("Questions").child("Anime").setValue("0000000000");//10 0's
-        mDatabase.child(uid).child("Questions").child("Culture").setValue("0000000000");//10 0's
-        mDatabase.child(uid).child("Questions").child("DC+Marvel").setValue("0000000000");//10 0's
-        mDatabase.child(uid).child("Questions").child("Food").setValue("0000000000");//10 0's
-        mDatabase.child(uid).child("Questions").child("Gaming").setValue("0000000000");//10 0's
-        mDatabase.child(uid).child("Questions").child("Movies").setValue("0000000000");//10 0's
-        mDatabase.child(uid).child("Questions").child("Politics").setValue("0000000000");//10 0's
-        mDatabase.child(uid).child("Questions").child("Riddles").setValue("0000000000");//10 0's
-        mDatabase.child(uid).child("Questions").child("Sports").setValue("0000000000");//10 0's
-        mDatabase.child(uid).child("Questions").child("TVSeries").setValue("0000000000");//10 0's
-        mDatabase.child(uid).child("Questions").child("Travel").setValue("0000000000");//10 0's
-        mDatabase.child(uid).child("Questions").child("War").setValue("0000000000");//10 0's
-        //
-        mDatabase.child(uid).child("Username").setValue(userName);
-        mDatabase.child(uid).child("Win").setValue("0");
-    }
+    } */
 
-}
+

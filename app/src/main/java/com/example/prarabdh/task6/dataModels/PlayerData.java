@@ -19,6 +19,7 @@ public class PlayerData {
     public static String udrLoss = "";
     public static int udrPoints = 0;
     public static Map<String, String> udrQuestionsAttempted = new HashMap<String, String>();
+    public static Map<String, String> udrSignUpData = new HashMap<String, String>();
     public static String udrUserName = "";
     public static String udrWin = "";
     public static  int[] pointsToUnlock;

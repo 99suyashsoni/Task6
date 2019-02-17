@@ -181,4 +181,23 @@ internal class DataRetrieve {
         })
 
     }
+
+    fun getDataForNewUser(listenerObject:ListenerObject){
+
+        database.getReference("Track").addListenerForSingleValueEvent(object: ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+
+                for(dsp in p0.children){
+
+                    PlayerData.udrSignUpData.put(dsp.key,dsp.value.toString())
+                }
+
+                listenerObject.listener!!.onDataRecieved()
+            }
+        })
+    }
 }
